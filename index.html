@@ -386,9 +386,34 @@ const typeColor={cafe:"#FF6C41",retail:"#7B2F25",studio:"#4A6B4A",wellness:"#B05
 
 const hMap=L.map("hero-map",{center:[19.076,72.8777],zoom:12,zoomControl:false,scrollWheelZoom:false,dragging:false,attributionControl:false});
 L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png").addTo(hMap);
-places.forEach(p=>{
-  L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:"<div style='width:8px;height:8px;background:"+typeColor[p.type]+";border-radius:50%;border:2px solid white;box-shadow:0 2px 5px rgba(0,0,0,0.2)'></div>",iconSize:[8,8],iconAnchor:[4,4]})}).addTo(hMap);
-});
+
+const cityViews=[
+  {name:"Mumbai",center:[19.076,72.8777],zoom:12,pins:[{lat:19.0596,lng:72.8295,type:"cafe"},{lat:19.0148,lng:72.8325,type:"wellness"},{lat:18.9281,lng:72.8312,type:"retail"}]},
+  {name:"Delhi",center:[28.6139,77.2090],zoom:12,pins:[{lat:28.6304,lng:77.2177,type:"cafe"},{lat:28.5921,lng:77.2290,type:"studio"},{lat:28.6562,lng:77.2410,type:"workspace"}]},
+  {name:"Bangalore",center:[12.9716,77.5946],zoom:12,pins:[{lat:12.9716,lng:77.5946,type:"wellness"},{lat:12.9352,lng:77.6245,type:"cafe"},{lat:12.9850,lng:77.5533,type:"retail"}]},
+  {name:"Kolkata",center:[22.5726,88.3639],zoom:12,pins:[{lat:22.5726,lng:88.3639,type:"cafe"},{lat:22.5450,lng:88.3426,type:"studio"},{lat:22.6000,lng:88.3800,type:"wellness"}]},
+  {name:"Goa",center:[15.2993,74.1240],zoom:12,pins:[{lat:15.5004,lng:73.8193,type:"retail"},{lat:15.2993,lng:74.1240,type:"cafe"},{lat:15.4109,lng:73.9986,type:"wellness"}]},
+];
+
+let cityIndex=0;
+let heroPinLayer=L.layerGroup().addTo(hMap);
+
+function renderHeroPins(city){
+  heroPinLayer.clearLayers();
+  city.pins.forEach(p=>{
+    L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:"<div style='width:8px;height:8px;background:"+typeColor[p.type]+";border-radius:50%;border:2px solid white;box-shadow:0 2px 5px rgba(0,0,0,0.2)'></div>",iconSize:[8,8],iconAnchor:[4,4]})}).addTo(heroPinLayer);
+  });
+}
+
+function cycleCity(){
+  cityIndex=(cityIndex+1)%cityViews.length;
+  const city=cityViews[cityIndex];
+  hMap.flyTo(city.center,city.zoom,{duration:2.5,easeLinearity:0.25});
+  renderHeroPins(city);
+}
+
+renderHeroPins(cityViews[0]);
+setInterval(cycleCity,4000);
 
 const mMap=L.map("main-map",{center:[19.05,72.84],zoom:12,scrollWheelZoom:false});
 L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{attribution:"&copy; OpenStreetMap &copy; CARTO"}).addTo(mMap);
