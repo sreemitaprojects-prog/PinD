@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore — PinD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#FF6C41;
+  --coral:#FF3C2D;
+  --ember:#7B2F25;
+  --peach:#FFCDB8;
+  --blush:#FFF0EC;
+  --cream:#FFFAF7;
+  --text-dark:#1C0A06;
+  --text-mid:#5C2D1E;
+  --text-light:#B07060;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--text-dark)}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;height:60px;
+  background:rgba(255,250,247,0.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,108,65,0.12);
+}
+.nav-logo{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:400;color:var(--orange);text-decoration:none;letter-spacing:0.02em}
+.nav-links{display:flex;align-items:center;gap:1.25rem;list-style:none}
+.nav-links a{text-decoration:none;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);transition:color 0.2s}
+.nav-links a:hover{color:var(--orange)}
+.nav-cta{background:var(--orange)!important;color:white!important;padding:8px 20px;border-radius:2px;transition:background 0.2s!important}
+.nav-cta:hover{background:var(--ember)!important;color:white!important}
+
+/* LAYOUT */
+.page{
+  position:fixed;
+  top:60px;left:0;right:0;bottom:0;
+  display:flex;
+}
+
+/* MAP */
+#map{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+
+/* PANEL */
+.panel{
+  position:relative;
+  z-index:10;
+  width:380px;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  background:rgba(255,250,247,0.97);
+  backdrop-filter:blur(16px);
+  border-right:1px solid rgba(255,108,65,0.1);
+  height:100%;
+  overflow:hidden;
+}
+
+/* SEARCH HEAD */
+.panel-head{
+  padding:1.5rem 1.5rem 1rem;
+  border-bottom:1px solid rgba(255,108,65,0.08);
+  flex-shrink:0;
+}
+.panel-eyebrow{
+  font-size:9px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:0.75rem;
+  display:flex;align-items:center;gap:8px;
+}
+.panel-eyebrow::before{content:"";width:18px;height:1px;background:var(--orange);display:block}
+.panel-title{
+  font-family:"Cormorant Garamond",serif;
+  font-size:1.6rem;font-weight:300;line-height:1.1;
+  color:var(--text-dark);margin-bottom:1.1rem;
+}
+.panel-title em{font-style:italic;color:var(--coral)}
+
+/* SEARCH BOX */
+.search-wrap{position:relative;margin-bottom:0.75rem}
+.search-icon{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--text-light);pointer-events:none;
+}
+#searchInput{
+  width:100%;
+  padding:0.65rem 1rem 0.65rem 2.5rem;
+  border:1px solid rgba(255,108,65,0.18);
+  border-radius:2px;
+  font-family:"DM Sans",sans-serif;
+  font-size:13px;
+  color:var(--text-dark);
+  background:white;
+  outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+#searchInput:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,108,65,0.08)}
+#searchInput::placeholder{color:var(--text-light)}
+
+/* FILTERS */
+.filter-row{display:flex;gap:0.35rem;flex-wrap:wrap}
+.filter-pill{
+  background:none;border:1px solid rgba(92,45,30,0.18);
+  color:var(--text-mid);font-family:"DM Sans",sans-serif;
+  font-size:10px;font-weight:400;letter-spacing:0.07em;text-transform:uppercase;
+  padding:5px 11px;border-radius:20px;cursor:pointer;transition:all 0.18s;
+}
+.filter-pill:hover{border-color:var(--orange);color:var(--orange)}
+.filter-pill.active{background:var(--orange);border-color:var(--orange);color:white}
+
+/* NEIGHBOURHOOD ROW */
+.neigh-row{
+  display:flex;gap:0.3rem;flex-wrap:wrap;
+  padding:0.75rem 1.5rem;
+  border-bottom:1px solid rgba(255,108,65,0.06);
+  flex-shrink:0;
+}
+.neigh-pill{
+  background:none;border:1px solid rgba(92,45,30,0.12);
+  color:var(--text-light);font-family:"DM Sans",sans-serif;
+  font-size:10px;letter-spacing:0.06em;text-transform:uppercase;
+  padding:4px 10px;border-radius:20px;cursor:pointer;transition:all 0.18s;
+}
+.neigh-pill:hover{border-color:var(--orange);color:var(--text-mid)}
+.neigh-pill.active{background:var(--ember);border-color:var(--ember);color:var(--peach)}
+
+/* RESULTS META */
+.results-meta{
+  padding:0.6rem 1.5rem;
+  font-size:11px;color:var(--text-light);
+  letter-spacing:0.04em;
+  border-bottom:1px solid rgba(255,108,65,0.06);
+  flex-shrink:0;
+}
+.results-meta span{color:var(--orange);font-weight:500}
+
+/* CARDS SCROLL */
+.cards-scroll{
+  flex:1;overflow-y:auto;
+  padding:0.75rem 1rem 2rem;
+}
+.cards-scroll::-webkit-scrollbar{width:3px}
+.cards-scroll::-webkit-scrollbar-track{background:transparent}
+.cards-scroll::-webkit-scrollbar-thumb{background:rgba(255,108,65,0.2);border-radius:2px}
+
+/* CARD */
+.place-card{
+  background:white;
+  border:1px solid rgba(255,108,65,0.1);
+  border-radius:3px;
+  padding:1rem 1.1rem;
+  margin-bottom:0.5rem;
+  cursor:pointer;
+  transition:all 0.2s;
+  display:flex;
+  flex-direction:column;
+  gap:0.3rem;
+}
+.place-card:hover,.place-card.active{
+  border-color:var(--orange);
+  box-shadow:0 4px 16px rgba(255,108,65,0.1);
+  transform:translateX(2px);
+}
+.place-card.active{background:var(--blush)}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem}
+.card-type{
+  font-size:8px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--orange);
+}
+.owner-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--ember);flex-shrink:0;margin-top:4px;
+  title:"Women-owned";
+}
+.card-name{
+  font-family:"Cormorant Garamond",serif;
+  font-size:1.05rem;font-weight:400;line-height:1.2;
+  color:var(--text-dark);
+}
+.card-area{
+  font-size:10px;font-weight:300;color:var(--text-light);
+  display:flex;align-items:center;gap:4px;
+}
+.card-area::before{
+  content:"";width:4px;height:4px;border-radius:50%;
+  background:var(--orange);display:inline-block;opacity:0.5;
+}
+.card-desc{
+  font-size:11.5px;font-weight:300;line-height:1.6;
+  color:var(--text-mid);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* EMPTY STATE */
+.empty-state{
+  text-align:center;padding:3rem 1.5rem;
+}
+.empty-icon{font-size:2rem;margin-bottom:1rem;opacity:0.4}
+.empty-text{font-family:"Cormorant Garamond",serif;font-size:1.2rem;font-weight:300;font-style:italic;color:var(--text-light)}
+
+/* MAP HINT */
+.map-hint{
+  position:absolute;
+  bottom:1.5rem;right:1.5rem;
+  z-index:10;
+  background:rgba(255,250,247,0.95);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,108,65,0.15);
+  border-radius:3px;
+  padding:0.6rem 1rem;
+  font-size:11px;color:var(--text-mid);
+  letter-spacing:0.04em;
+  pointer-events:none;
+  box-shadow:0 4px 16px rgba(123,47,37,0.08);
+}
+
+/* POPUP */
+.leaflet-popup-content-wrapper{border-radius:3px!important;font-family:"DM Sans",sans-serif!important;box-shadow:0 8px 28px rgba(0,0,0,0.1)!important;border:1px solid rgba(255,108,65,0.15)!important}
+.leaflet-popup-content{margin:12px 14px!important}
+.popup-type{font-size:8px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--orange);margin-bottom:3px}
+.popup-name{font-family:"Cormorant Garamond",serif;font-size:1.05rem;font-weight:400;color:#1C0A06;margin-bottom:2px}
+.popup-area{font-size:10px;color:#B07060}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">PinD</a>
+  <ul class="nav-links">
+    <li><a href="explore.html">Explore</a></li>
+    <li><a href="form.html" class="nav-cta">PinIt</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <!-- FULL SCREEN MAP -->
+  <div id="map"></div>
+
+  <!-- OVERLAY PANEL -->
+  <div class="panel">
+
+    <div class="panel-head">
+      <div class="panel-eyebrow">Explore</div>
+      <h1 class="panel-title">Find a space that feels like <em>home.</em></h1>
+
+      <div class="search-wrap">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search by name…" oninput="applyFilters()">
+      </div>
+
+      <div class="filter-row">
+        <button class="filter-pill active" onclick="setCategory('all',this)">All</button>
+        <button class="filter-pill" onclick="setCategory('cafe',this)">Café & Food</button>
+        <button class="filter-pill" onclick="setCategory('studio',this)">Studios</button>
+        <button class="filter-pill" onclick="setCategory('retail',this)">Retail</button>
+        <button class="filter-pill" onclick="setCategory('wellness',this)">Wellness</button>
+        <button class="filter-pill" onclick="setCategory('workspace',this)">Workspaces</button>
+      </div>
+    </div>
+
+    <div class="neigh-row" id="neighRow">
+      <button class="neigh-pill active" onclick="setNeigh('all',this)">All areas</button>
+    </div>
+
+    <div class="results-meta" id="resultsMeta"></div>
+
+    <div class="cards-scroll" id="cardsScroll"></div>
+
+  </div>
+
+  <div class="map-hint">Click a pin to explore</div>
+
+</div>
+
+<script>
+const places=[
+  {id:1,name:"Bombay Perfumery",area:"Kala Ghoda",type:"cafe",lat:18.9281,lng:72.8312,desc:"A boutique fragrance studio where every scent tells a story. Owned and created entirely by women."},
+  {id:2,name:"The Yoga House",area:"Prabhadevi",type:"wellness",lat:19.0148,lng:72.8325,desc:"A sanctuary for mindful practice. A space where the door is always open."},
+  {id:3,name:"Araku Coffee",area:"Bandra",type:"cafe",lat:19.0596,lng:72.8295,desc:"Origin coffee from Araku Valley, brought to the city by a women-led cooperative."},
+  {id:4,name:"Nirmala's Kitchen",area:"Dharavi",type:"cafe",lat:19.0435,lng:72.8562,desc:"A home kitchen turned community table. Nirmala cooks what she grew up eating."},
+  {id:5,name:"Studio Kohl",area:"Worli",type:"studio",lat:19.0069,lng:72.8180,desc:"An art studio, darkroom, and gathering space for women who make things."},
+  {id:6,name:"The Ink Room",area:"Colaba",type:"workspace",lat:18.9067,lng:72.8147,desc:"A members writing room. Founded by two journalists who needed a room of their own."},
+  {id:7,name:"Saee's Flower Studio",area:"Juhu",type:"retail",lat:19.1075,lng:72.8263,desc:"Seasonal florals, grown with intention. No plastic, no waste, no shortcuts."},
+  {id:8,name:"Prana Wellness",area:"Andheri",type:"wellness",lat:19.1197,lng:72.8464,desc:"Integrative health clinic run entirely by women practitioners."},
+  {id:9,name:"The Reading Room",area:"Bandra",type:"workspace",lat:19.0540,lng:72.8280,desc:"A quiet membership library built for women who need a room to think in."},
+  {id:10,name:"Kala Studio",area:"Kala Ghoda",type:"studio",lat:18.9295,lng:72.8320,desc:"A ceramics and printmaking studio. Open classes, open doors."},
+  {id:11,name:"Mitti Café",area:"Colaba",type:"cafe",lat:18.9080,lng:72.8160,desc:"Community café run by women with disabilities. Every cup matters."},
+  {id:12,name:"Aarohini",area:"Andheri",type:"wellness",lat:19.1150,lng:72.8490,desc:"A women's mental health practice. Safe, affordable, and private."},
+];
+
+const typeColor={cafe:"#FF6C41",retail:"#7B2F25",studio:"#4A6B4A",wellness:"#B05878",workspace:"#4A6B8A"};
+
+let activeCategory="all";
+let activeNeigh="all";
+let activeCardId=null;
+let markers={};
+
+// MAP INIT
+const map=L.map("map",{center:[19.03,72.87],zoom:12,zoomControl:false,attributionControl:false});
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{attribution:"&copy; OpenStreetMap &copy; CARTO"}).addTo(map);
+L.control.zoom({position:"bottomright"}).addTo(map);
+
+// BUILD NEIGHBOURHOOD PILLS
+const neighs=[...new Set(places.map(p=>p.area))].sort();
+const neighRow=document.getElementById("neighRow");
+neighs.forEach(n=>{
+  const btn=document.createElement("button");
+  btn.className="neigh-pill";
+  btn.textContent=n;
+  btn.onclick=()=>setNeigh(n,btn);
+  neighRow.appendChild(btn);
+});
+
+function makeMarker(p){
+  const el=document.createElement("div");
+  el.style.cssText=`width:12px;height:12px;background:${typeColor[p.type]};border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);cursor:pointer;transition:transform 0.15s`;
+  const icon=L.divIcon({className:"",html:el.outerHTML,iconSize:[12,12],iconAnchor:[6,6]});
+  const mk=L.marker([p.lat,p.lng],{icon});
+  mk.bindPopup(`<div class="popup-type">${p.type}</div><div class="popup-name">${p.name}</div><div class="popup-area">${p.area}, Mumbai</div>`,{maxWidth:180,closeButton:false});
+  mk.on("click",()=>selectCard(p.id));
+  return mk;
+}
+
+// INIT MARKERS
+places.forEach(p=>{
+  markers[p.id]=makeMarker(p);
+  markers[p.id].addTo(map);
+});
+
+function setCategory(cat,btn){
+  activeCategory=cat;
+  document.querySelectorAll(".filter-pill").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  applyFilters();
+}
+
+function setNeigh(n,btn){
+  activeNeigh=n;
+  document.querySelectorAll(".neigh-pill").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  applyFilters();
+}
+
+function applyFilters(){
+  const q=document.getElementById("searchInput").value.toLowerCase().trim();
+  const filtered=places.filter(p=>{
+    const matchCat=activeCategory==="all"||p.type===activeCategory;
+    const matchNeigh=activeNeigh==="all"||p.area===activeNeigh;
+    const matchQ=!q||p.name.toLowerCase().includes(q)||p.area.toLowerCase().includes(q);
+    return matchCat&&matchNeigh&&matchQ;
+  });
+  renderCards(filtered);
+  renderMarkers(filtered);
+}
+
+function renderMarkers(filtered){
+  const ids=new Set(filtered.map(p=>p.id));
+  places.forEach(p=>{
+    const mk=markers[p.id];
+    if(ids.has(p.id)){
+      if(!map.hasLayer(mk))mk.addTo(map);
+    } else {
+      if(map.hasLayer(mk))map.removeLayer(mk);
+    }
+  });
+}
+
+function renderCards(filtered){
+  const meta=document.getElementById("resultsMeta");
+  meta.innerHTML=`<span>${filtered.length}</span> space${filtered.length!==1?"s":""} found`;
+
+  const scroll=document.getElementById("cardsScroll");
+  if(filtered.length===0){
+    scroll.innerHTML=`<div class="empty-state"><div class="empty-icon">📍</div><div class="empty-text">No spaces found.<br>Try a different search.</div></div>`;
+    return;
+  }
+  scroll.innerHTML=filtered.map(p=>`
+    <div class="place-card${activeCardId===p.id?" active":""}" id="card-${p.id}" onclick="selectCard(${p.id})">
+      <div class="card-top">
+        <div class="card-type">${p.type}</div>
+        <div class="owner-dot" title="Women-owned"></div>
+      </div>
+      <div class="card-name">${p.name}</div>
+      <div class="card-area">${p.area}, Mumbai</div>
+      <div class="card-desc">${p.desc}</div>
+    </div>
+  `).join("");
+}
+
+function selectCard(id){
+  activeCardId=id;
+  const p=places.find(x=>x.id===id);
+  if(!p)return;
+
+  // highlight card
+  document.querySelectorAll(".place-card").forEach(c=>c.classList.remove("active"));
+  const card=document.getElementById(`card-${id}`);
+  if(card){card.classList.add("active");card.scrollIntoView({behavior:"smooth",block:"nearest"});}
+
+  // fly map
+  map.flyTo([p.lat,p.lng],14,{duration:0.8});
+  markers[id].openPopup();
+}
+
+// INIT
+applyFilters();
+</script>
+</body>
+</html>
