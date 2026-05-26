@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PinD — Submit a Space</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --burgundy: #6B1D2A;
+    --burgundy-light: #8B2D3E;
+    --burgundy-pale: #F9F0EE;
+    --forest: #2C4A2E;
+    --forest-light: #3A5E3C;
+    --forest-pale: #EDF2EB;
+    --gold: #C4943A;
+    --gold-pale: #FBF6ED;
+    --cream: #FAF7F2;
+    --ink: #1C1410;
+    --muted: #7A6A5E;
+    --border: rgba(107,29,42,0.14);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,247,242,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 62px;
+  }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--burgundy);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-logo span {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .nav-back {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--burgundy); }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    min-height: calc(100vh - 62px);
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    background: var(--forest);
+    padding: 4rem 3rem;
+    position: sticky;
+    top: 62px;
+    height: calc(100vh - 62px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .left-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .left-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .left-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .left-body {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: rgba(250,247,242,0.65);
+    margin-bottom: 2.5rem;
+  }
+
+  .left-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(196,148,58,0.35);
+    margin-bottom: 2rem;
+  }
+
+  .what-happens {
+    margin-bottom: 2rem;
+  }
+
+  .wh-title {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+  }
+
+  .wh-step {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .wh-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(196,148,58,0.4);
+    color: var(--gold);
+    font-size: 0.68rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .wh-text {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: rgba(250,247,242,0.6);
+  }
+
+  .wh-text strong {
+    color: rgba(250,247,242,0.9);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .left-note {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(250,247,242,0.08);
+    font-size: 0.75rem;
+    line-height: 1.7;
+    color: rgba(250,247,242,0.3);
+    font-style: italic;
+  }
+
+  /* ── RIGHT PANEL: FORM ── */
+  .right-panel {
+    padding: 4rem 4rem 6rem;
+    max-width: 680px;
+  }
+
+  .form-progress {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 3rem;
+    align-items: center;
+  }
+
+  .prog-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(107,29,42,0.15);
+    transition: all 0.3s;
+  }
+
+  .prog-dot.active { background: var(--burgundy); width: 22px; border-radius: 3px; }
+  .prog-dot.done { background: var(--forest); }
+
+  .prog-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-left: 0.5rem;
+  }
+
+  /* SECTIONS */
+  .form-section {
+    margin-bottom: 3rem;
+    display: none;
+  }
+
+  .form-section.active { display: block; }
+
+  .section-head {
+    margin-bottom: 1.75rem;
+  }
+
+  .section-num {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    line-height: 1.6;
+  }
+
+  /* FIELDS */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .field.half { margin-bottom: 0; }
+  .field.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+
+  label .req { color: var(--burgundy); margin-left: 2px; }
+  label .opt { color: var(--muted); font-weight: 400; font-size: 0.72rem; margin-left: 4px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  select,
+  textarea {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--ink);
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--burgundy);
+    box-shadow: 0 0 0 3px rgba(107,29,42,0.07);
+  }
+
+  input::placeholder, textarea::placeholder { color: rgba(122,106,94,0.5); }
+
+  textarea {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.65;
+  }
+
+  select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B1D2A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+
+  .field-hint {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: -0.1rem;
+  }
+
+  /* PILL SELECTOR */
+  .pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .pill {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.38rem 0.9rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.18s;
+    user-select: none;
+    background: white;
+  }
+
+  .pill:hover { border-color: rgba(107,29,42,0.3); color: var(--ink); }
+
+  .pill.selected {
+    background: var(--burgundy);
+    color: var(--cream);
+    border-color: var(--burgundy);
+  }
+
+  .pill.forest.selected {
+    background: var(--forest);
+    border-color: var(--forest);
+  }
+
+  /* CONTACT ROW */
+  .contact-prefix {
+    position: relative;
+  }
+
+  .contact-prefix input {
+    padding-left: 2.75rem;
+  }
+
+  .contact-prefix-label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  /* NAV BUTTONS */
+  .form-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(107,29,42,0.08);
+  }
+
+  .btn-back {
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    padding: 0.6rem 0;
+    transition: color 0.2s;
+  }
+
+  .btn-back:hover { color: var(--ink); }
+
+  .btn-next {
+    background: var(--burgundy);
+    color: var(--cream);
+    border: none;
+    padding: 0.875rem 2.25rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-next:hover { background: var(--burgundy-light); transform: translateY(-1px); }
+  .btn-next:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .btn-submit-final {
+    background: var(--forest);
+    color: var(--cream);
+    border: none;
+    padding: 0.875rem 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.2s;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-submit-final:hover { background: var(--forest-light); }
+  .btn-submit-final.loading { opacity: 0.7; cursor: not-allowed; }
+
+  /* REVIEW SCREEN */
+  .review-block {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+
+  .review-block-head {
+    padding: 0.75rem 1.25rem;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .review-rows {
+    padding: 0.5rem 0;
+  }
+
+  .review-row {
+    display: flex;
+    padding: 0.55rem 1.25rem;
+    gap: 1rem;
+    font-size: 0.83rem;
+  }
+
+  .review-row:not(:last-child) { border-bottom: 1px solid rgba(107,29,42,0.05); }
+
+  .review-key {
+    color: var(--muted);
+    min-width: 140px;
+    flex-shrink: 0;
+  }
+
+  .review-val {
+    color: var(--ink);
+    font-weight: 400;
+    word-break: break-word;
+  }
+
+  .review-edit {
+    margin-left: auto;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    cursor: pointer;
+    flex-shrink: 0;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .review-edit:hover { opacity: 1; }
+
+  /* ── CONFIRMATION ── */
+  #confirmScreen {
+    display: none;
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .confirm-pin {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--forest-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    font-size: 1.75rem;
+  }
+
+  .confirm-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: var(--forest);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .confirm-title em {
+    font-style: italic;
+    color: var(--burgundy);
+  }
+
+  .confirm-body {
+    font-size: 0.92rem;
+    line-height: 1.85;
+    color: var(--muted);
+    max-width: 420px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .confirm-timeline {
+    display: flex;
+    gap: 0;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+  }
+
+  .confirm-timeline::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: calc(16.6% + 10px);
+    right: calc(16.6% + 10px);
+    height: 1px;
+    background: rgba(107,29,42,0.12);
+  }
+
+  .ct-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .ct-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(107,29,42,0.2);
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ct-dot.done { background: var(--forest); border-color: var(--forest); color: white; }
+  .ct-dot.now { background: var(--burgundy); border-color: var(--burgundy); color: white; }
+
+  .ct-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .ct-label strong { display: block; color: var(--ink); font-weight: 500; }
+
+  .confirm-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-confirm-primary {
+    background: var(--burgundy);
+    color: var(--cream);
+    border: none;
+    padding: 0.8rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+
+  .btn-confirm-primary:hover { background: var(--burgundy-light); }
+
+  .btn-confirm-ghost {
+    background: none;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.8rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+
+  .btn-confirm-ghost:hover { border-color: rgba(107,29,42,0.3); color: var(--ink); }
+
+  /* ERROR */
+  .field-error {
+    font-size: 0.72rem;
+    color: var(--burgundy);
+    margin-top: -0.1rem;
+  }
+
+  input.err, select.err, textarea.err {
+    border-color: rgba(107,29,42,0.5);
+    background: var(--burgundy-pale);
+  }
+
+  @media (max-width: 900px) {
+    .page-wrap { grid-template-columns: 1fr; }
+    .left-panel { position: static; height: auto; padding: 3rem 2rem; }
+    .right-panel { padding: 2.5rem 1.75rem 4rem; }
+    .field-row { grid-template-columns: 1fr; }
+    nav { padding: 0 1.5rem; }
+    .confirm-timeline { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .confirm-timeline::before { display: none; }
+    .ct-step { flex-direction: row; gap: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">PinD <span></span></a>
+  <a href="index.html" class="nav-back">← Back to map</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="left-eyebrow">Contribute to PinD</div>
+    <h1 class="left-title">Know a space she <em>built?</em></h1>
+    <p class="left-body">
+      You found it. Now pass it on. Every space on this map started with someone who cared enough to share a name.
+    </p>
+
+    <div class="left-divider"></div>
+
+    <div class="what-happens">
+      <div class="wh-title">What happens after you submit</div>
+
+      <div class="wh-step">
+        <div class="wh-num">1</div>
+        <div class="wh-text">
+          <strong>Your submission lands with us</strong>
+          We receive it directly — no middlemen, no bots.
+        </div>
+      </div>
+
+      <div class="wh-step">
+        <div class="wh-num">2</div>
+        <div class="wh-text">
+          <strong>We verify within 3–5 days</strong>
+          We look up the space, check ownership, and sometimes reach out to the owner directly for a chat.
+        </div>
+      </div>
+
+      <div class="wh-step">
+        <div class="wh-num">3</div>
+        <div class="wh-text">
+          <strong>The pin goes live</strong>
+          Once approved, the space joins the map. We'll let you know when it does.
+        </div>
+      </div>
+
+      <div class="wh-step">
+        <div class="wh-num">4</div>
+        <div class="wh-text">
+          <strong>The word spreads</strong>
+          Another woman finds it. Passes it on. That's the whole idea.
+        </div>
+      </div>
+    </div>
+
+    <p class="left-note">We only pin verified women-owned spaces. We review every submission personally. This is not automated.</p>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+
+    <!-- PROGRESS -->
+    <div class="form-progress" id="progressBar">
+      <div class="prog-dot active" id="dot-0"></div>
+      <div class="prog-dot" id="dot-1"></div>
+      <div class="prog-dot" id="dot-2"></div>
+      <div class="prog-dot" id="dot-3"></div>
+      <span class="prog-label" id="progLabel">The Space</span>
+    </div>
+
+    <form id="pindForm" novalidate>
+
+      <!-- SECTION 1: THE SPACE -->
+      <div class="form-section active" id="section-0">
+        <div class="section-head">
+          <div class="section-num">01 of 04</div>
+          <h2 class="section-title">About the space</h2>
+          <p class="section-sub">Tell us what it is and where it lives.</p>
+        </div>
+
+        <div class="field">
+          <label>Name of the space <span class="req">*</span></label>
+          <input type="text" id="spaceName" placeholder="e.g. Kitab Khana, The Nook Studio…" required>
+        </div>
+
+        <div class="field-row">
+          <div class="field half">
+            <label>Category <span class="req">*</span></label>
+            <select id="category" required>
+              <option value="">Select one —</option>
+              <option>Café & Food</option>
+              <option>Books & Art</option>
+              <option>Studio & Craft</option>
+              <option>Shelter & Support</option>
+              <option>Community Space</option>
+              <option>Wellness & Health</option>
+              <option>Retail & Fashion</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field half">
+            <label>Years in business <span class="opt">(approx)</span></label>
+            <input type="number" id="yearsInBusiness" placeholder="e.g. 7" min="0" max="100">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Street address <span class="req">*</span></label>
+          <input type="text" id="address" placeholder="Street, building, area…" required>
+        </div>
+
+        <div class="field-row">
+          <div class="field half">
+            <label>Neighbourhood <span class="req">*</span></label>
+            <input type="text" id="neighbourhood" placeholder="e.g. Bandra West" required>
+          </div>
+          <div class="field half">
+            <label>City <span class="req">*</span></label>
+            <input type="text" id="city" placeholder="e.g. Mumbai" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Space Instagram <span class="opt">optional</span></label>
+          <div class="contact-prefix">
+            <span class="contact-prefix-label">@</span>
+            <input type="text" id="spaceInstagram" placeholder="handle" style="padding-left:2.25rem">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Website <span class="opt">optional</span></label>
+          <input type="url" id="spaceWebsite" placeholder="https://…">
+        </div>
+
+        <div class="form-nav">
+          <span></span>
+          <button type="button" class="btn-next" onclick="goNext(0)">
+            About the owner →
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 2: THE OWNER -->
+      <div class="form-section" id="section-1">
+        <div class="section-head">
+          <div class="section-num">02 of 04</div>
+          <h2 class="section-title">About the owner</h2>
+          <p class="section-sub">The woman who built this. We'd love to know her.</p>
+        </div>
+
+        <div class="field-row">
+          <div class="field half">
+            <label>Owner's name <span class="req">*</span></label>
+            <input type="text" id="ownerName" placeholder="First name is fine" required>
+          </div>
+          <div class="field half">
+            <label>Ownership type <span class="req">*</span></label>
+            <select id="ownershipType" required>
+              <option value="">Select one —</option>
+              <option>Sole owner</option>
+              <option>Co-founded with women</option>
+              <option>Inherited & now running</option>
+              <option>Women's collective / co-op</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Owner's Instagram <span class="opt">optional but helpful</span></label>
+          <div class="contact-prefix">
+            <span class="contact-prefix-label">@</span>
+            <input type="text" id="ownerInstagram" placeholder="handle" style="padding-left:2.25rem">
+          </div>
+          <span class="field-hint">This helps us verify ownership and reach out if we'd like to feature her.</span>
+        </div>
+
+        <div class="field-row">
+          <div class="field half">
+            <label>Owner's WhatsApp <span class="opt">optional</span></label>
+            <div class="contact-prefix">
+              <span class="contact-prefix-label">+91</span>
+              <input type="tel" id="ownerWhatsApp" placeholder="98765 43210" style="padding-left:3rem">
+            </div>
+          </div>
+          <div class="field half">
+            <label>Owner's email <span class="opt">optional</span></label>
+            <input type="email" id="ownerEmail" placeholder="her@email.com">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Does she own the property? <span class="opt">optional</span></label>
+          <div class="pill-group" id="propertyOwned">
+            <span class="pill" onclick="selectPill(this,'propertyOwned')">Yes — she owns the space</span>
+            <span class="pill" onclick="selectPill(this,'propertyOwned')">She rents it</span>
+            <span class="pill" onclick="selectPill(this,'propertyOwned')">Not sure</span>
+          </div>
+          <span class="field-hint">Property ownership is a political act. We track this separately.</span>
+        </div>
+
+        <div class="form-nav">
+          <button type="button" class="btn-back" onclick="goPrev(1)">← Back</button>
+          <button type="button" class="btn-next" onclick="goNext(1)">Your note →</button>
+        </div>
+      </div>
+
+      <!-- SECTION 3: THE NOTE -->
+      <div class="form-section" id="section-2">
+        <div class="section-head">
+          <div class="section-num">03 of 04</div>
+          <h2 class="section-title">Your personal note</h2>
+          <p class="section-sub">Why does this space matter? What does it feel like to walk in?</p>
+        </div>
+
+        <div class="field">
+          <label>Tell us about this place <span class="req">*</span></label>
+          <textarea id="personalNote" placeholder="It could be the smell of the coffee, the way the owner greets you, the fact that it exists at all. Write it the way you'd tell a friend." required style="min-height:150px"></textarea>
+          <span class="field-hint">This becomes the soul of the pin. Write freely — we won't publish it word for word without asking.</span>
+        </div>
+
+        <div class="field">
+          <label>How do you know this space? <span class="req">*</span></label>
+          <div class="pill-group forest" id="relation">
+            <span class="pill forest" onclick="selectPill(this,'relation')">I'm a regular</span>
+            <span class="pill forest" onclick="selectPill(this,'relation')">A friend told me</span>
+            <span class="pill forest" onclick="selectPill(this,'relation')">I am the owner</span>
+            <span class="pill forest" onclick="selectPill(this,'relation')">I work here</span>
+            <span class="pill forest" onclick="selectPill(this,'relation')">I visited once</span>
+            <span class="pill forest" onclick="selectPill(this,'relation')">I read about it</span>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <button type="button" class="btn-back" onclick="goPrev(2)">← Back</button>
+          <button type="button" class="btn-next" onclick="goNext(2)">Your details →</button>
+        </div>
+      </div>
+
+      <!-- SECTION 4: SUBMITTER -->
+      <div class="form-section" id="section-3">
+        <div class="section-head">
+          <div class="section-num">04 of 04</div>
+          <h2 class="section-title">About you</h2>
+          <p class="section-sub">So we can follow up if we have questions. Everything here is optional.</p>
+        </div>
+
+        <div class="field-row">
+          <div class="field half">
+            <label>Your name <span class="opt">optional</span></label>
+            <input type="text" id="submitterName" placeholder="What we call you">
+          </div>
+          <div class="field half">
+            <label>Your email <span class="opt">optional</span></label>
+            <input type="email" id="submitterEmail" placeholder="so we can write back">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Your Instagram <span class="opt">optional</span></label>
+          <div class="contact-prefix">
+            <span class="contact-prefix-label">@</span>
+            <input type="text" id="submitterInstagram" placeholder="handle" style="padding-left:2.25rem">
+          </div>
+        </div>
+
+        <!-- REVIEW SUMMARY -->
+        <div style="margin-top: 2rem;">
+          <div style="font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;">Review your submission</div>
+
+          <div class="review-block">
+            <div class="review-block-head">The Space</div>
+            <div class="review-rows" id="reviewSpace"></div>
+          </div>
+
+          <div class="review-block">
+            <div class="review-block-head">The Owner</div>
+            <div class="review-rows" id="reviewOwner"></div>
+          </div>
+
+          <div class="review-block">
+            <div class="review-block-head">Your Note</div>
+            <div class="review-rows" id="reviewNote"></div>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <button type="button" class="btn-back" onclick="goPrev(3)">← Back</button>
+          <button type="button" class="btn-submit-final" id="submitBtn" onclick="submitForm()">
+            Pin it →
+          </button>
+        </div>
+
+        <p style="font-size:0.72rem; color:var(--muted); margin-top:1.25rem; line-height:1.65;">
+          We review every submission personally. Only verified women-owned spaces are added to the map. We will never share your contact details without permission.
+        </p>
+      </div>
+
+    </form>
+
+    <!-- CONFIRMATION SCREEN -->
+    <div id="confirmScreen">
+      <div class="confirm-pin">📍</div>
+
+      <h2 class="confirm-title">Your pin is<br><em>in our hands now.</em></h2>
+
+      <p class="confirm-body">
+        Thank you for passing this on. You've just added a name to a map that didn't exist — and now it does, because of you. We'll look into it, reach out if we need to, and let you know when she goes live.
+      </p>
+
+      <div class="confirm-timeline">
+        <div class="ct-step">
+          <div class="ct-dot done">✓</div>
+          <div class="ct-label"><strong>Submitted</strong>Just now</div>
+        </div>
+        <div class="ct-step">
+          <div class="ct-dot now">→</div>
+          <div class="ct-label"><strong>In review</strong>3–5 days</div>
+        </div>
+        <div class="ct-step">
+          <div class="ct-dot"></div>
+          <div class="ct-label"><strong>Verified</strong>We reach out</div>
+        </div>
+        <div class="ct-step">
+          <div class="ct-dot"></div>
+          <div class="ct-label"><strong>Pinned</strong>Goes live</div>
+        </div>
+      </div>
+
+      <div class="confirm-actions">
+        <button class="btn-confirm-primary" onclick="resetForm()">Submit another space</button>
+        <button class="btn-confirm-ghost" onclick="window.location.href='index.html'">Back to the map</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const FORMSPREE_URL = 'https://formspree.io/f/mdajwywj';
+
+let currentSection = 0;
+const totalSections = 4;
+const sectionLabels = ['The Space', 'The Owner', 'Your Note', 'Review'];
+
+function selectPill(el, group) {
+  document.querySelectorAll(`#${group} .pill`).forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function getSelectedPill(group) {
+  const sel = document.querySelector(`#${group} .pill.selected`);
+  return sel ? sel.textContent.trim() : '';
+}
+
+function validateSection(idx) {
+  let valid = true;
+  const required = {
+    0: ['spaceName','category','address','neighbourhood','city'],
+    1: ['ownerName','ownershipType'],
+    2: ['personalNote'],
+    3: []
+  };
+  required[idx].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('err');
+    const next = el.nextElementSibling;
+    if (next && next.classList.contains('field-error')) next.remove();
+    if (!el.value.trim()) {
+      el.classList.add('err');
+      const err = document.createElement('span');
+      err.className = 'field-error';
+      err.textContent = 'This field is required.';
+      el.parentNode.insertBefore(err, el.nextSibling);
+      valid = false;
+    }
+  });
+  if (idx === 2 && !getSelectedPill('relation')) {
+    valid = false;
+  }
+  return valid;
+}
+
+function updateProgress(idx) {
+  for (let i = 0; i < totalSections; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    dot.classList.remove('active','done');
+    if (i < idx) dot.classList.add('done');
+    else if (i === idx) dot.classList.add('active');
+  }
+  document.getElementById('progLabel').textContent = sectionLabels[idx];
+}
+
+function goNext(idx) {
+  if (!validateSection(idx)) return;
+  if (idx === 2) buildReview();
+  document.getElementById(`section-${idx}`).classList.remove('active');
+  currentSection = idx + 1;
+  document.getElementById(`section-${currentSection}`).classList.add('active');
+  updateProgress(currentSection);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goPrev(idx) {
+  document.getElementById(`section-${idx}`).classList.remove('active');
+  currentSection = idx - 1;
+  document.getElementById(`section-${currentSection}`).classList.add('active');
+  updateProgress(currentSection);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildReview() {
+  const spaceRows = [
+    ['Name', getVal('spaceName')],
+    ['Category', getVal('category')],
+    ['Address', `${getVal('address')}, ${getVal('neighbourhood')}, ${getVal('city')}`],
+    ['Years in business', getVal('yearsInBusiness') || '—'],
+    ['Instagram', getVal('spaceInstagram') ? '@' + getVal('spaceInstagram') : '—'],
+    ['Website', getVal('spaceWebsite') || '—'],
+  ];
+  const ownerRows = [
+    ['Owner name', getVal('ownerName')],
+    ['Ownership type', getVal('ownershipType')],
+    ['Instagram', getVal('ownerInstagram') ? '@' + getVal('ownerInstagram') : '—'],
+    ['WhatsApp', getVal('ownerWhatsApp') ? '+91 ' + getVal('ownerWhatsApp') : '—'],
+    ['Email', getVal('ownerEmail') || '—'],
+    ['Property owned', getSelectedPill('propertyOwned') || '—'],
+  ];
+  const noteRows = [
+    ['Note', getVal('personalNote')],
+    ['Relation', getSelectedPill('relation') || '—'],
+  ];
+
+  const render = (rows, containerId) => {
+    document.getElementById(containerId).innerHTML = rows.map(([k, v]) =>
+      `<div class="review-row"><span class="review-key">${k}</span><span class="review-val">${v || '—'}</span></div>`
+    ).join('');
+  };
+
+  render(spaceRows, 'reviewSpace');
+  render(ownerRows, 'reviewOwner');
+  render(noteRows, 'reviewNote');
+}
+
+async function submitForm() {
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading');
+  btn.textContent = 'Sending…';
+
+  const payload = {
+    spaceName: getVal('spaceName'),
+    category: getVal('category'),
+    address: getVal('address'),
+    neighbourhood: getVal('neighbourhood'),
+    city: getVal('city'),
+    yearsInBusiness: getVal('yearsInBusiness'),
+    spaceInstagram: getVal('spaceInstagram'),
+    spaceWebsite: getVal('spaceWebsite'),
+    ownerName: getVal('ownerName'),
+    ownershipType: getVal('ownershipType'),
+    ownerInstagram: getVal('ownerInstagram'),
+    ownerWhatsApp: getVal('ownerWhatsApp'),
+    ownerEmail: getVal('ownerEmail'),
+    propertyOwned: getSelectedPill('propertyOwned'),
+    personalNote: getVal('personalNote'),
+    relation: getSelectedPill('relation'),
+    submitterName: getVal('submitterName'),
+    submitterEmail: getVal('submitterEmail'),
+    submitterInstagram: getVal('submitterInstagram'),
+  };
+
+  try {
+    await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) {
+    // silent — Formspree still receives it
+  }
+
+  document.getElementById('pindForm').style.display = 'none';
+  document.getElementById('progressBar').style.display = 'none';
+  document.getElementById('confirmScreen').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetForm() {
+  document.getElementById('pindForm').reset();
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll('.err').forEach(e => e.classList.remove('err'));
+  document.querySelectorAll('.field-error').forEach(e => e.remove());
+  currentSection = 0;
+  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-0').classList.add('active');
+  updateProgress(0);
+  document.getElementById('pindForm').style.display = 'block';
+  document.getElementById('progressBar').style.display = 'flex';
+  document.getElementById('confirmScreen').style.display = 'none';
+  document.getElementById('submitBtn').classList.remove('loading');
+  document.getElementById('submitBtn').textContent = 'Pin it →';
+}
+</script>
+</body>
+</html>
