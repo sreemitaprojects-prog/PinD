@@ -3,1160 +3,431 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PinD — Submit a Space</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<title>PinD - Women-Owned Spaces</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-  :root {
-    --burgundy: #6B1D2A;
-    --burgundy-light: #8B2D3E;
-    --burgundy-pale: #F9F0EE;
-    --forest: #2C4A2E;
-    --forest-light: #3A5E3C;
-    --forest-pale: #EDF2EB;
-    --gold: #C4943A;
-    --gold-pale: #FBF6ED;
-    --cream: #FAF7F2;
-    --ink: #1C1410;
-    --muted: #7A6A5E;
-    --border: rgba(107,29,42,0.14);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    min-height: 100vh;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(250,247,242,0.96);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 3rem;
-    height: 62px;
-  }
-
-  .nav-logo {
-    font-family: 'DM Serif Display', serif;
-    font-style: italic;
-    font-size: 1.6rem;
-    color: var(--burgundy);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .nav-logo span {
-    display: inline-block;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--gold);
-    margin-bottom: 10px;
-  }
-
-  .nav-back {
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: color 0.2s;
-  }
-
-  .nav-back:hover { color: var(--burgundy); }
-
-  /* ── LAYOUT ── */
-  .page-wrap {
-    display: grid;
-    grid-template-columns: 380px 1fr;
-    min-height: calc(100vh - 62px);
-  }
-
-  /* ── LEFT PANEL ── */
-  .left-panel {
-    background: var(--forest);
-    padding: 4rem 3rem;
-    position: sticky;
-    top: 62px;
-    height: calc(100vh - 62px);
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .left-eyebrow {
-    font-size: 0.68rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-  }
-
-  .left-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2.4rem;
-    line-height: 1.15;
-    color: var(--cream);
-    margin-bottom: 1.5rem;
-  }
-
-  .left-title em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
-  .left-body {
-    font-size: 0.88rem;
-    line-height: 1.8;
-    color: rgba(250,247,242,0.65);
-    margin-bottom: 2.5rem;
-  }
-
-  .left-divider {
-    width: 40px;
-    height: 1px;
-    background: rgba(196,148,58,0.35);
-    margin-bottom: 2rem;
-  }
-
-  .what-happens {
-    margin-bottom: 2rem;
-  }
-
-  .wh-title {
-    font-size: 0.68rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.25rem;
-  }
-
-  .wh-step {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    align-items: flex-start;
-  }
-
-  .wh-num {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 1px solid rgba(196,148,58,0.4);
-    color: var(--gold);
-    font-size: 0.68rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .wh-text {
-    font-size: 0.82rem;
-    line-height: 1.65;
-    color: rgba(250,247,242,0.6);
-  }
-
-  .wh-text strong {
-    color: rgba(250,247,242,0.9);
-    font-weight: 500;
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  .left-note {
-    margin-top: auto;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(250,247,242,0.08);
-    font-size: 0.75rem;
-    line-height: 1.7;
-    color: rgba(250,247,242,0.3);
-    font-style: italic;
-  }
-
-  /* ── RIGHT PANEL: FORM ── */
-  .right-panel {
-    padding: 4rem 4rem 6rem;
-    max-width: 680px;
-  }
-
-  .form-progress {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 3rem;
-    align-items: center;
-  }
-
-  .prog-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: rgba(107,29,42,0.15);
-    transition: all 0.3s;
-  }
-
-  .prog-dot.active { background: var(--burgundy); width: 22px; border-radius: 3px; }
-  .prog-dot.done { background: var(--forest); }
-
-  .prog-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-left: 0.5rem;
-  }
-
-  /* SECTIONS */
-  .form-section {
-    margin-bottom: 3rem;
-    display: none;
-  }
-
-  .form-section.active { display: block; }
-
-  .section-head {
-    margin-bottom: 1.75rem;
-  }
-
-  .section-num {
-    font-size: 0.68rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.4rem;
-  }
-
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.5rem;
-    color: var(--ink);
-    line-height: 1.2;
-  }
-
-  .section-sub {
-    font-size: 0.82rem;
-    color: var(--muted);
-    margin-top: 0.4rem;
-    line-height: 1.6;
-  }
-
-  /* FIELDS */
-  .field-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .field.half { margin-bottom: 0; }
-  .field.full { grid-column: 1 / -1; }
-
-  label {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--ink);
-    letter-spacing: 0.01em;
-  }
-
-  label .req { color: var(--burgundy); margin-left: 2px; }
-  label .opt { color: var(--muted); font-weight: 400; font-size: 0.72rem; margin-left: 4px; }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="number"],
-  select,
-  textarea {
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 0.75rem 1rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    color: var(--ink);
-    background: white;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    width: 100%;
-    outline: none;
-    -webkit-appearance: none;
-  }
-
-  input:focus, select:focus, textarea:focus {
-    border-color: var(--burgundy);
-    box-shadow: 0 0 0 3px rgba(107,29,42,0.07);
-  }
-
-  input::placeholder, textarea::placeholder { color: rgba(122,106,94,0.5); }
-
-  textarea {
-    resize: vertical;
-    min-height: 110px;
-    line-height: 1.65;
-  }
-
-  select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B1D2A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
-
-  .field-hint {
-    font-size: 0.72rem;
-    color: var(--muted);
-    line-height: 1.5;
-    margin-top: -0.1rem;
-  }
-
-  /* PILL SELECTOR */
-  .pill-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .pill {
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 0.38rem 0.9rem;
-    font-size: 0.8rem;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.18s;
-    user-select: none;
-    background: white;
-  }
-
-  .pill:hover { border-color: rgba(107,29,42,0.3); color: var(--ink); }
-
-  .pill.selected {
-    background: var(--burgundy);
-    color: var(--cream);
-    border-color: var(--burgundy);
-  }
-
-  .pill.forest.selected {
-    background: var(--forest);
-    border-color: var(--forest);
-  }
-
-  /* CONTACT ROW */
-  .contact-prefix {
-    position: relative;
-  }
-
-  .contact-prefix input {
-    padding-left: 2.75rem;
-  }
-
-  .contact-prefix-label {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.82rem;
-    color: var(--muted);
-  }
-
-  /* NAV BUTTONS */
-  .form-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(107,29,42,0.08);
-  }
-
-  .btn-back {
-    background: none;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    color: var(--muted);
-    cursor: pointer;
-    letter-spacing: 0.04em;
-    padding: 0.6rem 0;
-    transition: color 0.2s;
-  }
-
-  .btn-back:hover { color: var(--ink); }
-
-  .btn-next {
-    background: var(--burgundy);
-    color: var(--cream);
-    border: none;
-    padding: 0.875rem 2.25rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: background 0.2s, transform 0.15s;
-    letter-spacing: 0.02em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .btn-next:hover { background: var(--burgundy-light); transform: translateY(-1px); }
-  .btn-next:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-  .btn-submit-final {
-    background: var(--forest);
-    color: var(--cream);
-    border: none;
-    padding: 0.875rem 2.5rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: background 0.2s;
-    letter-spacing: 0.02em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .btn-submit-final:hover { background: var(--forest-light); }
-  .btn-submit-final.loading { opacity: 0.7; cursor: not-allowed; }
-
-  /* REVIEW SCREEN */
-  .review-block {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 1.25rem;
-  }
-
-  .review-block-head {
-    padding: 0.75rem 1.25rem;
-    background: var(--cream);
-    border-bottom: 1px solid var(--border);
-    font-size: 0.68rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 500;
-  }
-
-  .review-rows {
-    padding: 0.5rem 0;
-  }
-
-  .review-row {
-    display: flex;
-    padding: 0.55rem 1.25rem;
-    gap: 1rem;
-    font-size: 0.83rem;
-  }
-
-  .review-row:not(:last-child) { border-bottom: 1px solid rgba(107,29,42,0.05); }
-
-  .review-key {
-    color: var(--muted);
-    min-width: 140px;
-    flex-shrink: 0;
-  }
-
-  .review-val {
-    color: var(--ink);
-    font-weight: 400;
-    word-break: break-word;
-  }
-
-  .review-edit {
-    margin-left: auto;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--burgundy);
-    cursor: pointer;
-    flex-shrink: 0;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-  }
-
-  .review-edit:hover { opacity: 1; }
-
-  /* ── CONFIRMATION ── */
-  #confirmScreen {
-    display: none;
-    text-align: center;
-    padding: 4rem 2rem;
-  }
-
-  .confirm-pin {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: var(--forest-pale);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 2rem;
-    font-size: 1.75rem;
-  }
-
-  .confirm-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2.2rem;
-    color: var(--forest);
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-
-  .confirm-title em {
-    font-style: italic;
-    color: var(--burgundy);
-  }
-
-  .confirm-body {
-    font-size: 0.92rem;
-    line-height: 1.85;
-    color: var(--muted);
-    max-width: 420px;
-    margin: 0 auto 2.5rem;
-  }
-
-  .confirm-timeline {
-    display: flex;
-    gap: 0;
-    max-width: 480px;
-    margin: 0 auto 2.5rem;
-    position: relative;
-  }
-
-  .confirm-timeline::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: calc(16.6% + 10px);
-    right: calc(16.6% + 10px);
-    height: 1px;
-    background: rgba(107,29,42,0.12);
-  }
-
-  .ct-step {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  .ct-dot {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(107,29,42,0.2);
-    background: var(--cream);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.6rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .ct-dot.done { background: var(--forest); border-color: var(--forest); color: white; }
-  .ct-dot.now { background: var(--burgundy); border-color: var(--burgundy); color: white; }
-
-  .ct-label {
-    font-size: 0.7rem;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1.4;
-  }
-
-  .ct-label strong { display: block; color: var(--ink); font-weight: 500; }
-
-  .confirm-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .btn-confirm-primary {
-    background: var(--burgundy);
-    color: var(--cream);
-    border: none;
-    padding: 0.8rem 2rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: background 0.2s;
-  }
-
-  .btn-confirm-primary:hover { background: var(--burgundy-light); }
-
-  .btn-confirm-ghost {
-    background: none;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 0.8rem 2rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: all 0.2s;
-  }
-
-  .btn-confirm-ghost:hover { border-color: rgba(107,29,42,0.3); color: var(--ink); }
-
-  /* ERROR */
-  .field-error {
-    font-size: 0.72rem;
-    color: var(--burgundy);
-    margin-top: -0.1rem;
-  }
-
-  input.err, select.err, textarea.err {
-    border-color: rgba(107,29,42,0.5);
-    background: var(--burgundy-pale);
-  }
-
-  @media (max-width: 900px) {
-    .page-wrap { grid-template-columns: 1fr; }
-    .left-panel { position: static; height: auto; padding: 3rem 2rem; }
-    .right-panel { padding: 2.5rem 1.75rem 4rem; }
-    .field-row { grid-template-columns: 1fr; }
-    nav { padding: 0 1.5rem; }
-    .confirm-timeline { flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .confirm-timeline::before { display: none; }
-    .ct-step { flex-direction: row; gap: 0.75rem; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#FF6C41;
+  --coral:#FF3C2D;
+  --ember:#7B2F25;
+  --peach:#FFCDB8;
+  --blush:#FFF0EC;
+  --cream:#FFFAF7;
+  --text-dark:#1C0A06;
+  --text-mid:#5C2D1E;
+  --text-light:#B07060;
+}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:70px;
+  background:rgba(255,250,247,0.93);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,108,65,0.1);
+  transition:box-shadow 0.3s;
+}
+nav.scrolled{box-shadow:0 2px 24px rgba(123,47,37,0.07)}
+.nav-logo{font-family:"Cormorant Garamond",serif;font-size:1.6rem;font-weight:400;color:var(--orange);text-decoration:none;letter-spacing:0.02em}
+.nav-links{display:flex;align-items:center;gap:1.25rem;list-style:none}
+.nav-links a{text-decoration:none;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);transition:color 0.2s}
+.nav-links a:hover{color:var(--orange)}
+.nav-cta{background:var(--orange)!important;color:white!important;padding:9px 22px;border-radius:2px;transition:background 0.2s!important}
+.nav-cta:hover{background:var(--ember)!important;color:white!important}
+
+.hero{min-height:100vh;padding-top:70px;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 5rem;z-index:2}
+.hero-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);margin-bottom:2rem;display:flex;align-items:center;gap:12px}
+.hero-eyebrow::before{content:"";width:28px;height:1px;background:var(--orange);display:block}
+.hero-headline{font-family:"Cormorant Garamond",serif;font-size:clamp(3rem,4.5vw,5.2rem);font-weight:300;line-height:1.07;color:var(--text-dark);margin-bottom:2rem}
+.hero-headline em{font-style:italic;color:var(--coral)}
+.hero-sub{font-size:15px;font-weight:300;line-height:1.85;color:var(--text-mid);max-width:420px;margin-bottom:3rem}
+.hero-actions{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.btn-primary{background:var(--orange);color:white;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;padding:14px 30px;border-radius:2px;transition:background 0.2s,transform 0.15s;display:inline-block}
+.btn-primary:hover{background:var(--ember);transform:translateY(-1px)}
+.btn-ghost{color:var(--text-mid);text-decoration:none;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;border-bottom:1px solid var(--text-light);padding-bottom:2px;transition:color 0.2s,border-color 0.2s}
+.btn-ghost:hover{color:var(--orange);border-color:var(--orange)}
+.hero-right{position:relative;overflow:hidden;background:var(--blush)}
+#hero-map{position:absolute;inset:0}
+.map-fade-left{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,var(--cream) 0%,rgba(255,250,247,0.3) 40%,transparent 65%)}
+.map-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:100px;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--cream),transparent)}
+
+.stats-strip{background:var(--ember);padding:1.5rem 5rem;display:flex;align-items:center;gap:3.5rem}
+.stat-item{display:flex;flex-direction:column;gap:5px}
+.stat-num{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:400;color:var(--peach);line-height:1}
+.stat-label{font-size:10px;font-weight:300;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,205,184,0.55)}
+.stat-div{width:1px;height:36px;background:rgba(255,205,184,0.18)}
+
+/* MARQUEE */
+.marquee-strip{
+  background:var(--blush);
+  border-top:1px solid rgba(255,108,65,0.1);
+  border-bottom:1px solid rgba(255,108,65,0.1);
+  overflow:hidden;
+  padding:1.6rem 0;
+  white-space:nowrap;
+  position:relative;
+}
+.marquee-strip::before,.marquee-strip::after{
+  content:"";position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
+}
+.marquee-strip::before{left:0;background:linear-gradient(to right,var(--blush),transparent)}
+.marquee-strip::after{right:0;background:linear-gradient(to left,var(--blush),transparent)}
+.marquee-track{
+  display:inline-flex;
+  animation:marqueeScroll 18s linear infinite;
+  will-change:transform;
+}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes marqueeScroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.marquee-item{
+  display:inline-flex;align-items:center;gap:2rem;
+  padding:0 2.5rem;
+}
+.marquee-word{
+  font-family:"Cormorant Garamond",serif;
+  font-size:1.35rem;
+  font-style:italic;
+  font-weight:300;
+  color:var(--text-mid);
+  letter-spacing:0.04em;
+}
+.marquee-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--orange);flex-shrink:0;
+}
+
+.manifesto{padding:8rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center;background:var(--cream);position:relative}
+.section-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);margin-bottom:1.75rem;display:flex;align-items:center;gap:12px}
+.section-eyebrow::before{content:"";width:28px;height:1px;background:var(--orange);display:block}
+.manifesto-headline{font-family:"Cormorant Garamond",serif;font-size:clamp(1.9rem,3vw,3rem);font-weight:300;line-height:1.2;color:var(--text-dark);margin-bottom:2rem}
+.manifesto-headline em{font-style:italic;color:var(--coral)}
+.manifesto-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--text-mid)}
+.manifesto-body p+p{margin-top:1.25rem}
+.pull-quote{font-family:"Cormorant Garamond",serif;font-size:clamp(1.5rem,2.2vw,2.2rem);font-weight:300;font-style:italic;line-height:1.45;color:var(--coral);border-left:2px solid var(--orange);padding-left:2rem;margin-bottom:3rem;border-radius:0}
+.value-list{display:flex;flex-direction:column;gap:1.25rem}
+.value-item{display:flex;align-items:flex-start;gap:1rem}
+.value-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);margin-top:8px;flex-shrink:0}
+.value-text{font-size:14px;font-weight:300;line-height:1.7;color:var(--text-mid)}
+
+.map-section{padding:5rem 5rem 0;background:var(--blush)}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem}
+.section-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,3vw,3rem);font-weight:300;line-height:1.1;color:var(--text-dark)}
+.section-title em{font-style:italic;color:var(--coral)}
+.filter-bar{display:flex;gap:0.4rem;flex-wrap:wrap}
+.filter-btn{background:none;border:1px solid rgba(92,45,30,0.2);color:var(--text-mid);font-family:"DM Sans",sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;padding:7px 15px;border-radius:2px;cursor:pointer;transition:all 0.2s}
+.filter-btn:hover,.filter-btn.active{background:var(--orange);border-color:var(--orange);color:white}
+.map-container{position:relative;height:540px;border-radius:4px 4px 0 0;overflow:hidden;box-shadow:0 -6px 30px rgba(123,47,37,0.06)}
+#main-map{height:100%;width:100%}
+
+.places-preview{padding:4rem 5rem 6rem;background:var(--blush)}
+.places-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+.place-card{background:var(--cream);border:1px solid rgba(255,108,65,0.12);border-radius:4px;padding:1.75rem;cursor:pointer;transition:all 0.25s;text-decoration:none;color:inherit;display:block}
+.place-card:hover{border-color:var(--orange);transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,108,65,0.1)}
+.place-type{font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--orange);margin-bottom:0.75rem}
+.place-name{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:400;color:var(--text-dark);margin-bottom:0.5rem;line-height:1.2}
+.place-area{font-size:11px;font-weight:300;color:var(--text-light);margin-bottom:1rem;display:flex;align-items:center;gap:5px}
+.place-area::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--orange);display:inline-block;opacity:0.6}
+.place-desc{font-size:13px;font-weight:300;line-height:1.7;color:var(--text-mid)}
+.place-footer{margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,108,65,0.08);display:flex;align-items:center;justify-content:space-between}
+.owner-badge{font-size:9px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);background:rgba(123,47,37,0.07);padding:4px 10px;border-radius:2px}
+.see-all{margin-top:3rem;text-align:center}
+
+.power-section{background:var(--ember);padding:7rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.power-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--peach);opacity:0.7;margin-bottom:1.75rem;display:flex;align-items:center;gap:12px}
+.power-eyebrow::before{content:"";width:28px;height:1px;background:var(--peach);display:block;opacity:0.7}
+.power-headline{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,3.5vw,3.5rem);font-weight:300;color:var(--peach);line-height:1.15;margin-bottom:2rem}
+.power-headline em{font-style:italic;color:white}
+.power-body{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,205,184,0.7);margin-bottom:2.5rem}
+.power-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.power-stat{background:rgba(255,205,184,0.07);border:1px solid rgba(255,205,184,0.12);border-radius:4px;padding:1.5rem}
+.power-stat-num{font-family:"Cormorant Garamond",serif;font-size:2.2rem;font-weight:300;color:white;line-height:1;margin-bottom:6px}
+.power-stat-label{font-size:11px;font-weight:300;color:rgba(255,205,184,0.55);letter-spacing:0.05em}
+
+.doc-banner{background:var(--blush);padding:5rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;border-top:1px solid rgba(255,108,65,0.1)}
+.doc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,108,65,0.1);border:1px solid rgba(255,108,65,0.25);color:var(--orange);font-size:9px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;border-radius:2px;margin-bottom:1.5rem}
+.doc-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.doc-title{font-family:"Cormorant Garamond",serif;font-size:clamp(1.8rem,3vw,3rem);font-weight:300;color:var(--text-dark);line-height:1.15;margin-bottom:1rem}
+.doc-title em{font-style:italic;color:var(--coral)}
+.doc-sub{font-size:14px;font-weight:300;color:var(--text-mid);line-height:1.75;max-width:480px}
+.yt-btn{display:flex;align-items:center;gap:10px;background:var(--orange);color:white;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;padding:14px 28px;border-radius:2px;transition:background 0.2s;white-space:nowrap}
+.yt-btn:hover{background:var(--ember)}
+
+footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.footer-wordmark{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:300;color:rgba(255,205,184,0.4);text-decoration:none}
+.footer-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.footer-links a{text-decoration:none;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,205,184,0.4);transition:color 0.2s;display:flex;align-items:center;gap:7px}
+.footer-links a:hover{color:var(--peach)}
+.footer-copy{font-size:11px;color:rgba(255,205,184,0.25)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp 0.8s ease forwards}
+.fd1{animation-delay:0.1s}.fd2{animation-delay:0.28s}.fd3{animation-delay:0.44s}.fd4{animation-delay:0.6s}
+
+.leaflet-popup-content-wrapper{border-radius:4px!important;font-family:"DM Sans",sans-serif!important;box-shadow:0 8px 28px rgba(0,0,0,0.1)!important}
+.leaflet-popup-content{margin:14px 16px!important}
+.popup-type{font-size:9px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#FF6C41;margin-bottom:4px}
+.popup-name{font-family:"Cormorant Garamond",serif;font-size:1.15rem;font-weight:400;color:#1C0A06;margin-bottom:3px}
+.popup-area{font-size:11px;color:#B07060;margin-bottom:8px}
+.popup-link{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#FF6C41;text-decoration:none;border-bottom:1px solid #FF6C41;padding-bottom:1px}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">PinD <span></span></a>
-  <a href="index.html" class="nav-back">← Back to map</a>
+<nav id="navbar">
+  <a class="nav-logo" href="index.html">PinD</a>
+  <ul class="nav-links">
+    <li><a href="explore.html">Explore</a></li>
+    <li><a href="form.html" class="nav-cta">PinIt</a></li>
+  </ul>
 </nav>
 
-<div class="page-wrap">
-
-  <!-- LEFT PANEL -->
-  <div class="left-panel">
-    <div class="left-eyebrow">Contribute to PinD</div>
-    <h1 class="left-title">Know a space she <em>built?</em></h1>
-    <p class="left-body">
-      You found it. Now pass it on. Every space on this map started with someone who cared enough to share a name.
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow fade-up fd1">Women-Owned Spaces</div>
+    <h1 class="hero-headline fade-up fd2">
+      A map of places<br>that feel like<br><em>home.</em>
+    </h1>
+    <p class="hero-sub fade-up fd3">
+      Not a directory. A love letter to the women who built something anyway, and the spaces they made that feel different because of it.
     </p>
-
-    <div class="left-divider"></div>
-
-    <div class="what-happens">
-      <div class="wh-title">What happens after you submit</div>
-
-      <div class="wh-step">
-        <div class="wh-num">1</div>
-        <div class="wh-text">
-          <strong>Your submission lands with us</strong>
-          We receive it directly — no middlemen, no bots.
-        </div>
-      </div>
-
-      <div class="wh-step">
-        <div class="wh-num">2</div>
-        <div class="wh-text">
-          <strong>We verify within 3–5 days</strong>
-          We look up the space, check ownership, and sometimes reach out to the owner directly for a chat.
-        </div>
-      </div>
-
-      <div class="wh-step">
-        <div class="wh-num">3</div>
-        <div class="wh-text">
-          <strong>The pin goes live</strong>
-          Once approved, the space joins the map. We'll let you know when it does.
-        </div>
-      </div>
-
-      <div class="wh-step">
-        <div class="wh-num">4</div>
-        <div class="wh-text">
-          <strong>The word spreads</strong>
-          Another woman finds it. Passes it on. That's the whole idea.
-        </div>
-      </div>
+    <div class="hero-actions fade-up fd4">
+      <a href="#map" class="btn-primary">Explore the Map</a>
+      <a href="explore.html" class="btn-ghost">Browse All Spaces</a>
     </div>
-
-    <p class="left-note">We only pin verified women-owned spaces. We review every submission personally. This is not automated.</p>
   </div>
+  <div class="hero-right">
+    <div id="hero-map" style="position:absolute;inset:0"></div>
+    <div class="map-fade-left"></div>
+    <div class="map-fade-bottom"></div>
+  </div>
+</section>
 
-  <!-- RIGHT PANEL -->
-  <div class="right-panel">
+<div class="stats-strip">
+  <div class="stat-item"><span class="stat-num">24</span><span class="stat-label">Places that have been PinD</span></div>
+  <div class="stat-div"></div>
+  <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">Neighbourhoods</span></div>
+  <div class="stat-div"></div>
+  <div class="stat-item"><span class="stat-num">6</span><span class="stat-label">Categories</span></div>
+  <div class="stat-div"></div>
+  <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Women-Owned</span></div>
+  <div class="stat-div"></div>
+  <div class="stat-item"><span class="stat-num">Mumbai First</span><span class="stat-label">Growing</span></div>
+</div>
 
-    <!-- PROGRESS -->
-    <div class="form-progress" id="progressBar">
-      <div class="prog-dot active" id="dot-0"></div>
-      <div class="prog-dot" id="dot-1"></div>
-      <div class="prog-dot" id="dot-2"></div>
-      <div class="prog-dot" id="dot-3"></div>
-      <span class="prog-label" id="progLabel">The Space</span>
-    </div>
-
-    <form id="pindForm" novalidate>
-
-      <!-- SECTION 1: THE SPACE -->
-      <div class="form-section active" id="section-0">
-        <div class="section-head">
-          <div class="section-num">01 of 04</div>
-          <h2 class="section-title">About the space</h2>
-          <p class="section-sub">Tell us what it is and where it lives.</p>
-        </div>
-
-        <div class="field">
-          <label>Name of the space <span class="req">*</span></label>
-          <input type="text" id="spaceName" placeholder="e.g. Kitab Khana, The Nook Studio…" required>
-        </div>
-
-        <div class="field-row">
-          <div class="field half">
-            <label>Category <span class="req">*</span></label>
-            <select id="category" required>
-              <option value="">Select one —</option>
-              <option>Café & Food</option>
-              <option>Books & Art</option>
-              <option>Studio & Craft</option>
-              <option>Shelter & Support</option>
-              <option>Community Space</option>
-              <option>Wellness & Health</option>
-              <option>Retail & Fashion</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field half">
-            <label>Years in business <span class="opt">(approx)</span></label>
-            <input type="number" id="yearsInBusiness" placeholder="e.g. 7" min="0" max="100">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Street address <span class="req">*</span></label>
-          <input type="text" id="address" placeholder="Street, building, area…" required>
-        </div>
-
-        <div class="field-row">
-          <div class="field half">
-            <label>Neighbourhood <span class="req">*</span></label>
-            <input type="text" id="neighbourhood" placeholder="e.g. Bandra West" required>
-          </div>
-          <div class="field half">
-            <label>City <span class="req">*</span></label>
-            <input type="text" id="city" placeholder="e.g. Mumbai" required>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Space Instagram <span class="opt">optional</span></label>
-          <div class="contact-prefix">
-            <span class="contact-prefix-label">@</span>
-            <input type="text" id="spaceInstagram" placeholder="handle" style="padding-left:2.25rem">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Website <span class="opt">optional</span></label>
-          <input type="url" id="spaceWebsite" placeholder="https://…">
-        </div>
-
-        <div class="form-nav">
-          <span></span>
-          <button type="button" class="btn-next" onclick="goNext(0)">
-            About the owner →
-          </button>
-        </div>
-      </div>
-
-      <!-- SECTION 2: THE OWNER -->
-      <div class="form-section" id="section-1">
-        <div class="section-head">
-          <div class="section-num">02 of 04</div>
-          <h2 class="section-title">About the owner</h2>
-          <p class="section-sub">The woman who built this. We'd love to know her.</p>
-        </div>
-
-        <div class="field-row">
-          <div class="field half">
-            <label>Owner's name <span class="req">*</span></label>
-            <input type="text" id="ownerName" placeholder="First name is fine" required>
-          </div>
-          <div class="field half">
-            <label>Ownership type <span class="req">*</span></label>
-            <select id="ownershipType" required>
-              <option value="">Select one —</option>
-              <option>Sole owner</option>
-              <option>Co-founded with women</option>
-              <option>Inherited & now running</option>
-              <option>Women's collective / co-op</option>
-              <option>Not sure</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Owner's Instagram <span class="opt">optional but helpful</span></label>
-          <div class="contact-prefix">
-            <span class="contact-prefix-label">@</span>
-            <input type="text" id="ownerInstagram" placeholder="handle" style="padding-left:2.25rem">
-          </div>
-          <span class="field-hint">This helps us verify ownership and reach out if we'd like to feature her.</span>
-        </div>
-
-        <div class="field-row">
-          <div class="field half">
-            <label>Owner's WhatsApp <span class="opt">optional</span></label>
-            <div class="contact-prefix">
-              <span class="contact-prefix-label">+91</span>
-              <input type="tel" id="ownerWhatsApp" placeholder="98765 43210" style="padding-left:3rem">
-            </div>
-          </div>
-          <div class="field half">
-            <label>Owner's email <span class="opt">optional</span></label>
-            <input type="email" id="ownerEmail" placeholder="her@email.com">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Does she own the property? <span class="opt">optional</span></label>
-          <div class="pill-group" id="propertyOwned">
-            <span class="pill" onclick="selectPill(this,'propertyOwned')">Yes — she owns the space</span>
-            <span class="pill" onclick="selectPill(this,'propertyOwned')">She rents it</span>
-            <span class="pill" onclick="selectPill(this,'propertyOwned')">Not sure</span>
-          </div>
-          <span class="field-hint">Property ownership is a political act. We track this separately.</span>
-        </div>
-
-        <div class="form-nav">
-          <button type="button" class="btn-back" onclick="goPrev(1)">← Back</button>
-          <button type="button" class="btn-next" onclick="goNext(1)">Your note →</button>
-        </div>
-      </div>
-
-      <!-- SECTION 3: THE NOTE -->
-      <div class="form-section" id="section-2">
-        <div class="section-head">
-          <div class="section-num">03 of 04</div>
-          <h2 class="section-title">Your personal note</h2>
-          <p class="section-sub">Why does this space matter? What does it feel like to walk in?</p>
-        </div>
-
-        <div class="field">
-          <label>Tell us about this place <span class="req">*</span></label>
-          <textarea id="personalNote" placeholder="It could be the smell of the coffee, the way the owner greets you, the fact that it exists at all. Write it the way you'd tell a friend." required style="min-height:150px"></textarea>
-          <span class="field-hint">This becomes the soul of the pin. Write freely — we won't publish it word for word without asking.</span>
-        </div>
-
-        <div class="field">
-          <label>How do you know this space? <span class="req">*</span></label>
-          <div class="pill-group forest" id="relation">
-            <span class="pill forest" onclick="selectPill(this,'relation')">I'm a regular</span>
-            <span class="pill forest" onclick="selectPill(this,'relation')">A friend told me</span>
-            <span class="pill forest" onclick="selectPill(this,'relation')">I am the owner</span>
-            <span class="pill forest" onclick="selectPill(this,'relation')">I work here</span>
-            <span class="pill forest" onclick="selectPill(this,'relation')">I visited once</span>
-            <span class="pill forest" onclick="selectPill(this,'relation')">I read about it</span>
-          </div>
-        </div>
-
-        <div class="form-nav">
-          <button type="button" class="btn-back" onclick="goPrev(2)">← Back</button>
-          <button type="button" class="btn-next" onclick="goNext(2)">Your details →</button>
-        </div>
-      </div>
-
-      <!-- SECTION 4: SUBMITTER -->
-      <div class="form-section" id="section-3">
-        <div class="section-head">
-          <div class="section-num">04 of 04</div>
-          <h2 class="section-title">About you</h2>
-          <p class="section-sub">So we can follow up if we have questions. Everything here is optional.</p>
-        </div>
-
-        <div class="field-row">
-          <div class="field half">
-            <label>Your name <span class="opt">optional</span></label>
-            <input type="text" id="submitterName" placeholder="What we call you">
-          </div>
-          <div class="field half">
-            <label>Your email <span class="opt">optional</span></label>
-            <input type="email" id="submitterEmail" placeholder="so we can write back">
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Your Instagram <span class="opt">optional</span></label>
-          <div class="contact-prefix">
-            <span class="contact-prefix-label">@</span>
-            <input type="text" id="submitterInstagram" placeholder="handle" style="padding-left:2.25rem">
-          </div>
-        </div>
-
-        <!-- REVIEW SUMMARY -->
-        <div style="margin-top: 2rem;">
-          <div style="font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem;">Review your submission</div>
-
-          <div class="review-block">
-            <div class="review-block-head">The Space</div>
-            <div class="review-rows" id="reviewSpace"></div>
-          </div>
-
-          <div class="review-block">
-            <div class="review-block-head">The Owner</div>
-            <div class="review-rows" id="reviewOwner"></div>
-          </div>
-
-          <div class="review-block">
-            <div class="review-block-head">Your Note</div>
-            <div class="review-rows" id="reviewNote"></div>
-          </div>
-        </div>
-
-        <div class="form-nav">
-          <button type="button" class="btn-back" onclick="goPrev(3)">← Back</button>
-          <button type="button" class="btn-submit-final" id="submitBtn" onclick="submitForm()">
-            Pin it →
-          </button>
-        </div>
-
-        <p style="font-size:0.72rem; color:var(--muted); margin-top:1.25rem; line-height:1.65;">
-          We review every submission personally. Only verified women-owned spaces are added to the map. We will never share your contact details without permission.
-        </p>
-      </div>
-
-    </form>
-
-    <!-- CONFIRMATION SCREEN -->
-    <div id="confirmScreen">
-      <div class="confirm-pin">📍</div>
-
-      <h2 class="confirm-title">Your pin is<br><em>in our hands now.</em></h2>
-
-      <p class="confirm-body">
-        Thank you for passing this on. You've just added a name to a map that didn't exist — and now it does, because of you. We'll look into it, reach out if we need to, and let you know when she goes live.
-      </p>
-
-      <div class="confirm-timeline">
-        <div class="ct-step">
-          <div class="ct-dot done">✓</div>
-          <div class="ct-label"><strong>Submitted</strong>Just now</div>
-        </div>
-        <div class="ct-step">
-          <div class="ct-dot now">→</div>
-          <div class="ct-label"><strong>In review</strong>3–5 days</div>
-        </div>
-        <div class="ct-step">
-          <div class="ct-dot"></div>
-          <div class="ct-label"><strong>Verified</strong>We reach out</div>
-        </div>
-        <div class="ct-step">
-          <div class="ct-dot"></div>
-          <div class="ct-label"><strong>Pinned</strong>Goes live</div>
-        </div>
-      </div>
-
-      <div class="confirm-actions">
-        <button class="btn-confirm-primary" onclick="resetForm()">Submit another space</button>
-        <button class="btn-confirm-ghost" onclick="window.location.href='index.html'">Back to the map</button>
-      </div>
-    </div>
-
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-word">PinD</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">PinD</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">PinD</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">PinD</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
   </div>
 </div>
 
+<section class="manifesto">
+  <div>
+    <div class="section-eyebrow">Our Manifesto</div>
+    <h2 class="manifesto-headline">
+      This map is a love letter to the women who <em>built something anyway.</em>
+    </h2>
+    <div class="manifesto-body">
+      <p>Not the ones who waited for permission. The ones who unlocked a door, hung a sign, and made a place that felt like theirs, and somehow in doing so, made it yours too.</p>
+      <p>PinD exists because Google Maps will show you an address, but it will not tell you that you can exhale there. It will not tell you that the woman who owns that cafe sat at that counter for years before she put her name on the door.</p>
+      <p>We are building a different kind of map. One made of stories, not listings. One that grows the same way trust does: slowly, personally, by word of mouth.</p>
+    </div>
+  </div>
+  <div>
+    <div class="pull-quote">
+      Google Maps will show you an address. It will not tell you that you can exhale there.
+    </div>
+    <div class="value-list">
+      <div class="value-item"><div class="value-dot"></div><div class="value-text">We map feeling, not just location. Safety, belonging, and the warmth of a space made with intention.</div></div>
+      <div class="value-item"><div class="value-dot"></div><div class="value-text">We are not a directory. Every space here is a story, not a listing.</div></div>
+      <div class="value-item"><div class="value-dot"></div><div class="value-text">Word of mouth is our oldest technology. PinD is its digital form.</div></div>
+      <div class="value-item"><div class="value-dot"></div><div class="value-text">We start where we know. We grow only when it means growing well.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="map-section" id="map">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Explore</div>
+      <h2 class="section-title">Find a space <em>near you</em></h2>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterMap('all',this)">All</button>
+      <button class="filter-btn" onclick="filterMap('cafe',this)">Cafe and Food</button>
+      <button class="filter-btn" onclick="filterMap('studio',this)">Studios</button>
+      <button class="filter-btn" onclick="filterMap('retail',this)">Retail</button>
+      <button class="filter-btn" onclick="filterMap('wellness',this)">Wellness</button>
+      <button class="filter-btn" onclick="filterMap('workspace',this)">Workspaces</button>
+    </div>
+  </div>
+  <div class="map-container">
+    <div id="main-map"></div>
+  </div>
+</section>
+
+<section class="places-preview">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Featured Spaces</div>
+      <h2 class="section-title">Places worth <em>knowing about</em></h2>
+    </div>
+  </div>
+  <div class="places-grid" id="places-grid"></div>
+  <div class="see-all">
+    <a href="explore.html" class="btn-primary">See All Spaces</a>
+  </div>
+</section>
+
+<section class="power-section">
+  <div>
+    <div class="power-eyebrow">Why It Matters</div>
+    <h2 class="power-headline">
+      To own a space in India,<br>as a woman,<br>is <em>quietly radical.</em>
+    </h2>
+    <p class="power-body">
+      Property. Walls. A room of one's own. These have never been simple things for women in India to hold. Every business on this map is a woman who held one anyway. We think that deserves to be seen.
+    </p>
+    <a href="form.html" class="btn-primary" style="background:var(--peach);color:var(--ember)">PinIt. Add a Space.</a>
+  </div>
+  <div class="power-stat-grid">
+    <div class="power-stat">
+      <div class="power-stat-num">14%</div>
+      <div class="power-stat-label">of Indian businesses are women-owned</div>
+    </div>
+    <div class="power-stat">
+      <div class="power-stat-num">1 in 5</div>
+      <div class="power-stat-label">women in India own any property at all</div>
+    </div>
+    <div class="power-stat">
+      <div class="power-stat-num">24</div>
+      <div class="power-stat-label">spaces already on our map</div>
+    </div>
+    <div class="power-stat">
+      <div class="power-stat-num">Growing</div>
+      <div class="power-stat-label">by word of mouth, one pin at a time</div>
+    </div>
+  </div>
+</section>
+
+<section class="doc-banner">
+  <div>
+    <div class="doc-badge"><span class="doc-badge-dot"></span>YouTube Documentary</div>
+    <h2 class="doc-title">The women who built<br><em>Mumbai's hidden rooms.</em></h2>
+    <p class="doc-sub">A documentary series about what it means to own a space in India, told through the women who did it anyway. Filming in Mumbai now. Coming soon.</p>
+  </div>
+  <div>
+    <a href="#" class="yt-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      Notify Me
+    </a>
+  </div>
+</section>
+
+<footer>
+  <a class="footer-wordmark" href="index.html">PinD</a>
+  <ul class="footer-links">
+    <li>
+      <a href="https://www.instagram.com/sreemitamukherjee/" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+    </li>
+    <li><a href="explore.html">Explore</a></li>
+    <li><a href="form.html">Submit a Space</a></li>
+  </ul>
+  <span class="footer-copy">2025 PinD</span>
+</footer>
+
 <script>
-const FORMSPREE_URL = 'https://formspree.io/f/mdajwywj';
+const places=[
+  {id:1,name:"Bombay Perfumery",area:"Kala Ghoda",type:"retail",lat:18.9281,lng:72.8312,desc:"A boutique fragrance studio where every scent tells a story. Owned and created entirely by women.",featured:true},
+  {id:2,name:"The Yoga House",area:"Prabhadevi",type:"wellness",lat:19.0148,lng:72.8325,desc:"A sanctuary for mindful practice. A space where the door is always open.",featured:true},
+  {id:3,name:"Araku Coffee",area:"Bandra",type:"cafe",lat:19.0596,lng:72.8295,desc:"Origin coffee from Araku Valley, brought to the city by a women-led cooperative.",featured:true},
+  {id:4,name:"Nirmala's Kitchen",area:"Dharavi",type:"cafe",lat:19.0435,lng:72.8562,desc:"A home kitchen turned community table. Nirmala cooks what she grew up eating.",featured:true},
+  {id:5,name:"Studio Kohl",area:"Worli",type:"studio",lat:19.0069,lng:72.8180,desc:"An art studio, darkroom, and gathering space for women who make things.",featured:true},
+  {id:6,name:"The Ink Room",area:"Colaba",type:"workspace",lat:18.9067,lng:72.8147,desc:"A members writing room. Founded by two journalists who needed a room of their own.",featured:true},
+  {id:7,name:"Saee's Flower Studio",area:"Juhu",type:"retail",lat:19.1075,lng:72.8263,desc:"Seasonal florals, grown with intention. No plastic, no waste, no shortcuts.",featured:false},
+  {id:8,name:"Prana Wellness",area:"Andheri",type:"wellness",lat:19.1197,lng:72.8464,desc:"Integrative health clinic run entirely by women practitioners.",featured:false},
+];
+const typeColor={cafe:"#FF6C41",retail:"#7B2F25",studio:"#4A6B4A",wellness:"#B05878",workspace:"#4A6B8A"};
 
-let currentSection = 0;
-const totalSections = 4;
-const sectionLabels = ['The Space', 'The Owner', 'Your Note', 'Review'];
+const hMap=L.map("hero-map",{center:[19.076,72.8777],zoom:12,zoomControl:false,scrollWheelZoom:false,dragging:false,attributionControl:false});
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png").addTo(hMap);
+places.forEach(p=>{
+  L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:"<div style='width:8px;height:8px;background:"+typeColor[p.type]+";border-radius:50%;border:2px solid white;box-shadow:0 2px 5px rgba(0,0,0,0.2)'></div>",iconSize:[8,8],iconAnchor:[4,4]})}).addTo(hMap);
+});
 
-function selectPill(el, group) {
-  document.querySelectorAll(`#${group} .pill`).forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
-}
+const mMap=L.map("main-map",{center:[19.05,72.84],zoom:12,scrollWheelZoom:false});
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{attribution:"&copy; OpenStreetMap &copy; CARTO"}).addTo(mMap);
+let ml=L.layerGroup().addTo(mMap);
 
-function getVal(id) {
-  const el = document.getElementById(id);
-  return el ? el.value.trim() : '';
-}
-
-function getSelectedPill(group) {
-  const sel = document.querySelector(`#${group} .pill.selected`);
-  return sel ? sel.textContent.trim() : '';
-}
-
-function validateSection(idx) {
-  let valid = true;
-  const required = {
-    0: ['spaceName','category','address','neighbourhood','city'],
-    1: ['ownerName','ownershipType'],
-    2: ['personalNote'],
-    3: []
-  };
-  required[idx].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.remove('err');
-    const next = el.nextElementSibling;
-    if (next && next.classList.contains('field-error')) next.remove();
-    if (!el.value.trim()) {
-      el.classList.add('err');
-      const err = document.createElement('span');
-      err.className = 'field-error';
-      err.textContent = 'This field is required.';
-      el.parentNode.insertBefore(err, el.nextSibling);
-      valid = false;
-    }
+function renderMarkers(f){
+  ml.clearLayers();
+  (f==="all"?places:places.filter(p=>p.type===f)).forEach(p=>{
+    const mk=L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:"<div style='width:13px;height:13px;background:"+typeColor[p.type]+";border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);cursor:pointer'></div>",iconSize:[13,13],iconAnchor:[6,6]})});
+    mk.bindPopup("<div class='popup-type'>"+p.type+"</div><div class='popup-name'>"+p.name+"</div><div class='popup-area'>"+p.area+", Mumbai</div><a href='explore.html' class='popup-link'>View Details</a>",{maxWidth:200});
+    mk.addTo(ml);
   });
-  if (idx === 2 && !getSelectedPill('relation')) {
-    valid = false;
-  }
-  return valid;
+}
+renderMarkers("all");
+
+function filterMap(type,btn){
+  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderMarkers(type);
 }
 
-function updateProgress(idx) {
-  for (let i = 0; i < totalSections; i++) {
-    const dot = document.getElementById(`dot-${i}`);
-    dot.classList.remove('active','done');
-    if (i < idx) dot.classList.add('done');
-    else if (i === idx) dot.classList.add('active');
-  }
-  document.getElementById('progLabel').textContent = sectionLabels[idx];
-}
+document.getElementById("places-grid").innerHTML=places.filter(p=>p.featured).map(p=>`
+  <a class="place-card" href="explore.html">
+    <div class="place-type">${p.type}</div>
+    <div class="place-name">${p.name}</div>
+    <div class="place-area">${p.area}, Mumbai</div>
+    <div class="place-desc">${p.desc}</div>
+    <div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#B07060;font-size:14px">&#x2192;</span></div>
+  </a>`).join("");
 
-function goNext(idx) {
-  if (!validateSection(idx)) return;
-  if (idx === 2) buildReview();
-  document.getElementById(`section-${idx}`).classList.remove('active');
-  currentSection = idx + 1;
-  document.getElementById(`section-${currentSection}`).classList.add('active');
-  updateProgress(currentSection);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function goPrev(idx) {
-  document.getElementById(`section-${idx}`).classList.remove('active');
-  currentSection = idx - 1;
-  document.getElementById(`section-${currentSection}`).classList.add('active');
-  updateProgress(currentSection);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function buildReview() {
-  const spaceRows = [
-    ['Name', getVal('spaceName')],
-    ['Category', getVal('category')],
-    ['Address', `${getVal('address')}, ${getVal('neighbourhood')}, ${getVal('city')}`],
-    ['Years in business', getVal('yearsInBusiness') || '—'],
-    ['Instagram', getVal('spaceInstagram') ? '@' + getVal('spaceInstagram') : '—'],
-    ['Website', getVal('spaceWebsite') || '—'],
-  ];
-  const ownerRows = [
-    ['Owner name', getVal('ownerName')],
-    ['Ownership type', getVal('ownershipType')],
-    ['Instagram', getVal('ownerInstagram') ? '@' + getVal('ownerInstagram') : '—'],
-    ['WhatsApp', getVal('ownerWhatsApp') ? '+91 ' + getVal('ownerWhatsApp') : '—'],
-    ['Email', getVal('ownerEmail') || '—'],
-    ['Property owned', getSelectedPill('propertyOwned') || '—'],
-  ];
-  const noteRows = [
-    ['Note', getVal('personalNote')],
-    ['Relation', getSelectedPill('relation') || '—'],
-  ];
-
-  const render = (rows, containerId) => {
-    document.getElementById(containerId).innerHTML = rows.map(([k, v]) =>
-      `<div class="review-row"><span class="review-key">${k}</span><span class="review-val">${v || '—'}</span></div>`
-    ).join('');
-  };
-
-  render(spaceRows, 'reviewSpace');
-  render(ownerRows, 'reviewOwner');
-  render(noteRows, 'reviewNote');
-}
-
-async function submitForm() {
-  const btn = document.getElementById('submitBtn');
-  btn.classList.add('loading');
-  btn.textContent = 'Sending…';
-
-  const payload = {
-    spaceName: getVal('spaceName'),
-    category: getVal('category'),
-    address: getVal('address'),
-    neighbourhood: getVal('neighbourhood'),
-    city: getVal('city'),
-    yearsInBusiness: getVal('yearsInBusiness'),
-    spaceInstagram: getVal('spaceInstagram'),
-    spaceWebsite: getVal('spaceWebsite'),
-    ownerName: getVal('ownerName'),
-    ownershipType: getVal('ownershipType'),
-    ownerInstagram: getVal('ownerInstagram'),
-    ownerWhatsApp: getVal('ownerWhatsApp'),
-    ownerEmail: getVal('ownerEmail'),
-    propertyOwned: getSelectedPill('propertyOwned'),
-    personalNote: getVal('personalNote'),
-    relation: getSelectedPill('relation'),
-    submitterName: getVal('submitterName'),
-    submitterEmail: getVal('submitterEmail'),
-    submitterInstagram: getVal('submitterInstagram'),
-  };
-
-  try {
-    await fetch(FORMSPREE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-  } catch(e) {
-    // silent — Formspree still receives it
-  }
-
-  document.getElementById('pindForm').style.display = 'none';
-  document.getElementById('progressBar').style.display = 'none';
-  document.getElementById('confirmScreen').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function resetForm() {
-  document.getElementById('pindForm').reset();
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
-  document.querySelectorAll('.err').forEach(e => e.classList.remove('err'));
-  document.querySelectorAll('.field-error').forEach(e => e.remove());
-  currentSection = 0;
-  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-  document.getElementById('section-0').classList.add('active');
-  updateProgress(0);
-  document.getElementById('pindForm').style.display = 'block';
-  document.getElementById('progressBar').style.display = 'flex';
-  document.getElementById('confirmScreen').style.display = 'none';
-  document.getElementById('submitBtn').classList.remove('loading');
-  document.getElementById('submitBtn').textContent = 'Pin it →';
-}
+window.addEventListener("scroll",()=>{
+  document.getElementById("navbar").classList.toggle("scrolled",window.scrollY>40);
+});
+document.querySelectorAll("a[href^='#']").forEach(a=>{
+  a.addEventListener("click",e=>{
+    const t=document.querySelector(a.getAttribute("href"));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth"});}
+  });
+});
 </script>
 </body>
 </html>
