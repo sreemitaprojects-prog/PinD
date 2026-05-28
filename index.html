@@ -4,211 +4,168 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PinD — Women-Owned Spaces</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Favicon: teardrop location pin -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6C41'/%3E%3Cstop offset='100%25' stop-color='%23FF3C2D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 2C10.477 2 6 6.477 6 12c0 7.5 10 18 10 18s10-10.5 10-18c0-5.523-4.477-10-10-10z' fill='url(%23fg)'/%3E%3Ccircle cx='16' cy='12' r='3.5' fill='white'/%3E%3C/svg%3E">
-
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --orange:#FF6C41;
-  --coral:#FF3C2D;
-  --ember:#7B2F25;
-  --peach:#FFCDB8;
-  --blush:#FFF0EC;
-  --cream:#FFFAF7;
-  --text-dark:#1C0A06;
-  --text-mid:#5C2D1E;
-  --text-light:#B07060;
+  --orange:#FF6C41;--coral:#FF3C2D;--ember:#7B2F25;
+  --peach:#FFCDB8;--blush:#FFF0EC;--cream:#FFFAF7;
+  --text-dark:#1C0A06;--text-mid:#5C2D1E;--text-light:#B07060;
 }
-html{scroll-behavior:smooth}
-body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+html{scroll-behavior:smooth;}
+body{font-family:"Karla",sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 3rem;height:70px;
-  background:rgba(255,250,247,0.93);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(255,108,65,0.1);
-  transition:box-shadow 0.3s;
-}
-nav.scrolled{box-shadow:0 2px 24px rgba(123,47,37,0.07)}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:70px;background:rgba(255,250,247,0.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,108,65,0.1);transition:box-shadow 0.3s;}
+nav.scrolled{box-shadow:0 2px 24px rgba(123,47,37,0.07);}
 .nav-logo{display:flex;align-items:center;text-decoration:none;}
-.nav-logo svg{height:38px;width:auto;}
-.nav-links{display:flex;align-items:center;gap:1.25rem;list-style:none}
-.nav-links a{text-decoration:none;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);transition:color 0.2s}
-.nav-links a:hover{color:var(--orange)}
-.nav-cta{background:var(--orange)!important;color:white!important;padding:9px 22px;border-radius:2px;transition:background 0.2s!important}
-.nav-cta:hover{background:var(--ember)!important;color:white!important}
+.nav-logo svg{height:40px;width:auto;}
+.nav-links{display:flex;align-items:center;gap:1.25rem;list-style:none;}
+.nav-links a{text-decoration:none;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);transition:color 0.2s;font-family:"Karla",sans-serif;}
+.nav-links a:hover{color:var(--orange);}
+.nav-cta{background:var(--orange)!important;color:white!important;padding:9px 22px;border-radius:2px;}
+.nav-cta:hover{background:var(--ember)!important;}
 
-/* ── HERO ── */
-.hero{min-height:100vh;padding-top:70px;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
-.hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 5rem;z-index:2}
-.hero-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);margin-bottom:2rem;display:flex;align-items:center;gap:12px}
-.hero-eyebrow::before{content:"";width:28px;height:1px;background:var(--orange);display:block}
-.hero-headline{font-family:"Cormorant Garamond",serif;font-size:clamp(3rem,4.5vw,5.2rem);font-weight:300;line-height:1.07;color:var(--text-dark);margin-bottom:2rem}
-.hero-headline em{font-style:italic;color:var(--coral)}
-.hero-sub{font-size:15px;font-weight:300;line-height:1.85;color:var(--text-mid);max-width:420px;margin-bottom:3rem}
-.hero-actions{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
-.btn-primary{background:var(--orange);color:white;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;padding:14px 30px;border-radius:2px;transition:background 0.2s,transform 0.15s;display:inline-block}
-.btn-primary:hover{background:var(--ember);transform:translateY(-1px)}
-.btn-ghost{color:var(--text-mid);text-decoration:none;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;border-bottom:1px solid var(--text-light);padding-bottom:2px;transition:color 0.2s,border-color 0.2s}
-.btn-ghost:hover{color:var(--orange);border-color:var(--orange)}
-.hero-right{position:relative;overflow:hidden;background:var(--blush)}
-#hero-map{position:absolute;inset:0}
-.map-fade-left{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,var(--cream) 0%,rgba(255,250,247,0.3) 40%,transparent 65%)}
-.map-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:100px;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--cream),transparent)}
+/* HERO */
+.hero{min-height:100vh;padding-top:70px;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 5rem;z-index:2;}
+.hero-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);margin-bottom:2rem;display:flex;align-items:center;gap:12px;font-family:"Karla",sans-serif;}
+.hero-eyebrow::before{content:"";width:28px;height:1px;background:var(--orange);display:block;}
+.hero-headline{font-family:"Fraunces",serif;font-size:clamp(3rem,4.5vw,5.2rem);font-weight:300;line-height:1.07;color:var(--text-dark);margin-bottom:2rem;}
+.hero-headline em{font-style:italic;color:var(--coral);}
+.hero-sub{font-size:15px;font-weight:300;line-height:1.85;color:var(--text-mid);max-width:440px;margin-bottom:3rem;font-family:"Karla",sans-serif;}
+.hero-sub strong{font-weight:500;color:var(--text-dark);}
+.hero-actions{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+.btn-primary{background:var(--orange);color:white;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;padding:14px 30px;border-radius:2px;transition:background 0.2s,transform 0.15s;display:inline-block;font-family:"Karla",sans-serif;}
+.btn-primary:hover{background:var(--ember);transform:translateY(-1px);}
+.hero-right{position:relative;overflow:hidden;background:var(--blush);}
+#hero-map{position:absolute;inset:0;}
+.map-fade-left{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,var(--cream) 0%,rgba(255,250,247,0.3) 40%,transparent 65%);}
+.map-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:100px;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--cream),transparent);}
 
-/* ── STATS ── */
-.stats-strip{background:var(--ember);padding:1.5rem 5rem;display:flex;align-items:center;gap:3.5rem}
-.stat-item{display:flex;flex-direction:column;gap:5px}
-.stat-num{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:400;color:var(--peach);line-height:1}
-.stat-label{font-size:10px;font-weight:300;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,205,184,0.55)}
-.stat-div{width:1px;height:36px;background:rgba(255,205,184,0.18)}
-
-/* ── MARQUEE ── */
-.marquee-strip{
-  background:var(--blush);
-  border-top:1px solid rgba(255,108,65,0.1);
-  border-bottom:1px solid rgba(255,108,65,0.1);
-  overflow:hidden;padding:1.6rem 0;white-space:nowrap;position:relative;
-}
+/* MARQUEE */
+.marquee-strip{background:var(--blush);border-top:1px solid rgba(255,108,65,0.1);border-bottom:1px solid rgba(255,108,65,0.1);overflow:hidden;padding:1.6rem 0;white-space:nowrap;position:relative;}
 .marquee-strip::before,.marquee-strip::after{content:"";position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
-.marquee-strip::before{left:0;background:linear-gradient(to right,var(--blush),transparent)}
-.marquee-strip::after{right:0;background:linear-gradient(to left,var(--blush),transparent)}
+.marquee-strip::before{left:0;background:linear-gradient(to right,var(--blush),transparent);}
+.marquee-strip::after{right:0;background:linear-gradient(to left,var(--blush),transparent);}
 .marquee-track{display:inline-flex;animation:marqueeScroll 18s linear infinite;will-change:transform;}
-.marquee-track:hover{animation-play-state:paused}
-@keyframes marqueeScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-track:hover{animation-play-state:paused;}
+@keyframes marqueeScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .marquee-item{display:inline-flex;align-items:center;gap:2rem;padding:0 2.5rem;}
-.marquee-word{font-family:"Cormorant Garamond",serif;font-size:1.35rem;font-style:italic;font-weight:300;color:var(--text-mid);letter-spacing:0.04em;}
+.marquee-word{font-family:"Fraunces",serif;font-size:1.35rem;font-style:italic;font-weight:300;color:var(--text-mid);letter-spacing:0.04em;}
 .marquee-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0;}
 
-/* ── MANIFESTO ── */
-.manifesto{padding:8rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center;background:var(--cream);position:relative}
-.section-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);margin-bottom:1.75rem;display:flex;align-items:center;gap:12px}
-.section-eyebrow::before{content:"";width:28px;height:1px;background:var(--orange);display:block}
-.manifesto-headline{font-family:"Cormorant Garamond",serif;font-size:clamp(1.9rem,3vw,3rem);font-weight:300;line-height:1.2;color:var(--text-dark);margin-bottom:2rem}
-.manifesto-headline em{font-style:italic;color:var(--coral)}
-.manifesto-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--text-mid)}
-.manifesto-body p+p{margin-top:1.25rem}
-.pull-quote{font-family:"Cormorant Garamond",serif;font-size:clamp(1.5rem,2.2vw,2.2rem);font-weight:300;font-style:italic;line-height:1.45;color:var(--coral);border-left:2px solid var(--orange);padding-left:2rem;margin-bottom:3rem}
-.value-list{display:flex;flex-direction:column;gap:1.25rem}
-.value-item{display:flex;align-items:flex-start;gap:1rem}
-.value-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);margin-top:8px;flex-shrink:0}
-.value-text{font-size:14px;font-weight:300;line-height:1.7;color:var(--text-mid)}
+/* MANIFESTO */
+.manifesto{padding:8rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;background:var(--cream);}
+.section-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);margin-bottom:1.75rem;display:flex;align-items:center;gap:12px;font-family:"Karla",sans-serif;}
+.section-eyebrow::before{content:"";width:28px;height:1px;background:var(--orange);display:block;}
+.manifesto-headline{font-family:"Fraunces",serif;font-size:clamp(1.9rem,3vw,3rem);font-weight:300;line-height:1.2;color:var(--text-dark);margin-bottom:2rem;}
+.manifesto-headline em{font-style:italic;color:var(--coral);}
+.manifesto-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--text-mid);font-family:"Karla",sans-serif;}
+.manifesto-body p+p{margin-top:1.25rem;}
+.pull-quote{font-family:"Fraunces",serif;font-size:clamp(1.4rem,2vw,2rem);font-weight:300;font-style:italic;line-height:1.5;color:var(--coral);border-left:2px solid var(--orange);padding-left:2rem;margin-bottom:2.5rem;}
+.value-list{display:flex;flex-direction:column;gap:1.25rem;}
+.value-item{display:flex;align-items:flex-start;gap:1rem;}
+.value-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);margin-top:8px;flex-shrink:0;}
+.value-text{font-size:14px;font-weight:300;line-height:1.7;color:var(--text-mid);font-family:"Karla",sans-serif;}
 
-/* ── MAP SECTION ── */
-.map-section{padding:5rem 5rem 0;background:var(--blush)}
-.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem}
-.section-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,3vw,3rem);font-weight:300;line-height:1.1;color:var(--text-dark)}
-.section-title em{font-style:italic;color:var(--coral)}
-.filter-bar{display:flex;gap:0.4rem;flex-wrap:wrap}
-.filter-btn{background:none;border:1px solid rgba(92,45,30,0.2);color:var(--text-mid);font-family:"DM Sans",sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;padding:7px 15px;border-radius:2px;cursor:pointer;transition:all 0.2s}
-.filter-btn:hover,.filter-btn.active{background:var(--orange);border-color:var(--orange);color:white}
-.map-container{position:relative;height:540px;border-radius:4px 4px 0 0;overflow:hidden;box-shadow:0 -6px 30px rgba(123,47,37,0.06)}
-#main-map{height:100%;width:100%}
+/* PHOTO CAROUSEL */
+.photo-carousel{overflow:hidden;position:relative;margin-top:2.5rem;}
+.photo-track{display:flex;gap:1rem;animation:photoScroll 22s linear infinite;will-change:transform;}
+.photo-track:hover{animation-play-state:paused;}
+@keyframes photoScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.photo-slide{flex-shrink:0;width:260px;height:340px;border-radius:4px;overflow:hidden;}
+.photo-slide img{width:100%;height:100%;object-fit:cover;display:block;}
 
-/* ── PLACES ── */
-.places-preview{padding:4rem 5rem 6rem;background:var(--blush)}
-.places-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
-.place-card{background:var(--cream);border:1px solid rgba(255,108,65,0.12);border-radius:4px;padding:1.75rem;cursor:pointer;transition:all 0.25s;text-decoration:none;color:inherit;display:block}
-.place-card:hover{border-color:var(--orange);transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,108,65,0.1)}
-.place-type{font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--orange);margin-bottom:0.75rem}
-.place-name{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:400;color:var(--text-dark);margin-bottom:0.5rem;line-height:1.2}
-.place-area{font-size:11px;font-weight:300;color:var(--text-light);margin-bottom:1rem;display:flex;align-items:center;gap:5px}
-.place-area::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--orange);display:inline-block;opacity:0.6}
-.place-desc{font-size:13px;font-weight:300;line-height:1.7;color:var(--text-mid)}
-.place-footer{margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,108,65,0.08);display:flex;align-items:center;justify-content:space-between}
-.owner-badge{font-size:9px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);background:rgba(123,47,37,0.07);padding:4px 10px;border-radius:2px}
-.see-all{margin-top:3rem;text-align:center}
+/* MAP SECTION */
+.map-section{padding:5rem 5rem 0;background:var(--blush);}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;}
+.section-title{font-family:"Fraunces",serif;font-size:clamp(2rem,3vw,3rem);font-weight:300;line-height:1.1;color:var(--text-dark);}
+.section-title em{font-style:italic;color:var(--coral);}
+.filter-bar{display:flex;gap:0.4rem;flex-wrap:wrap;}
+.filter-btn{background:none;border:1px solid rgba(92,45,30,0.2);color:var(--text-mid);font-family:"Karla",sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;padding:7px 15px;border-radius:2px;cursor:pointer;transition:all 0.2s;}
+.filter-btn:hover,.filter-btn.active{background:var(--orange);border-color:var(--orange);color:white;}
+.map-container{position:relative;height:540px;border-radius:4px 4px 0 0;overflow:hidden;}
+#main-map{height:100%;width:100%;}
 
-/* ── POWER ── */
-.power-section{background:var(--ember);padding:7rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
-.power-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--peach);opacity:0.7;margin-bottom:1.75rem;display:flex;align-items:center;gap:12px}
-.power-eyebrow::before{content:"";width:28px;height:1px;background:var(--peach);display:block;opacity:0.7}
-.power-headline{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,3.5vw,3.5rem);font-weight:300;color:var(--peach);line-height:1.15;margin-bottom:2rem}
-.power-headline em{font-style:italic;color:white}
-.power-body{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,205,184,0.7);margin-bottom:2.5rem}
-.power-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.power-stat{background:rgba(255,205,184,0.07);border:1px solid rgba(255,205,184,0.12);border-radius:4px;padding:1.5rem}
-.power-stat-num{font-family:"Cormorant Garamond",serif;font-size:2.2rem;font-weight:300;color:white;line-height:1;margin-bottom:6px}
-.power-stat-label{font-size:11px;font-weight:300;color:rgba(255,205,184,0.55);letter-spacing:0.05em}
+/* RECENTLY PINNED */
+.places-preview{padding:4rem 5rem 6rem;background:var(--blush);}
+.coming-soon-block{margin-top:2.5rem;border:1px dashed rgba(255,108,65,0.3);border-radius:4px;padding:4rem 3rem;text-align:center;background:rgba(255,240,236,0.4);}
+.coming-soon-title{font-family:"Fraunces",serif;font-size:1.75rem;font-weight:300;font-style:italic;color:var(--text-mid);margin-bottom:0.75rem;}
+.coming-soon-sub{font-size:14px;font-weight:300;color:var(--text-light);line-height:1.75;font-family:"Karla",sans-serif;max-width:420px;margin:0 auto 1.5rem;}
+.places-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem;}
+.place-card{background:var(--cream);border:1px solid rgba(255,108,65,0.12);border-radius:4px;padding:1.75rem;cursor:pointer;transition:all 0.25s;text-decoration:none;color:inherit;display:block;}
+.place-card:hover{border-color:var(--orange);transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,108,65,0.1);}
+.place-type{font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--orange);margin-bottom:0.75rem;font-family:"Karla",sans-serif;}
+.place-name{font-family:"Fraunces",serif;font-size:1.4rem;font-weight:400;color:var(--text-dark);margin-bottom:0.5rem;line-height:1.2;}
+.place-area{font-size:11px;font-weight:300;color:var(--text-light);margin-bottom:1rem;display:flex;align-items:center;gap:5px;font-family:"Karla",sans-serif;}
+.place-area::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--orange);display:inline-block;opacity:0.6;}
+.place-desc{font-size:13px;font-weight:300;line-height:1.7;color:var(--text-mid);font-family:"Karla",sans-serif;}
+.place-footer{margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,108,65,0.08);display:flex;align-items:center;justify-content:space-between;}
+.owner-badge{font-size:9px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);background:rgba(123,47,37,0.07);padding:4px 10px;border-radius:2px;font-family:"Karla",sans-serif;}
+.see-all{margin-top:3rem;text-align:center;}
 
-/* ── DOC BANNER ── */
-.doc-banner{background:var(--blush);padding:5rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;border-top:1px solid rgba(255,108,65,0.1)}
-.doc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,108,65,0.1);border:1px solid rgba(255,108,65,0.25);color:var(--orange);font-size:9px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;border-radius:2px;margin-bottom:1.5rem}
-.doc-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-.doc-title{font-family:"Cormorant Garamond",serif;font-size:clamp(1.8rem,3vw,3rem);font-weight:300;color:var(--text-dark);line-height:1.15;margin-bottom:1rem}
-.doc-title em{font-style:italic;color:var(--coral)}
-.doc-sub{font-size:14px;font-weight:300;color:var(--text-mid);line-height:1.75;max-width:480px}
-.yt-btn{display:flex;align-items:center;gap:10px;background:var(--orange);color:white;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;padding:14px 28px;border-radius:2px;transition:background 0.2s;white-space:nowrap}
-.yt-btn:hover{background:var(--ember)}
+/* POWER */
+.power-section{background:var(--ember);padding:7rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.power-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:rgba(255,205,184,0.6);margin-bottom:1.75rem;display:flex;align-items:center;gap:12px;font-family:"Karla",sans-serif;}
+.power-eyebrow::before{content:"";width:28px;height:1px;background:var(--peach);display:block;opacity:0.6;}
+.power-headline{font-family:"Fraunces",serif;font-size:clamp(2rem,3.5vw,3.2rem);font-weight:300;color:var(--peach);line-height:1.15;margin-bottom:2rem;}
+.power-headline em{font-style:italic;color:white;}
+.power-body{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,205,184,0.7);margin-bottom:2.5rem;font-family:"Karla",sans-serif;}
+.power-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.power-stat{background:rgba(255,205,184,0.07);border:1px solid rgba(255,205,184,0.12);border-radius:4px;padding:1.5rem;}
+.power-stat-num{font-family:"Fraunces",serif;font-size:2.2rem;font-weight:300;color:white;line-height:1;margin-bottom:6px;}
+.power-stat-label{font-size:11px;font-weight:300;color:rgba(255,205,184,0.55);letter-spacing:0.05em;font-family:"Karla",sans-serif;}
 
-/* ── FOOTER ── */
-footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+/* POWER PHOTO CAROUSEL */
+.power-photos{overflow:hidden;position:relative;margin-top:0;}
+.power-photo-track{display:flex;flex-direction:column;gap:1rem;animation:powerPhotoScroll 18s linear infinite;will-change:transform;}
+.power-photo-track:hover{animation-play-state:paused;}
+@keyframes powerPhotoScroll{from{transform:translateY(0);}to{transform:translateY(-50%);}}
+.power-photo-slide{flex-shrink:0;width:100%;height:220px;border-radius:4px;overflow:hidden;}
+.power-photo-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* DOC BANNER */
+.doc-banner{background:var(--blush);padding:5rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;border-top:1px solid rgba(255,108,65,0.1);}
+.doc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,108,65,0.1);border:1px solid rgba(255,108,65,0.25);color:var(--orange);font-size:9px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:6px 14px;border-radius:2px;margin-bottom:1.5rem;font-family:"Karla",sans-serif;}
+.doc-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.doc-title{font-family:"Fraunces",serif;font-size:clamp(1.8rem,3vw,3rem);font-weight:300;color:var(--text-dark);line-height:1.15;margin-bottom:1rem;}
+.doc-title em{font-style:italic;color:var(--coral);}
+.doc-sub{font-size:14px;font-weight:300;color:var(--text-mid);line-height:1.75;max-width:480px;font-family:"Karla",sans-serif;}
+.yt-btn{display:flex;align-items:center;gap:10px;background:var(--orange);color:white;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;padding:14px 28px;border-radius:2px;transition:background 0.2s;white-space:nowrap;font-family:"Karla",sans-serif;}
+.yt-btn:hover{background:var(--ember);}
+
+/* FOOTER */
+footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;}
 .footer-logo{display:flex;align-items:center;text-decoration:none;}
 .footer-logo svg{height:28px;width:auto;opacity:0.45;}
-.footer-links{display:flex;gap:2rem;list-style:none;align-items:center}
-.footer-links a{text-decoration:none;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,205,184,0.4);transition:color 0.2s;display:flex;align-items:center;gap:7px}
-.footer-links a:hover{color:var(--peach)}
-.footer-copy{font-size:11px;color:rgba(255,205,184,0.25)}
+.footer-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+.footer-links a{text-decoration:none;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,205,184,0.4);transition:color 0.2s;display:flex;align-items:center;gap:7px;font-family:"Karla",sans-serif;}
+.footer-links a:hover{color:var(--peach);}
+.footer-copy{font-size:11px;color:rgba(255,205,184,0.25);font-family:"Karla",sans-serif;}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-.fade-up{opacity:0;animation:fadeUp 0.8s ease forwards}
-.fd1{animation-delay:0.1s}.fd2{animation-delay:0.28s}.fd3{animation-delay:0.44s}.fd4{animation-delay:0.6s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{opacity:0;animation:fadeUp 0.8s ease forwards;}
+.fd1{animation-delay:0.1s;}.fd2{animation-delay:0.28s;}.fd3{animation-delay:0.44s;}.fd4{animation-delay:0.6s;}
 
-.leaflet-popup-content-wrapper{border-radius:4px!important;font-family:"DM Sans",sans-serif!important;box-shadow:0 8px 28px rgba(0,0,0,0.1)!important}
-.leaflet-popup-content{margin:14px 16px!important}
-.popup-type{font-size:9px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#FF6C41;margin-bottom:4px}
-.popup-name{font-family:"Cormorant Garamond",serif;font-size:1.15rem;font-weight:400;color:#1C0A06;margin-bottom:3px}
-.popup-area{font-size:11px;color:#B07060;margin-bottom:8px}
-.popup-link{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#FF6C41;text-decoration:none;border-bottom:1px solid #FF6C41;padding-bottom:1px}
+.leaflet-popup-content-wrapper{border-radius:4px!important;font-family:"Karla",sans-serif!important;box-shadow:0 8px 28px rgba(0,0,0,0.1)!important;}
+.leaflet-popup-content{margin:14px 16px!important;}
+.popup-name{font-family:"Fraunces",serif;font-size:1.1rem;font-weight:400;color:#1C0A06;margin-bottom:3px;}
+.popup-area{font-size:11px;color:#B07060;}
 </style>
 </head>
 <body>
 
-<!-- ── INLINE SVG LOGO DEFINITION (reused via <use>) ── -->
-<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF6C41"/>
-      <stop offset="100%" stop-color="#FF3C2D"/>
-    </linearGradient>
-    <!-- PinD wordmark: italic serif lettering with pin on the i -->
-    <symbol id="pind-logo" viewBox="0 0 220 80">
-      <!-- P -->
-      <text x="4" y="68" font-family="Cormorant Garamond, serif" font-size="72" font-style="italic" font-weight="400" fill="url(#logoGrad)">PinD</text>
-      <!-- Location pin sitting above the i dot -->
-      <g transform="translate(72, 2)">
-        <path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11c0-3.314-2.686-6-6-6z" fill="url(#logoGrad)"/>
-        <circle cx="9" cy="6" r="2.2" fill="white"/>
-      </g>
-    </symbol>
-  </defs>
-</svg>
-
 <nav id="navbar">
   <a class="nav-logo" href="index.html" aria-label="PinD Home">
     <svg height="42" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#FF6C41"/>
-          <stop offset="100%" stop-color="#FF3C2D"/>
-        </linearGradient>
-      </defs>
-      <text x="4" y="68" font-family="Cormorant Garamond, serif" font-size="72" font-style="italic" font-weight="400" fill="url(#ng)">PinD</text>
-      <g transform="translate(72, 2)">
-        <path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="url(#ng)"/>
-        <circle cx="9" cy="6" r="2.2" fill="white"/>
-      </g>
+      <defs><linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6C41"/><stop offset="100%" stop-color="#FF3C2D"/></linearGradient></defs>
+      <text x="4" y="68" font-family="Fraunces, serif" font-size="72" font-style="italic" font-weight="300" fill="url(#ng)">PinD</text>
+      <g transform="translate(72, 2)"><path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="url(#ng)"/><circle cx="9" cy="6" r="2.2" fill="white"/></g>
     </svg>
   </a>
   <ul class="nav-links">
@@ -221,34 +178,21 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
   <div class="hero-left">
     <div class="hero-eyebrow fade-up fd1">Women-Owned Spaces</div>
     <h1 class="hero-headline fade-up fd2">
-      I kept finding<br>incredible spaces.<br><em>No one was talking<br>about them.</em>
+      Meet me at<br><em>her spot.</em>
     </h1>
     <p class="hero-sub fade-up fd3">
-      Every pin on this map is a woman who built something. PinD exists so you can find her, walk through her door, and know what it cost her to open it.
+      <strong>A wise woman once said, we should all strive to say "oh, I know a girl"</strong> and solve any possible problem with it. This is the digitised version of that. For every woman, to every woman.
     </p>
     <div class="hero-actions fade-up fd4">
-      <a href="#map" class="btn-primary">Explore the Map</a>
-      <a href="explore.html" class="btn-ghost">Browse All Spaces</a>
+      <a href="explore.html" class="btn-primary">Take me there</a>
     </div>
   </div>
   <div class="hero-right">
-    <div id="hero-map" style="position:absolute;inset:0"></div>
+    <div id="hero-map"></div>
     <div class="map-fade-left"></div>
     <div class="map-fade-bottom"></div>
   </div>
 </section>
-
-<div class="stats-strip">
-  <div class="stat-item"><span class="stat-num">24</span><span class="stat-label">Places Pinned</span></div>
-  <div class="stat-div"></div>
-  <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">Neighbourhoods</span></div>
-  <div class="stat-div"></div>
-  <div class="stat-item"><span class="stat-num">6</span><span class="stat-label">Categories</span></div>
-  <div class="stat-div"></div>
-  <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Women-Owned</span></div>
-  <div class="stat-div"></div>
-  <div class="stat-item"><span class="stat-num">Mumbai First</span><span class="stat-label">Growing</span></div>
-</div>
 
 <div class="marquee-strip">
   <div class="marquee-track">
@@ -256,18 +200,17 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
     <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Belong</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">PinD</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Belong</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">PinD</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
-    <div class="marquee-item"><span class="marquee-word">PinD</span><span class="marquee-dot"></span></div>
-    <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
-    <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
-    <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Belong</span><span class="marquee-dot"></span></div>
   </div>
 </div>
 
@@ -278,9 +221,23 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
       Google Maps will give you an address. It won't tell you that the woman behind the counter <em>built this from nothing.</em>
     </h2>
     <div class="manifesto-body">
-      <p>In India, a woman owning a space is still a radical act. Property. Walls. A business that is hers. These are not simple things to hold. Every pin on this map is a woman who held one anyway.</p>
-      <p>This is not a directory. It does not rank or rate. It maps the feeling of walking into a room and knowing that everything in it was decided by a woman who fought to be there.</p>
-      <p>PinD started because I kept finding these spaces and no one was talking about them. Now you can find them too.</p>
+      <p>PinD is built so we can celebrate taking up space. So that you can find your spot, where you can be unapologetically yourself.</p>
+      <p>These are your pockets of comfort, of girlhood, of community and belonging. And importantly, it is a movement. A statement. We are here. And we are going nowhere.</p>
+      <p>In India, a woman owning a space is still a radical act. Property. Walls. A business that is hers. Every pin on this map is a woman who held one anyway.</p>
+    </div>
+    <!-- PHOTO CAROUSEL: manifesto -->
+    <div class="photo-carousel" style="margin-top:2.5rem;">
+      <div class="photo-track">
+        <div class="photo-slide"><img src="photo1.png" alt="A women-owned space"></div>
+        <div class="photo-slide"><img src="photo2.png" alt="A women-owned space"></div>
+        <div class="photo-slide"><img src="photo3.png" alt="A women-owned space"></div>
+        <div class="photo-slide"><img src="photo4.png" alt="A women-owned space"></div>
+        <!-- duplicated for seamless loop -->
+        <div class="photo-slide"><img src="photo1.png" alt="A women-owned space"></div>
+        <div class="photo-slide"><img src="photo2.png" alt="A women-owned space"></div>
+        <div class="photo-slide"><img src="photo3.png" alt="A women-owned space"></div>
+        <div class="photo-slide"><img src="photo4.png" alt="A women-owned space"></div>
+      </div>
     </div>
   </div>
   <div>
@@ -288,7 +245,7 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
       These spaces exist. They are just not on any map that matters. Until now.
     </div>
     <div class="value-list">
-      <div class="value-item"><div class="value-dot"></div><div class="value-text">We map feeling, not just location. The safety, warmth, and intention you can sense the moment you walk in.</div></div>
+      <div class="value-item"><div class="value-dot"></div><div class="value-text">We map feeling, not just location. The safety, warmth, and intention you sense the moment you walk in.</div></div>
       <div class="value-item"><div class="value-dot"></div><div class="value-text">This is not a listing. Every space here is a story. Every pin is a person.</div></div>
       <div class="value-item"><div class="value-dot"></div><div class="value-text">Word of mouth is the oldest technology we have. PinD is its digital form.</div></div>
       <div class="value-item"><div class="value-dot"></div><div class="value-text">We start where we know. We grow only when it means growing well.</div></div>
@@ -304,7 +261,7 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
     </div>
     <div class="filter-bar">
       <button class="filter-btn active" onclick="filterMap('all',this)">All</button>
-      <button class="filter-btn" onclick="filterMap('cafe',this)">Cafe and Food</button>
+      <button class="filter-btn" onclick="filterMap('cafe',this)">Cafe & Food</button>
       <button class="filter-btn" onclick="filterMap('studio',this)">Studios</button>
       <button class="filter-btn" onclick="filterMap('retail',this)">Retail</button>
       <button class="filter-btn" onclick="filterMap('wellness',this)">Wellness</button>
@@ -323,9 +280,12 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
       <h2 class="section-title">The latest spaces <em>on the map</em></h2>
     </div>
   </div>
-  <div class="places-grid" id="places-grid"></div>
-  <div class="see-all">
-    <a href="explore.html" class="btn-primary">See All Spaces</a>
+  <div id="places-container">
+    <div class="coming-soon-block">
+      <div class="coming-soon-title">The first pins are coming.</div>
+      <p class="coming-soon-sub">This map grows by word of mouth, one woman at a time. The first spaces are being verified now. Come back soon.</p>
+      <a href="form.html" class="btn-primary">Own a space? Pin it.</a>
+    </div>
   </div>
 </section>
 
@@ -338,33 +298,35 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
     <p class="power-body">
       Know a space run by a woman? Pin it. That is how this map grows. Not through algorithms or ad spend. Through people who care enough to share a name.
     </p>
-    <a href="form.html" class="btn-primary" style="background:var(--peach);color:var(--ember)">Know a space? Pin it.</a>
+    <a href="form.html" class="btn-primary" style="background:var(--peach);color:var(--ember);">Own a space? Pin it.</a>
+    <div class="power-stat-grid" style="margin-top:2.5rem;">
+      <div class="power-stat"><div class="power-stat-num">14%</div><div class="power-stat-label">of Indian businesses are women-owned</div></div>
+      <div class="power-stat"><div class="power-stat-num">1 in 5</div><div class="power-stat-label">women in India own any property at all</div></div>
+      <div class="power-stat"><div class="power-stat-num">Mumbai</div><div class="power-stat-label">where it starts</div></div>
+      <div class="power-stat"><div class="power-stat-num">Growing</div><div class="power-stat-label">by word of mouth, one pin at a time</div></div>
+    </div>
   </div>
-  <div class="power-stat-grid">
-    <div class="power-stat">
-      <div class="power-stat-num">14%</div>
-      <div class="power-stat-label">of Indian businesses are women-owned</div>
-    </div>
-    <div class="power-stat">
-      <div class="power-stat-num">1 in 5</div>
-      <div class="power-stat-label">women in India own any property at all</div>
-    </div>
-    <div class="power-stat">
-      <div class="power-stat-num">24</div>
-      <div class="power-stat-label">spaces already on the map</div>
-    </div>
-    <div class="power-stat">
-      <div class="power-stat-num">Growing</div>
-      <div class="power-stat-label">by word of mouth, one pin at a time</div>
+  <!-- VERTICAL PHOTO STRIP -->
+  <div class="power-photos" style="height:580px;overflow:hidden;">
+    <div class="power-photo-track">
+      <div class="power-photo-slide"><img src="photo3.png" alt="Women-owned space"></div>
+      <div class="power-photo-slide"><img src="photo1.png" alt="Women-owned space"></div>
+      <div class="power-photo-slide"><img src="photo4.png" alt="Women-owned space"></div>
+      <div class="power-photo-slide"><img src="photo2.png" alt="Women-owned space"></div>
+      <!-- duplicated for loop -->
+      <div class="power-photo-slide"><img src="photo3.png" alt="Women-owned space"></div>
+      <div class="power-photo-slide"><img src="photo1.png" alt="Women-owned space"></div>
+      <div class="power-photo-slide"><img src="photo4.png" alt="Women-owned space"></div>
+      <div class="power-photo-slide"><img src="photo2.png" alt="Women-owned space"></div>
     </div>
   </div>
 </section>
 
 <section class="doc-banner">
   <div>
-    <div class="doc-badge"><span class="doc-badge-dot"></span>YouTube Documentary</div>
-    <h2 class="doc-title">The women who built<br><em>Mumbai's hidden rooms.</em></h2>
-    <p class="doc-sub">A documentary series about what it means to own a space in India, told through the women who did it anyway. Filming in Mumbai. Coming soon.</p>
+    <div class="doc-badge"><span class="doc-badge-dot"></span>YouTube Documentary Series</div>
+    <h2 class="doc-title"><em>30 Minutes With.</em></h2>
+    <p class="doc-sub">A documentary series about what it means to own a space in India, told through the women who did it anyway. Thirty minutes with the women behind the pins. Filming in Mumbai. Coming soon.</p>
   </div>
   <div>
     <a href="#" class="yt-btn">
@@ -377,124 +339,111 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
 <footer>
   <a class="footer-logo" href="index.html" aria-label="PinD Home">
     <svg height="28" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="fg2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="rgba(255,205,184,0.4)"/>
-          <stop offset="100%" stop-color="rgba(255,60,45,0.4)"/>
-        </linearGradient>
-      </defs>
-      <text x="4" y="68" font-family="Cormorant Garamond, serif" font-size="72" font-style="italic" font-weight="400" fill="url(#fg2)">PinD</text>
-      <g transform="translate(72, 2)">
-        <path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="rgba(255,205,184,0.4)"/>
-        <circle cx="9" cy="6" r="2.2" fill="rgba(28,10,6,0.8)"/>
-      </g>
+      <defs><linearGradient id="fg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(255,205,184,0.4)"/><stop offset="100%" stop-color="rgba(255,60,45,0.4)"/></linearGradient></defs>
+      <text x="4" y="68" font-family="Fraunces, serif" font-size="72" font-style="italic" font-weight="300" fill="url(#fg2)">PinD</text>
+      <g transform="translate(72, 2)"><path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="rgba(255,205,184,0.4)"/><circle cx="9" cy="6" r="2.2" fill="rgba(28,10,6,0.8)"/></g>
     </svg>
   </a>
   <ul class="footer-links">
-    <li>
-      <a href="https://www.instagram.com/sreemitamukherjee/" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-        Instagram
-      </a>
-    </li>
-    <li>
-      <a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-    </li>
+    <li><a href="https://www.instagram.com/sreemitamukherjee/" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a></li>
+    <li><a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a></li>
     <li><a href="explore.html">Explore</a></li>
-    <li><a href="form.html">Submit a Space</a></li>
+    <li><a href="form.html">Add Your Space</a></li>
   </ul>
-  <span class="footer-copy">2025 PinD</span>
+  <span class="footer-copy">2026 PinD</span>
 </footer>
 
 <script>
-const places=[
-  {id:1,name:"Bombay Perfumery",area:"Kala Ghoda",type:"retail",lat:18.9281,lng:72.8312,desc:"A boutique fragrance studio where every scent tells a story. Owned and created entirely by women.",featured:true},
-  {id:2,name:"The Yoga House",area:"Prabhadevi",type:"wellness",lat:19.0148,lng:72.8325,desc:"A sanctuary for mindful practice. A space where the door is always open.",featured:true},
-  {id:3,name:"Araku Coffee",area:"Bandra",type:"cafe",lat:19.0596,lng:72.8295,desc:"Origin coffee from Araku Valley, brought to the city by a women-led cooperative.",featured:true},
-  {id:4,name:"Nirmala's Kitchen",area:"Dharavi",type:"cafe",lat:19.0435,lng:72.8562,desc:"A home kitchen turned community table. Nirmala cooks what she grew up eating.",featured:true},
-  {id:5,name:"Studio Kohl",area:"Worli",type:"studio",lat:19.0069,lng:72.8180,desc:"An art studio, darkroom, and gathering space for women who make things.",featured:true},
-  {id:6,name:"The Ink Room",area:"Colaba",type:"workspace",lat:18.9067,lng:72.8147,desc:"A members writing room. Founded by two journalists who needed a room of their own.",featured:true},
-  {id:7,name:"Saee's Flower Studio",area:"Juhu",type:"retail",lat:19.1075,lng:72.8263,desc:"Seasonal florals, grown with intention. No plastic, no waste, no shortcuts.",featured:false},
-  {id:8,name:"Prana Wellness",area:"Andheri",type:"wellness",lat:19.1197,lng:72.8464,desc:"Integrative health clinic run entirely by women practitioners.",featured:false},
-];
-const typeColor={cafe:"#FF6C41",retail:"#7B2F25",studio:"#4A6B4A",wellness:"#B05878",workspace:"#4A6B8A"};
+const SUPABASE_URL='https://xyzgqmghddzirnafwodi.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5emdxbWdoZGR6aXJuYWZ3b2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTM2MTcsImV4cCI6MjA5NTUyOTYxN30.4laPWa2_obOOAkTeFWDg4FGI9LDKDrHcY9pZlWAaAlo';
 
-// Hero map
-const hMap=L.map("hero-map",{center:[19.076,72.8777],zoom:12,zoomControl:false,scrollWheelZoom:false,dragging:false,attributionControl:false});
-L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png").addTo(hMap);
+const typeColor={'cafe':'#FF6C41','cafe & food':'#FF6C41','retail':'#7B2F25','retail & fashion':'#7B2F25','studio':'#4A6B4A','studio & craft':'#4A6B4A','wellness':'#B05878','wellness & health':'#B05878','workspace':'#4A6B8A','community space':'#4A6B8A'};
+function getTypeColor(t){return typeColor[t?.toLowerCase()]||'#FF6C41';}
+
+// HERO MAP
+const hMap=L.map('hero-map',{center:[19.076,72.8777],zoom:12,zoomControl:false,scrollWheelZoom:false,dragging:false,attributionControl:false});
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(hMap);
 
 const cityViews=[
-  {name:"Mumbai",center:[19.076,72.8777],zoom:12,pins:[{lat:19.0596,lng:72.8295,type:"cafe"},{lat:19.0148,lng:72.8325,type:"wellness"},{lat:18.9281,lng:72.8312,type:"retail"}]},
-  {name:"Delhi",center:[28.6139,77.2090],zoom:12,pins:[{lat:28.6304,lng:77.2177,type:"cafe"},{lat:28.5921,lng:77.2290,type:"studio"},{lat:28.6562,lng:77.2410,type:"workspace"}]},
-  {name:"Bangalore",center:[12.9716,77.5946],zoom:12,pins:[{lat:12.9716,lng:77.5946,type:"wellness"},{lat:12.9352,lng:77.6245,type:"cafe"},{lat:12.9850,lng:77.5533,type:"retail"}]},
-  {name:"Kolkata",center:[22.5726,88.3639],zoom:12,pins:[{lat:22.5726,lng:88.3639,type:"cafe"},{lat:22.5450,lng:88.3426,type:"studio"},{lat:22.6000,lng:88.3800,type:"wellness"}]},
-  {name:"Goa",center:[15.2993,74.1240],zoom:12,pins:[{lat:15.5004,lng:73.8193,type:"retail"},{lat:15.2993,lng:74.1240,type:"cafe"},{lat:15.4109,lng:73.9986,type:"wellness"}]},
+  {center:[19.076,72.8777],zoom:12},{center:[28.6139,77.2090],zoom:12},
+  {center:[12.9716,77.5946],zoom:12},{center:[22.5726,88.3639],zoom:12},
+  {center:[15.2993,74.1240],zoom:12},
 ];
-
 let cityIndex=0;
-let heroPinLayer=L.layerGroup().addTo(hMap);
-
-function renderHeroPins(city){
-  heroPinLayer.clearLayers();
-  city.pins.forEach(p=>{
-    L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:"<div style='width:8px;height:8px;background:"+typeColor[p.type]+";border-radius:50%;border:2px solid white;box-shadow:0 2px 5px rgba(0,0,0,0.2)'></div>",iconSize:[8,8],iconAnchor:[4,4]})}).addTo(heroPinLayer);
-  });
-}
-
 function cycleCity(){
   cityIndex=(cityIndex+1)%cityViews.length;
-  const city=cityViews[cityIndex];
-  hMap.flyTo(city.center,city.zoom,{duration:2.5,easeLinearity:0.25});
-  renderHeroPins(city);
+  const c=cityViews[cityIndex];
+  hMap.flyTo(c.center,c.zoom,{duration:2.5,easeLinearity:0.25});
 }
-
-renderHeroPins(cityViews[0]);
 setInterval(cycleCity,4000);
 
-// Main map
-const mMap=L.map("main-map",{center:[19.05,72.84],zoom:12,scrollWheelZoom:false});
-L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{attribution:"&copy; OpenStreetMap &copy; CARTO"}).addTo(mMap);
+// MAIN MAP
+const mMap=L.map('main-map',{center:[19.05,72.84],zoom:12,scrollWheelZoom:false});
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO'}).addTo(mMap);
 let ml=L.layerGroup().addTo(mMap);
+let allPlaces=[];
 
-function renderMarkers(f){
+async function loadPlaces(){
+  try{
+    const res=await fetch(SUPABASE_URL+'/rest/v1/submissions?status=eq.approved&select=*',{
+      headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
+    });
+    const data=await res.json();
+    allPlaces=data.map(p=>({
+      id:p.id,
+      name:p.space_name||'',
+      area:p.neighbourhood||'',
+      city:p.city||'',
+      type:(p.category||'').toLowerCase(),
+      lat:parseFloat(p.lat)||null,
+      lng:parseFloat(p.lng)||null,
+      desc:p.personal_note||'',
+    }));
+  }catch(e){allPlaces=[];}
+  renderMapMarkers('all');
+  renderRecentPins();
+}
+
+function renderMapMarkers(f){
   ml.clearLayers();
-  (f==="all"?places:places.filter(p=>p.type===f)).forEach(p=>{
-    const mk=L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:"<div style='width:13px;height:13px;background:"+typeColor[p.type]+";border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);cursor:pointer'></div>",iconSize:[13,13],iconAnchor:[6,6]})});
-    mk.bindPopup("<div class='popup-type'>"+p.type+"</div><div class='popup-name'>"+p.name+"</div><div class='popup-area'>"+p.area+", Mumbai</div><a href='explore.html' class='popup-link'>View Details</a>",{maxWidth:200});
+  const filtered=f==='all'?allPlaces:allPlaces.filter(p=>p.type.includes(f));
+  filtered.forEach(p=>{
+    if(!p.lat||!p.lng)return;
+    const col=getTypeColor(p.type);
+    const mk=L.marker([p.lat,p.lng],{icon:L.divIcon({className:'',html:'<div style="width:13px;height:13px;background:'+col+';border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);cursor:pointer"></div>',iconSize:[13,13],iconAnchor:[6,6]})});
+    mk.bindPopup('<div class="popup-name">'+p.name+'</div><div class="popup-area">'+p.area+(p.city?', '+p.city:'')+'</div>',{maxWidth:200});
     mk.addTo(ml);
   });
 }
-renderMarkers("all");
 
 function filterMap(type,btn){
-  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  renderMarkers(type);
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMapMarkers(type);
 }
 
-// Show most recent 6 entries (last 6 in array)
-const recentPlaces=[...places].slice(-6);
-document.getElementById("places-grid").innerHTML=recentPlaces.map(p=>`
-  <a class="place-card" href="explore.html">
-    <div class="place-type">${p.type}</div>
-    <div class="place-name">${p.name}</div>
-    <div class="place-area">${p.area}, Mumbai</div>
-    <div class="place-desc">${p.desc}</div>
-    <div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#B07060;font-size:14px">&#x2192;</span></div>
-  </a>`).join("");
+function renderRecentPins(){
+  const container=document.getElementById('places-container');
+  if(!allPlaces||allPlaces.length===0){
+    container.innerHTML='<div class="coming-soon-block"><div class="coming-soon-title">The first pins are coming.</div><p class="coming-soon-sub">This map grows by word of mouth, one woman at a time. The first spaces are being verified now. Come back soon.</p><a href="form.html" class="btn-primary">Own a space? Pin it.</a></div>';
+    return;
+  }
+  const recent=[...allPlaces].slice(-6).reverse();
+  container.innerHTML='<div class="places-grid">'+recent.map(p=>`
+    <a class="place-card" href="explore.html">
+      <div class="place-type">${p.type}</div>
+      <div class="place-name">${p.name}</div>
+      <div class="place-area">${p.area}${p.city?', '+p.city:''}</div>
+      <div class="place-desc">${p.desc}</div>
+      <div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#B07060;font-size:14px">&#x2192;</span></div>
+    </a>`).join('')+'</div><div class="see-all"><a href="explore.html" class="btn-primary">See All Spaces</a></div>';
+}
 
-window.addEventListener("scroll",()=>{
-  document.getElementById("navbar").classList.toggle("scrolled",window.scrollY>40);
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);
 });
-document.querySelectorAll("a[href^='#']").forEach(a=>{
-  a.addEventListener("click",e=>{
-    const t=document.querySelector(a.getAttribute("href"));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth"});}
-  });
-});
+
+window.addEventListener('load',loadPlaces);
 </script>
 </body>
 </html>
