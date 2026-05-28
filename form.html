@@ -77,6 +77,13 @@ select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='10'
 .review-val{color:var(--text-dark);word-break:break-word;}
 .field-error{font-size:0.72rem;color:var(--coral);}
 input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#fff8f7;}
+
+.photo-upload-box{border:1px dashed rgba(255,108,65,0.35);border-radius:3px;background:white;cursor:pointer;transition:border-color 0.2s,background 0.2s;overflow:hidden;height:160px;display:flex;align-items:center;justify-content:center;}
+.photo-upload-box:hover{border-color:var(--orange);background:var(--blush);}
+.photo-upload-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:0.8rem;color:var(--text-light);font-family:"Karla",sans-serif;text-align:center;padding:1rem;width:100%;height:100%;}
+.photo-upload-inner img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-uploading{font-size:0.75rem;color:var(--orange);font-family:"Karla",sans-serif;margin-top:4px;}
+.photo-done{font-size:0.75rem;color:var(--ember);font-family:"Karla",sans-serif;margin-top:4px;}
 #confirmScreen{display:none;padding:3rem 0;}
 .confirm-inner{max-width:520px;}
 .confirm-celebration{font-family:"Fraunces",serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.15;color:var(--text-dark);margin-bottom:1.5rem;}
@@ -198,6 +205,31 @@ input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#f
         </div>
         <div class="field"><label>Tell us about your space <span class="req">*</span></label><textarea id="personalNote" placeholder="It could be why you opened it, what you want people to feel when they walk in, or what it cost you to get here. Write it the way you would tell a friend." required style="min-height:160px"></textarea><span class="field-hint">This becomes the soul of your pin. We will not publish it word for word without asking you first.</span></div>
 
+        <div class="field-row">
+          <div class="field half">
+            <label>A photo of you in your space <span class="opt">optional</span></label>
+            <div class="photo-upload-box" id="ownerPhotoBox" onclick="document.getElementById('ownerPhotoInput').click()">
+              <div class="photo-upload-inner" id="ownerPhotoPreview">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-light);margin-bottom:8px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Upload your photo</span>
+              </div>
+            </div>
+            <input type="file" id="ownerPhotoInput" accept="image/*" style="display:none" onchange="previewPhoto(this,'ownerPhotoPreview','ownerPhotoBox')">
+            <span class="field-hint">You, in the space you built.</span>
+          </div>
+          <div class="field half">
+            <label>A photo of your space <span class="opt">optional</span></label>
+            <div class="photo-upload-box" id="spacePhotoBox" onclick="document.getElementById('spacePhotoInput').click()">
+              <div class="photo-upload-inner" id="spacePhotoPreview">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-light);margin-bottom:8px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>Upload your space</span>
+              </div>
+            </div>
+            <input type="file" id="spacePhotoInput" accept="image/*" style="display:none" onchange="previewPhoto(this,'spacePhotoPreview','spacePhotoBox')">
+            <span class="field-hint">What it looks like when you walk in.</span>
+          </div>
+        </div>
+
         <div style="margin-top:2.5rem;">
           <div style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;">Review before you submit</div>
           <div class="review-block"><div class="review-block-head">The Space</div><div class="review-rows" id="reviewSpace"></div></div>
@@ -234,9 +266,45 @@ const SUPABASE_URL='https://xyzgqmghddzirnafwodi.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5emdxbWdoZGR6aXJuYWZ3b2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTM2MTcsImV4cCI6MjA5NTUyOTYxN30.4laPWa2_obOOAkTeFWDg4FGI9LDKDrHcY9pZlWAaAlo';
 let currentSection=0;
 const sectionLabels=['The Space','You','Your Note'];
+let ownerPhotoUrl='';
+let spacePhotoUrl='';
+
 function selectPill(el,group){document.querySelectorAll('#'+group+' .pill').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');}
 function getVal(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 function getSelectedPill(group){const sel=document.querySelector('#'+group+' .pill.selected');return sel?sel.textContent.trim():'';}
+
+function previewPhoto(input, previewId, boxId) {
+  const file = input.files[0];
+  if (!file) return;
+  const preview = document.getElementById(previewId);
+  const reader = new FileReader();
+  reader.onload = e => {
+    preview.innerHTML = '<img src="'+e.target.result+'" style="width:100%;height:100%;object-fit:cover;display:block;">';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function uploadPhoto(inputId, folder) {
+  const input = document.getElementById(inputId);
+  if (!input.files[0]) return '';
+  const file = input.files[0];
+  const ext = file.name.split('.').pop();
+  const filename = folder + '/' + Date.now() + '.' + ext;
+  const res = await fetch(SUPABASE_URL + '/storage/v1/object/space-photos/' + filename, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': file.type,
+    },
+    body: file
+  });
+  if (res.ok) {
+    return SUPABASE_URL + '/storage/v1/object/public/space-photos/' + filename;
+  }
+  return '';
+}
+
 function validateSection(idx){
   let valid=true;
   const required={0:['spaceName','category','address','neighbourhood','city'],1:['ownerName','ownershipType','ownerEmail'],2:['personalNote']};
@@ -275,12 +343,48 @@ function buildReview(){
   const render=(rows,id)=>{document.getElementById(id).innerHTML=rows.map(r=>'<div class="review-row"><span class="review-key">'+r[0]+'</span><span class="review-val">'+(r[1]||'—')+'</span></div>').join('');};
   render(spaceRows,'reviewSpace');render(ownerRows,'reviewOwner');
 }
+async function geocodeAddress(address, neighbourhood, city) {
+  try {
+    const query = encodeURIComponent([address, neighbourhood, city, 'India'].filter(Boolean).join(', '));
+    const res = await fetch('https://nominatim.openstreetmap.org/search?q=' + query + '&format=json&limit=1', {
+      headers: { 'Accept-Language': 'en', 'User-Agent': 'PinD/1.0' }
+    });
+    const data = await res.json();
+    if (data && data.length > 0) {
+      return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+    }
+  } catch(e) {}
+  return { lat: null, lng: null };
+}
+
 async function submitForm(){
   const btn=document.getElementById('submitBtn');
-  btn.classList.add('loading');btn.textContent='Submitting…';
+  btn.classList.add('loading');btn.textContent='Finding your space on the map…';
   const firstName=getVal('ownerName').split(' ')[0];
   const email=getVal('ownerEmail');
-  const payload={space_name:getVal('spaceName'),category:getVal('category'),address:getVal('address'),neighbourhood:getVal('neighbourhood'),city:getVal('city'),years_in_business:getVal('yearsInBusiness'),space_instagram:getVal('spaceInstagram'),space_website:getVal('spaceWebsite'),owner_name:getVal('ownerName'),ownership_type:getVal('ownershipType'),owner_email:email,owner_whatsapp:getVal('ownerWhatsApp'),owner_instagram:getVal('ownerInstagram'),property_owned:getSelectedPill('propertyOwned'),personal_note:getVal('personalNote')};
+
+  // Geocode address
+  const coords = await geocodeAddress(getVal('address'), getVal('neighbourhood'), getVal('city'));
+
+  btn.textContent='Uploading photos…';
+  ownerPhotoUrl = await uploadPhoto('ownerPhotoInput', 'owners');
+  btn.textContent='Almost there…';
+  spacePhotoUrl = await uploadPhoto('spacePhotoInput', 'spaces');
+
+  btn.textContent='Submitting…';
+  const payload={
+    space_name:getVal('spaceName'),category:getVal('category'),
+    address:getVal('address'),neighbourhood:getVal('neighbourhood'),city:getVal('city'),
+    years_in_business:getVal('yearsInBusiness'),space_instagram:getVal('spaceInstagram'),
+    space_website:getVal('spaceWebsite'),owner_name:getVal('ownerName'),
+    ownership_type:getVal('ownershipType'),owner_email:email,
+    owner_whatsapp:getVal('ownerWhatsApp'),owner_instagram:getVal('ownerInstagram'),
+    property_owned:getSelectedPill('propertyOwned'),personal_note:getVal('personalNote'),
+    owner_photo_url:ownerPhotoUrl||null,
+    space_photo_url:spacePhotoUrl||null,
+    lat:coords.lat,
+    lng:coords.lng,
+  };
   try{
     const response=await fetch(SUPABASE_URL+'/rest/v1/submissions',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Prefer':'return=minimal'},body:JSON.stringify(payload)});
     if(response.ok){
@@ -298,6 +402,9 @@ function resetForm(){
   document.querySelectorAll('.pill').forEach(p=>p.classList.remove('selected'));
   document.querySelectorAll('.err').forEach(e=>e.classList.remove('err'));
   document.querySelectorAll('.field-error').forEach(e=>e.remove());
+  document.getElementById('ownerPhotoPreview').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-light);margin-bottom:8px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Upload your photo</span>';
+  document.getElementById('spacePhotoPreview').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-light);margin-bottom:8px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Upload your space</span>';
+  ownerPhotoUrl='';spacePhotoUrl='';
   currentSection=0;
   document.querySelectorAll('.form-section').forEach(s=>s.classList.remove('active'));
   document.getElementById('section-0').classList.add('active');
