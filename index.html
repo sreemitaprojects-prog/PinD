@@ -73,23 +73,32 @@ nav.scrolled{box-shadow:0 2px 24px rgba(123,47,37,0.07);}
 .value-text{font-size:14px;font-weight:300;line-height:1.7;color:var(--text-mid);font-family:"Karla",sans-serif;}
 
 /* PHOTO CAROUSEL */
-.photo-carousel{overflow:hidden;position:relative;margin-top:2.5rem;}
-.photo-track{display:flex;gap:1rem;animation:photoScroll 22s linear infinite;will-change:transform;}
+.photo-carousel{overflow:hidden;position:relative;margin-top:2.5rem;height:320px;}
+.photo-track{display:flex;gap:1rem;animation:photoScroll 22s linear infinite;will-change:transform;height:100%;}
 .photo-track:hover{animation-play-state:paused;}
 @keyframes photoScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.photo-slide{flex-shrink:0;width:260px;height:340px;border-radius:4px;overflow:hidden;}
+.photo-slide{flex-shrink:0;width:240px;height:100%;border-radius:4px;overflow:hidden;}
 .photo-slide img{width:100%;height:100%;object-fit:cover;display:block;}
 
-/* MAP SECTION */
-.map-section{padding:5rem 5rem 0;background:var(--blush);}
-.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;}
-.section-title{font-family:"Fraunces",serif;font-size:clamp(2rem,3vw,3rem);font-weight:300;line-height:1.1;color:var(--text-dark);}
-.section-title em{font-style:italic;color:var(--coral);}
-.filter-bar{display:flex;gap:0.4rem;flex-wrap:wrap;}
-.filter-btn{background:none;border:1px solid rgba(92,45,30,0.2);color:var(--text-mid);font-family:"Karla",sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;padding:7px 15px;border-radius:2px;cursor:pointer;transition:all 0.2s;}
-.filter-btn:hover,.filter-btn.active{background:var(--orange);border-color:var(--orange);color:white;}
-.map-container{position:relative;height:540px;border-radius:4px 4px 0 0;overflow:hidden;}
-#main-map{height:100%;width:100%;}
+/* NOTES SECTION */
+.notes-section{padding:6rem 0;background:var(--cream);overflow:hidden;}
+.notes-header{padding:0 5rem;margin-bottom:3rem;}
+.notes-track-wrap{overflow:hidden;position:relative;}
+.notes-track-wrap::before,.notes-track-wrap::after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;}
+.notes-track-wrap::before{left:0;background:linear-gradient(to right,var(--cream),transparent);}
+.notes-track-wrap::after{right:0;background:linear-gradient(to left,var(--cream),transparent);}
+.notes-track{display:inline-flex;gap:1.5rem;animation:notesScroll 30s linear infinite;will-change:transform;padding:0.5rem 0;}
+.notes-track:hover{animation-play-state:paused;}
+@keyframes notesScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.note-card{flex-shrink:0;width:320px;background:white;border:1px solid rgba(255,108,65,0.12);border-radius:4px;padding:2rem;display:flex;flex-direction:column;gap:1rem;}
+.note-card-text{font-family:"Fraunces",serif;font-size:1.05rem;font-weight:300;font-style:italic;line-height:1.75;color:var(--text-mid);}
+.note-card-text::before{content:'\201C';color:var(--orange);font-size:1.5rem;line-height:0;vertical-align:-0.4em;margin-right:3px;}
+.note-card-footer{display:flex;align-items:center;gap:0.75rem;margin-top:auto;}
+.note-card-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);flex-shrink:0;}
+.note-card-name{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);font-family:"Karla",sans-serif;}
+.note-card-place{font-size:11px;font-weight:300;color:var(--text-light);font-family:"Karla",sans-serif;}
+.notes-coming-soon{text-align:center;padding:3rem 5rem;font-family:"Fraunces",serif;font-size:1.2rem;font-weight:300;font-style:italic;color:var(--text-light);}
+
 
 /* RECENTLY PINNED */
 .places-preview{padding:4rem 5rem 6rem;background:var(--blush);}
@@ -178,10 +187,10 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
   <div class="hero-left">
     <div class="hero-eyebrow fade-up fd1">Women-Owned Spaces</div>
     <h1 class="hero-headline fade-up fd2">
-      Meet me at<br><em>her spot.</em>
+      Your pocket full<br><em>of girlhood.</em>
     </h1>
     <p class="hero-sub fade-up fd3">
-      <strong>A wise woman once said, we should all strive to say "oh, I know a girl"</strong> and solve any possible problem with it. This is the digitised version of that. For every woman, to every woman.
+      <strong>A wise woman once said, we should all strive to say "oh, I know a woman who can do this"</strong> and solve any possible problem with it. This is the digitised version of that. For every woman, to every woman.
     </p>
     <div class="hero-actions fade-up fd4">
       <a href="explore.html" class="btn-primary">Take me there</a>
@@ -253,23 +262,18 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
   </div>
 </section>
 
-<section class="map-section" id="map">
-  <div class="section-header">
-    <div>
-      <div class="section-eyebrow">Explore</div>
-      <h2 class="section-title">Find a space <em>near you</em></h2>
-    </div>
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterMap('all',this)">All</button>
-      <button class="filter-btn" onclick="filterMap('cafe',this)">Cafe & Food</button>
-      <button class="filter-btn" onclick="filterMap('studio',this)">Studios</button>
-      <button class="filter-btn" onclick="filterMap('retail',this)">Retail</button>
-      <button class="filter-btn" onclick="filterMap('wellness',this)">Wellness</button>
-      <button class="filter-btn" onclick="filterMap('workspace',this)">Workspaces</button>
+<section class="notes-section">
+  <div class="notes-header">
+    <div class="section-eyebrow">From the women who built it</div>
+    <h2 class="manifesto-headline" style="max-width:500px;">In their own <em>words.</em></h2>
+  </div>
+  <div class="notes-track-wrap">
+    <div class="notes-track" id="notesTrack">
+      <!-- populated by JS from Supabase, or shown as coming soon -->
     </div>
   </div>
-  <div class="map-container">
-    <div id="main-map"></div>
+  <div class="notes-coming-soon" id="notesComing" style="display:none;">
+    The first notes are on their way. Come back soon.
   </div>
 </section>
 
@@ -357,84 +361,67 @@ footer{background:var(--text-dark);padding:2.5rem 5rem;display:flex;align-items:
 const SUPABASE_URL='https://xyzgqmghddzirnafwodi.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5emdxbWdoZGR6aXJuYWZ3b2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTM2MTcsImV4cCI6MjA5NTUyOTYxN30.4laPWa2_obOOAkTeFWDg4FGI9LDKDrHcY9pZlWAaAlo';
 
-const typeColor={'cafe':'#FF6C41','cafe & food':'#FF6C41','retail':'#7B2F25','retail & fashion':'#7B2F25','studio':'#4A6B4A','studio & craft':'#4A6B4A','wellness':'#B05878','wellness & health':'#B05878','workspace':'#4A6B8A','community space':'#4A6B8A'};
-function getTypeColor(t){return typeColor[t?.toLowerCase()]||'#FF6C41';}
-
 // HERO MAP
 const hMap=L.map('hero-map',{center:[19.076,72.8777],zoom:12,zoomControl:false,scrollWheelZoom:false,dragging:false,attributionControl:false});
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(hMap);
-
 const cityViews=[
   {center:[19.076,72.8777],zoom:12},{center:[28.6139,77.2090],zoom:12},
   {center:[12.9716,77.5946],zoom:12},{center:[22.5726,88.3639],zoom:12},
   {center:[15.2993,74.1240],zoom:12},
 ];
 let cityIndex=0;
-function cycleCity(){
-  cityIndex=(cityIndex+1)%cityViews.length;
-  const c=cityViews[cityIndex];
-  hMap.flyTo(c.center,c.zoom,{duration:2.5,easeLinearity:0.25});
-}
+function cycleCity(){cityIndex=(cityIndex+1)%cityViews.length;const c=cityViews[cityIndex];hMap.flyTo(c.center,c.zoom,{duration:2.5,easeLinearity:0.25});}
 setInterval(cycleCity,4000);
 
-// MAIN MAP
-const mMap=L.map('main-map',{center:[19.05,72.84],zoom:12,scrollWheelZoom:false});
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO'}).addTo(mMap);
-let ml=L.layerGroup().addTo(mMap);
-let allPlaces=[];
-
 async function loadPlaces(){
+  let places=[];
   try{
     const res=await fetch(SUPABASE_URL+'/rest/v1/submissions?status=eq.approved&select=*',{
       headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
     });
-    const data=await res.json();
-    allPlaces=data.map(p=>({
-      id:p.id,
-      name:p.space_name||'',
-      area:p.neighbourhood||'',
-      city:p.city||'',
-      type:(p.category||'').toLowerCase(),
-      lat:parseFloat(p.lat)||null,
-      lng:parseFloat(p.lng)||null,
-      desc:p.personal_note||'',
-    }));
-  }catch(e){allPlaces=[];}
-  renderMapMarkers('all');
-  renderRecentPins();
+    places=await res.json();
+  }catch(e){places=[];}
+
+  renderNotes(places);
+  renderRecentPins(places);
 }
 
-function renderMapMarkers(f){
-  ml.clearLayers();
-  const filtered=f==='all'?allPlaces:allPlaces.filter(p=>p.type.includes(f));
-  filtered.forEach(p=>{
-    if(!p.lat||!p.lng)return;
-    const col=getTypeColor(p.type);
-    const mk=L.marker([p.lat,p.lng],{icon:L.divIcon({className:'',html:'<div style="width:13px;height:13px;background:'+col+';border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);cursor:pointer"></div>',iconSize:[13,13],iconAnchor:[6,6]})});
-    mk.bindPopup('<div class="popup-name">'+p.name+'</div><div class="popup-area">'+p.area+(p.city?', '+p.city:'')+'</div>',{maxWidth:200});
-    mk.addTo(ml);
-  });
+function renderNotes(places){
+  const track=document.getElementById('notesTrack');
+  const coming=document.getElementById('notesComing');
+  const withNotes=places.filter(p=>p.personal_note&&p.personal_note.trim()!=='');
+  if(withNotes.length===0){
+    track.style.display='none';
+    coming.style.display='block';
+    return;
+  }
+  // duplicate for seamless loop
+  const all=[...withNotes,...withNotes];
+  track.innerHTML=all.map(p=>`
+    <div class="note-card">
+      <div class="note-card-text">${p.personal_note}</div>
+      <div class="note-card-footer">
+        <div class="note-card-dot"></div>
+        <span class="note-card-name">${p.owner_name||'Anonymous'}</span>
+        ${p.space_name?'<span class="note-card-place">· '+p.space_name+'</span>':''}
+      </div>
+    </div>
+  `).join('');
 }
 
-function filterMap(type,btn){
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderMapMarkers(type);
-}
-
-function renderRecentPins(){
+function renderRecentPins(places){
   const container=document.getElementById('places-container');
-  if(!allPlaces||allPlaces.length===0){
+  if(!places||places.length===0){
     container.innerHTML='<div class="coming-soon-block"><div class="coming-soon-title">The first pins are coming.</div><p class="coming-soon-sub">This map grows by word of mouth, one woman at a time. The first spaces are being verified now. Come back soon.</p><a href="form.html" class="btn-primary">Own a space? Pin it.</a></div>';
     return;
   }
-  const recent=[...allPlaces].slice(-6).reverse();
+  const recent=[...places].slice(-6).reverse();
   container.innerHTML='<div class="places-grid">'+recent.map(p=>`
     <a class="place-card" href="explore.html">
-      <div class="place-type">${p.type}</div>
-      <div class="place-name">${p.name}</div>
-      <div class="place-area">${p.area}${p.city?', '+p.city:''}</div>
-      <div class="place-desc">${p.desc}</div>
+      <div class="place-type">${p.category||''}</div>
+      <div class="place-name">${p.space_name||''}</div>
+      <div class="place-area">${p.neighbourhood?p.neighbourhood+', ':''}${p.city||''}</div>
+      <div class="place-desc">${p.personal_note||''}</div>
       <div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#B07060;font-size:14px">&#x2192;</span></div>
     </a>`).join('')+'</div><div class="see-all"><a href="explore.html" class="btn-primary">See All Spaces</a></div>';
 }
@@ -442,7 +429,6 @@ function renderRecentPins(){
 window.addEventListener('scroll',()=>{
   document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);
 });
-
 window.addEventListener('load',loadPlaces);
 </script>
 </body>
