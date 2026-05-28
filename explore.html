@@ -4,137 +4,128 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Explore — PinD</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Favicon: teardrop location pin -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6C41'/%3E%3Cstop offset='100%25' stop-color='%23FF3C2D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 2C10.477 2 6 6.477 6 12c0 7.5 10 18 10 18s10-10.5 10-18c0-5.523-4.477-10-10-10z' fill='url(%23fg)'/%3E%3Ccircle cx='16' cy='12' r='3.5' fill='white'/%3E%3C/svg%3E">
-
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --orange:#FF6C41;
-  --coral:#FF3C2D;
-  --ember:#7B2F25;
-  --peach:#FFCDB8;
-  --blush:#FFF0EC;
-  --cream:#FFFAF7;
-  --text-dark:#1C0A06;
-  --text-mid:#5C2D1E;
-  --text-light:#B07060;
-}
-html,body{height:100%;overflow:hidden}
-body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--text-dark)}
+:root{--orange:#FF6C41;--coral:#FF3C2D;--ember:#7B2F25;--peach:#FFCDB8;--blush:#FFF0EC;--cream:#FFFAF7;--text-dark:#1C0A06;--text-mid:#5C2D1E;--text-light:#B07060;--border:rgba(255,108,65,0.14);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:"Karla",sans-serif;background:var(--cream);color:var(--text-dark);}
 
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 2rem;height:60px;
-  background:rgba(255,250,247,0.96);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(255,108,65,0.12);
-}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(255,250,247,0.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,108,65,0.12);}
 .nav-logo{display:flex;align-items:center;text-decoration:none;}
 .nav-logo svg{height:34px;width:auto;}
-.nav-links{display:flex;align-items:center;gap:1.25rem;list-style:none}
-.nav-links a{text-decoration:none;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);transition:color 0.2s}
-.nav-links a:hover{color:var(--orange)}
-.nav-cta{background:var(--orange)!important;color:white!important;padding:8px 20px;border-radius:2px;transition:background 0.2s!important}
-.nav-cta:hover{background:var(--ember)!important;color:white!important}
+.nav-links{display:flex;align-items:center;gap:1.25rem;list-style:none;}
+.nav-links a{text-decoration:none;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);transition:color 0.2s;font-family:"Karla",sans-serif;}
+.nav-links a:hover{color:var(--orange);}
+.nav-cta{background:var(--orange)!important;color:white!important;padding:8px 20px;border-radius:2px;}
+.nav-cta:hover{background:var(--ember)!important;}
 
+/* LAYOUT */
 .page{position:fixed;top:60px;left:0;right:0;bottom:0;display:flex;}
 #map{position:absolute;inset:0;z-index:0;}
 
-.panel{
-  position:relative;z-index:10;width:380px;flex-shrink:0;
-  display:flex;flex-direction:column;
-  background:rgba(255,250,247,0.97);
-  backdrop-filter:blur(16px);
-  border-right:1px solid rgba(255,108,65,0.1);
-  height:100%;overflow:hidden;
-}
+/* LEFT PANEL */
+.panel{position:relative;z-index:10;width:400px;flex-shrink:0;display:flex;flex-direction:column;background:var(--orange);height:100%;overflow:hidden;}
 
-.panel-head{padding:1.5rem 1.5rem 1rem;border-bottom:1px solid rgba(255,108,65,0.08);flex-shrink:0;}
-.panel-eyebrow{font-size:9px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);margin-bottom:0.75rem;display:flex;align-items:center;gap:8px;}
-.panel-eyebrow::before{content:"";width:18px;height:1px;background:var(--orange);display:block}
-.panel-title{font-family:"Cormorant Garamond",serif;font-size:1.6rem;font-weight:300;line-height:1.1;color:var(--text-dark);margin-bottom:1.1rem;}
-.panel-title em{font-style:italic;color:var(--coral)}
+/* PANEL TOP — fixed orange header */
+.panel-top{flex-shrink:0;padding:1.75rem 1.5rem 1.25rem;background:var(--orange);}
+.panel-title{font-family:"Fraunces",serif;font-size:1.55rem;font-weight:300;line-height:1.15;color:white;margin-bottom:1.1rem;}
+.panel-title em{font-style:italic;color:rgba(255,255,255,0.75);}
 
-.search-wrap{position:relative;margin-bottom:0.75rem}
-.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-light);pointer-events:none;}
-#searchInput{width:100%;padding:0.65rem 1rem 0.65rem 2.5rem;border:1px solid rgba(255,108,65,0.18);border-radius:2px;font-family:"DM Sans",sans-serif;font-size:13px;color:var(--text-dark);background:white;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
-#searchInput:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,108,65,0.08)}
-#searchInput::placeholder{color:var(--text-light)}
+/* SEARCH */
+.search-wrap{position:relative;margin-bottom:1rem;}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.6);pointer-events:none;}
+#searchInput{width:100%;padding:0.65rem 1rem 0.65rem 2.5rem;border:1px solid rgba(255,255,255,0.25);border-radius:2px;font-family:"Karla",sans-serif;font-size:13px;color:white;background:rgba(255,255,255,0.15);outline:none;transition:border-color 0.2s,background 0.2s;cursor:pointer;}
+#searchInput::placeholder{color:rgba(255,255,255,0.55);}
+#searchInput:focus{border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.22);}
 
-.filter-row{display:flex;gap:0.35rem;flex-wrap:wrap}
-.filter-pill{background:none;border:1px solid rgba(92,45,30,0.18);color:var(--text-mid);font-family:"DM Sans",sans-serif;font-size:10px;font-weight:400;letter-spacing:0.07em;text-transform:uppercase;padding:5px 11px;border-radius:20px;cursor:pointer;transition:all 0.18s;}
-.filter-pill:hover{border-color:var(--orange);color:var(--orange)}
-.filter-pill.active{background:var(--orange);border-color:var(--orange);color:white}
+/* FILTER PILLS */
+.filter-row{display:flex;gap:0.35rem;flex-wrap:wrap;margin-bottom:0.75rem;}
+.filter-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);color:rgba(255,255,255,0.8);font-family:"Karla",sans-serif;font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;padding:5px 12px;border-radius:20px;cursor:pointer;transition:all 0.18s;}
+.filter-pill:hover{background:rgba(255,255,255,0.22);color:white;}
+.filter-pill.active{background:white;border-color:white;color:var(--orange);}
 
-.city-row{display:flex;gap:0.35rem;flex-wrap:wrap;padding:0.75rem 1.5rem 0;flex-shrink:0;}
-.city-pill{background:none;border:1px solid rgba(255,108,65,0.25);color:var(--text-mid);font-family:"DM Sans",sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:5px 12px;border-radius:20px;cursor:pointer;transition:all 0.18s;}
-.city-pill:hover{border-color:var(--orange);color:var(--orange)}
-.city-pill.active{background:var(--orange);border-color:var(--orange);color:white}
+/* CITY PILLS */
+.city-row{display:flex;gap:0.3rem;flex-wrap:wrap;padding:0 1.5rem 0.75rem;}
+.city-pill{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.75);font-family:"Karla",sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:4px 11px;border-radius:20px;cursor:pointer;transition:all 0.18s;}
+.city-pill:hover{background:rgba(255,255,255,0.2);color:white;}
+.city-pill.active{background:var(--ember);border-color:var(--ember);color:white;}
 
-.neigh-row{display:flex;gap:0.3rem;flex-wrap:wrap;padding:0.75rem 1.5rem;border-bottom:1px solid rgba(255,108,65,0.06);flex-shrink:0;}
-.neigh-pill{background:none;border:1px solid rgba(92,45,30,0.12);color:var(--text-light);font-family:"DM Sans",sans-serif;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border-radius:20px;cursor:pointer;transition:all 0.18s;}
-.neigh-pill:hover{border-color:var(--orange);color:var(--text-mid)}
-.neigh-pill.active{background:var(--ember);border-color:var(--ember);color:var(--peach)}
+/* NEIGH PILLS */
+.neigh-row{display:flex;gap:0.3rem;flex-wrap:wrap;padding:0 1.5rem 0.75rem;border-bottom:1px solid rgba(255,255,255,0.1);}
+.neigh-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);font-family:"Karla",sans-serif;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border-radius:20px;cursor:pointer;transition:all 0.18s;}
+.neigh-pill:hover{background:rgba(255,255,255,0.18);color:white;}
+.neigh-pill.active{background:var(--ember);border-color:var(--ember);color:var(--peach);}
 
-.results-meta{padding:0.6rem 1.5rem;font-size:11px;color:var(--text-light);letter-spacing:0.04em;border-bottom:1px solid rgba(255,108,65,0.06);flex-shrink:0;}
-.results-meta span{color:var(--orange);font-weight:500}
+/* RESULTS META */
+.results-meta{padding:0.6rem 1.5rem;font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:0.04em;font-family:"Karla",sans-serif;flex-shrink:0;}
+.results-meta span{color:white;font-weight:500;}
 
-.cards-scroll{flex:1;overflow-y:auto;padding:0.75rem 1rem 2rem;}
-.cards-scroll::-webkit-scrollbar{width:3px}
-.cards-scroll::-webkit-scrollbar-track{background:transparent}
-.cards-scroll::-webkit-scrollbar-thumb{background:rgba(255,108,65,0.2);border-radius:2px}
+/* CARDS SCROLL */
+.cards-scroll{flex:1;overflow-y:auto;padding:0.5rem 1rem 2rem;background:var(--orange);}
+.cards-scroll::-webkit-scrollbar{width:3px;}
+.cards-scroll::-webkit-scrollbar-track{background:transparent;}
+.cards-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:2px;}
 
-.place-card{background:white;border:1px solid rgba(255,108,65,0.1);border-radius:3px;padding:1rem 1.1rem;margin-bottom:0.5rem;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;gap:0.3rem;}
-.place-card:hover,.place-card.active{border-color:var(--orange);box-shadow:0 4px 16px rgba(255,108,65,0.1);transform:translateX(2px);}
-.place-card.active{background:var(--blush)}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem}
-.card-type{font-size:8px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);}
-.owner-dot{width:5px;height:5px;border-radius:50%;background:var(--ember);flex-shrink:0;margin-top:4px;}
-.card-name{font-family:"Cormorant Garamond",serif;font-size:1.05rem;font-weight:400;line-height:1.2;color:var(--text-dark);}
-.card-area{font-size:10px;font-weight:300;color:var(--text-light);display:flex;align-items:center;gap:4px;}
-.card-area::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--orange);display:inline-block;opacity:0.5;}
-.card-desc{font-size:11.5px;font-weight:300;line-height:1.6;color:var(--text-mid);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+/* PLACE CARD */
+.place-card{background:white;border-radius:3px;padding:1.1rem 1.2rem;margin-bottom:0.6rem;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;gap:0.3rem;border:2px solid transparent;}
+.place-card:hover,.place-card.active{border-color:var(--ember);box-shadow:0 4px 16px rgba(123,47,37,0.12);}
+.card-type{font-size:8px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);font-family:"Karla",sans-serif;}
+.card-name{font-family:"Fraunces",serif;font-size:1.1rem;font-weight:400;line-height:1.2;color:var(--text-dark);}
+.card-area{font-size:10px;font-weight:300;color:var(--text-light);font-family:"Karla",sans-serif;display:flex;align-items:center;gap:4px;}
+.card-area::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--orange);display:inline-block;opacity:0.6;}
+.card-note{font-size:11.5px;font-weight:300;line-height:1.6;color:var(--text-mid);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:"Karla",sans-serif;margin-top:2px;}
 
+/* EMPTY / LOADING */
 .empty-state{text-align:center;padding:3rem 1.5rem;}
-.empty-icon{font-size:2rem;margin-bottom:1rem;opacity:0.4}
-.empty-text{font-family:"Cormorant Garamond",serif;font-size:1.2rem;font-weight:300;font-style:italic;color:var(--text-light)}
+.empty-icon{font-size:2rem;margin-bottom:1rem;opacity:0.5;}
+.empty-text{font-family:"Fraunces",serif;font-size:1.15rem;font-weight:300;font-style:italic;color:rgba(255,255,255,0.6);}
+.loading-state{text-align:center;padding:3rem 1.5rem;font-family:"Fraunces",serif;font-size:1.1rem;font-style:italic;font-weight:300;color:rgba(255,255,255,0.6);}
 
-.map-hint{position:absolute;bottom:1.5rem;right:1.5rem;z-index:10;background:rgba(255,250,247,0.95);backdrop-filter:blur(10px);border:1px solid rgba(255,108,65,0.15);border-radius:3px;padding:0.6rem 1rem;font-size:11px;color:var(--text-mid);letter-spacing:0.04em;pointer-events:none;box-shadow:0 4px 16px rgba(123,47,37,0.08);}
+/* SEARCH MODAL */
+.search-modal{display:none;position:fixed;inset:0;z-index:3000;background:rgba(28,10,6,0.6);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding-top:120px;}
+.search-modal.open{display:flex;}
+.search-box{background:white;border-radius:4px;width:100%;max-width:560px;box-shadow:0 24px 60px rgba(28,10,6,0.18);overflow:hidden;}
+.search-input-wrap{position:relative;border-bottom:1px solid var(--border);}
+.search-input-icon{position:absolute;left:1.25rem;top:50%;transform:translateY(-50%);color:var(--text-light);}
+#modalSearchInput{width:100%;padding:1.1rem 1.25rem 1.1rem 3rem;font-family:"Karla",sans-serif;font-size:1rem;color:var(--text-dark);border:none;outline:none;background:transparent;}
+#modalSearchInput::placeholder{color:var(--text-light);}
+.search-results-list{max-height:400px;overflow-y:auto;}
+.search-result-item{padding:0.9rem 1.25rem;cursor:pointer;transition:background 0.15s;border-bottom:1px solid rgba(255,108,65,0.07);display:flex;flex-direction:column;gap:3px;}
+.search-result-item:hover{background:var(--blush);}
+.sr-name{font-family:"Fraunces",serif;font-size:1rem;font-weight:400;color:var(--text-dark);}
+.sr-meta{font-size:11px;color:var(--text-light);font-family:"Karla",sans-serif;}
+.search-empty{padding:2rem 1.25rem;font-family:"Fraunces",serif;font-size:1rem;font-style:italic;font-weight:300;color:var(--text-light);text-align:center;}
+.search-close{padding:0.75rem 1.25rem;border-top:1px solid var(--border);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);text-align:center;cursor:pointer;font-family:"Karla",sans-serif;transition:color 0.2s;}
+.search-close:hover{color:var(--orange);}
 
-.leaflet-popup-content-wrapper{border-radius:3px!important;font-family:"DM Sans",sans-serif!important;box-shadow:0 8px 28px rgba(0,0,0,0.1)!important;border:1px solid rgba(255,108,65,0.15)!important}
-.leaflet-popup-content{margin:12px 14px!important}
-.popup-type{font-size:8px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#FF6C41;margin-bottom:3px}
-.popup-name{font-family:"Cormorant Garamond",serif;font-size:1.05rem;font-weight:400;color:#1C0A06;margin-bottom:2px}
-.popup-area{font-size:10px;color:#B07060}
+/* DETAIL PANEL (slide in from right) */
+.detail-panel{position:absolute;top:0;right:0;bottom:0;width:380px;z-index:20;background:var(--cream);border-left:1px solid rgba(255,108,65,0.12);box-shadow:-8px 0 32px rgba(28,10,6,0.1);transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;overflow:hidden;}
+.detail-panel.open{transform:translateX(0);}
+.detail-close{position:absolute;top:1.1rem;right:1.1rem;width:32px;height:32px;border-radius:50%;background:var(--orange);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:white;font-size:0.9rem;transition:background 0.2s;z-index:2;font-family:"Karla",sans-serif;}
+.detail-close:hover{background:var(--coral);}
+.detail-scroll{flex:1;overflow-y:auto;padding:2rem 1.75rem 3rem;}
+.detail-scroll::-webkit-scrollbar{width:3px;}
+.detail-scroll::-webkit-scrollbar-thumb{background:rgba(255,108,65,0.2);border-radius:2px;}
+.detail-note{font-family:"Fraunces",serif;font-size:1.25rem;font-weight:300;font-style:italic;line-height:1.7;color:var(--text-mid);margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,108,65,0.1);}
+.detail-name{font-family:"Fraunces",serif;font-size:1.85rem;font-weight:300;color:var(--text-dark);line-height:1.1;margin-bottom:0.4rem;}
+.detail-area{font-size:12px;font-weight:300;color:var(--text-light);font-family:"Karla",sans-serif;display:flex;align-items:center;gap:5px;margin-bottom:1.25rem;}
+.detail-area::before{content:"📍";font-size:10px;}
+.detail-type{display:inline-block;font-size:9px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--ember);background:rgba(123,47,37,0.07);padding:4px 10px;border-radius:2px;margin-bottom:1.5rem;font-family:"Karla",sans-serif;}
+.detail-insta{display:inline-flex;align-items:center;gap:8px;color:var(--orange);text-decoration:none;font-size:13px;font-family:"Karla",sans-serif;border-bottom:1px solid rgba(255,108,65,0.3);padding-bottom:2px;transition:color 0.2s;}
+.detail-insta:hover{color:var(--coral);}
+.detail-badge{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,108,65,0.08);font-size:9px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);background:rgba(123,47,37,0.06);padding:8px 14px;border-radius:2px;display:inline-block;font-family:"Karla",sans-serif;}
 
-.modal-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(28,10,6,0.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:2rem;}
-.modal-overlay.open{display:flex}
-.modal{background:var(--cream);border-radius:4px;max-width:520px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 24px 60px rgba(28,10,6,0.18);border:1px solid rgba(255,108,65,0.12);position:relative;}
-.modal-close{position:absolute;top:1.25rem;right:1.25rem;background:none;border:none;cursor:pointer;color:var(--text-light);font-size:1.1rem;line-height:1;transition:color 0.2s;font-family:"DM Sans",sans-serif;}
-.modal-close:hover{color:var(--text-dark)}
-.modal-type{padding:1.75rem 1.75rem 0;font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem;}
-.modal-name{padding:0 1.75rem;font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:300;line-height:1.1;color:var(--text-dark);margin-bottom:0.35rem;}
-.modal-location{padding:0 1.75rem;font-size:12px;font-weight:300;color:var(--text-light);display:flex;align-items:center;gap:5px;margin-bottom:1.5rem;}
-.modal-location::before{content:"📍";font-size:10px}
-.modal-divider{height:1px;background:rgba(255,108,65,0.08);margin:0 1.75rem 1.5rem}
-.modal-owner-note{padding:0 1.75rem 1.5rem;}
-.modal-note-label{font-size:9px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--ember);margin-bottom:0.75rem;}
-.modal-note-text{font-family:"Cormorant Garamond",serif;font-size:1.15rem;font-weight:300;font-style:italic;line-height:1.75;color:var(--text-mid);}
-.modal-desc{padding:0 1.75rem 1.5rem;font-size:13px;font-weight:300;line-height:1.75;color:var(--text-mid);}
-.modal-owner-row{padding:1.25rem 1.75rem;border-top:1px solid rgba(255,108,65,0.08);display:flex;align-items:center;justify-content:space-between;}
-.modal-owner-name{font-size:12px;font-weight:400;color:var(--text-dark);}
-.modal-owner-sub{font-size:10px;color:var(--text-light);margin-top:2px}
-.modal-badge{font-size:9px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);background:rgba(123,47,37,0.07);padding:5px 12px;border-radius:2px;}
-.modal::-webkit-scrollbar{width:3px}
-.modal::-webkit-scrollbar-thumb{background:rgba(255,108,65,0.2);border-radius:2px}
+.map-hint{position:absolute;bottom:1.5rem;right:1.5rem;z-index:10;background:rgba(255,250,247,0.95);backdrop-filter:blur(10px);border:1px solid rgba(255,108,65,0.15);border-radius:3px;padding:0.6rem 1rem;font-size:11px;color:var(--text-mid);letter-spacing:0.04em;pointer-events:none;box-shadow:0 4px 16px rgba(123,47,37,0.08);font-family:"Karla",sans-serif;}
+
+.leaflet-popup-content-wrapper{border-radius:3px!important;font-family:"Karla",sans-serif!important;box-shadow:0 8px 28px rgba(0,0,0,0.1)!important;border:1px solid rgba(255,108,65,0.15)!important;}
+.leaflet-popup-content{margin:12px 14px!important;}
+.popup-name{font-family:"Fraunces",serif;font-size:1rem;font-weight:400;color:#1C0A06;margin-bottom:2px;}
+.popup-area{font-size:10px;color:#B07060;}
 </style>
 </head>
 <body>
@@ -142,17 +133,9 @@ nav{
 <nav>
   <a class="nav-logo" href="index.html" aria-label="PinD Home">
     <svg height="34" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#FF6C41"/>
-          <stop offset="100%" stop-color="#FF3C2D"/>
-        </linearGradient>
-      </defs>
-      <text x="4" y="68" font-family="Cormorant Garamond, serif" font-size="72" font-style="italic" font-weight="400" fill="url(#ng)">PinD</text>
-      <g transform="translate(72, 2)">
-        <path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="url(#ng)"/>
-        <circle cx="9" cy="6" r="2.2" fill="white"/>
-      </g>
+      <defs><linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6C41"/><stop offset="100%" stop-color="#FF3C2D"/></linearGradient></defs>
+      <text x="4" y="68" font-family="Fraunces, serif" font-size="72" font-style="italic" font-weight="300" fill="url(#ng)">PinD</text>
+      <g transform="translate(72, 2)"><path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="url(#ng)"/><circle cx="9" cy="6" r="2.2" fill="white"/></g>
     </svg>
   </a>
   <ul class="nav-links">
@@ -163,13 +146,14 @@ nav{
 
 <div class="page">
   <div id="map"></div>
+
+  <!-- LEFT PANEL -->
   <div class="panel">
-    <div class="panel-head">
-      <div class="panel-eyebrow">Explore</div>
-      <h1 class="panel-title">Every pin is a woman<br>who <em>built something.</em></h1>
+    <div class="panel-top">
+      <div class="panel-title">Every pin is a woman<br>who <em>built something.</em></div>
       <div class="search-wrap">
         <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="searchInput" placeholder="Search by name or area…" oninput="applyFilters()">
+        <input type="text" id="searchInput" placeholder="Search by name or area…" readonly onclick="openSearch()">
       </div>
       <div class="filter-row">
         <button class="filter-pill active" onclick="setCategory('all',this)">All</button>
@@ -185,59 +169,38 @@ nav{
     <div class="results-meta" id="resultsMeta"></div>
     <div class="cards-scroll" id="cardsScroll"></div>
   </div>
-  <div class="map-hint">Click a pin to explore</div>
-</div>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModalDirect()">✕</button>
-    <div class="modal-type" id="mType"></div>
-    <div class="modal-name" id="mName"></div>
-    <div class="modal-location" id="mLocation"></div>
-    <div class="modal-divider"></div>
-    <div class="modal-owner-note">
-      <div class="modal-note-label">A note from the owner</div>
-      <div class="modal-note-text" id="mNote"></div>
-    </div>
-    <div class="modal-desc" id="mDesc"></div>
-    <div class="modal-owner-row">
-      <div>
-        <div class="modal-owner-name" id="mOwner"></div>
-        <div class="modal-owner-sub">Owner</div>
-      </div>
-      <div class="modal-badge">Women-Owned</div>
+  <div class="map-hint">Click a pin to explore</div>
+
+  <!-- DETAIL PANEL -->
+  <div class="detail-panel" id="detailPanel">
+    <button class="detail-close" onclick="closeDetail()">✕</button>
+    <div class="detail-scroll">
+      <div class="detail-note" id="dNote"></div>
+      <div class="detail-name" id="dName"></div>
+      <div class="detail-area" id="dArea"></div>
+      <div class="detail-type" id="dType"></div>
+      <div id="dInstaWrap"></div>
+      <div style="margin-top:2rem;"><span class="detail-badge">Women-Owned</span></div>
     </div>
   </div>
 </div>
 
+<!-- SEARCH MODAL -->
+<div class="search-modal" id="searchModal" onclick="handleSearchOverlay(event)">
+  <div class="search-box">
+    <div class="search-input-wrap">
+      <svg class="search-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="modalSearchInput" placeholder="Search by name, area or city…" oninput="runSearch()" autofocus>
+    </div>
+    <div class="search-results-list" id="searchResultsList"></div>
+    <div class="search-close" onclick="closeSearch()">Close search</div>
+  </div>
+</div>
+
 <script>
-const places=[
-  {id:1,name:"Bombay Perfumery",city:"Mumbai",area:"Kala Ghoda",type:"retail",lat:18.9281,lng:72.8312,owner:"Rooshna",desc:"A boutique fragrance studio where every scent tells a story. Owned and created entirely by women.",ownerNote:"I started this because I wanted to smell like myself, not like a department store. Every bottle here is a story I wanted to tell."},
-  {id:2,name:"The Yoga House",city:"Mumbai",area:"Prabhadevi",type:"wellness",lat:19.0148,lng:72.8325,owner:"Sunaina",desc:"A sanctuary for mindful practice. A space where the door is always open.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:3,name:"Araku Coffee",city:"Mumbai",area:"Bandra",type:"cafe",lat:19.0596,lng:72.8295,owner:"Sneha",desc:"Origin coffee from Araku Valley, brought to the city by a women-led cooperative.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:4,name:"Nirmala's Kitchen",city:"Mumbai",area:"Dharavi",type:"cafe",lat:19.0435,lng:72.8562,owner:"Nirmala",desc:"A home kitchen turned community table. Nirmala cooks what she grew up eating.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:5,name:"Studio Kohl",city:"Mumbai",area:"Worli",type:"studio",lat:19.0069,lng:72.8180,owner:"Priya",desc:"An art studio, darkroom, and gathering space for women who make things.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:6,name:"The Ink Room",city:"Mumbai",area:"Colaba",type:"workspace",lat:18.9067,lng:72.8147,owner:"Ria & Tara",desc:"A members writing room. Founded by two journalists who needed a room of their own.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:7,name:"Saee's Flower Studio",city:"Mumbai",area:"Juhu",type:"retail",lat:19.1075,lng:72.8263,owner:"Saee",desc:"Seasonal florals, grown with intention. No plastic, no waste, no shortcuts.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:8,name:"Prana Wellness",city:"Mumbai",area:"Andheri",type:"wellness",lat:19.1197,lng:72.8464,owner:"Dr. Leena",desc:"Integrative health clinic run entirely by women practitioners.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:9,name:"Café Lota",city:"Delhi",area:"Pragati Maidan",type:"cafe",lat:28.6127,lng:77.2427,owner:"Aditi",desc:"A design-forward café inside a museum. The food is as considered as the art.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:10,name:"Ogaan",city:"Delhi",area:"Hauz Khas",type:"retail",lat:28.5494,lng:77.2001,owner:"Kavita",desc:"A multi-designer boutique that has championed Indian designers for three decades.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:11,name:"The Writing Room",city:"Delhi",area:"Khan Market",type:"workspace",lat:28.5998,lng:77.2260,owner:"Meera",desc:"A quiet membership space for writers, thinkers, and people who need to concentrate.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:12,name:"Hole in the Wall Café",city:"Bangalore",area:"Koramangala",type:"cafe",lat:12.9352,lng:77.6245,owner:"Divya",desc:"The city's most beloved tiny café. Known for its handwritten menus and homemade bread.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:13,name:"Krama Yoga",city:"Bangalore",area:"Indiranagar",type:"wellness",lat:12.9784,lng:77.6408,owner:"Nandita",desc:"A studio rooted in traditional Mysore Ashtanga. No performance. Just practice.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:14,name:"Lightbox Studio",city:"Bangalore",area:"HSR Layout",type:"studio",lat:12.9121,lng:77.6446,owner:"Ananya",desc:"Photography and film studio owned and operated by women. Open for shoots and workshops.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:15,name:"Kasha Ki Aasha",city:"Kolkata",area:"Park Street",type:"cafe",lat:22.5512,lng:88.3516,owner:"Joanna",desc:"A rooftop café run by a women's collective. Proceeds fund girls' education.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:16,name:"Sasha",city:"Kolkata",area:"Park Street",type:"retail",lat:22.5520,lng:88.3510,owner:"Sasha Collective",desc:"A craft store and social enterprise supporting women artisans across Bengal.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:17,name:"Olive Bistro",city:"Hyderabad",area:"Banjara Hills",type:"cafe",lat:17.4157,lng:78.4478,owner:"Farida",desc:"A slow food bistro with a courtyard. Everything is seasonal, local, and made from scratch.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:18,name:"Studio Seams",city:"Hyderabad",area:"Jubilee Hills",type:"studio",lat:17.4319,lng:78.4085,owner:"Reshma",desc:"A fashion studio and atelier. Women designers, women tailors, women clients.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:19,name:"The Flour Works",city:"Pune",area:"Kalyani Nagar",type:"cafe",lat:18.5489,lng:73.9022,owner:"Shruti",desc:"A bakery-café built around sourdough and community. Bread classes every Sunday.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:20,name:"Studio Mati",city:"Pune",area:"Koregaon Park",type:"studio",lat:18.5362,lng:73.8939,owner:"Pooja",desc:"Ceramics studio with open kiln days. Walk in and make something.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:21,name:"Sublime",city:"Goa",area:"Anjuna",type:"cafe",lat:15.5727,lng:73.7414,owner:"Sabrina",desc:"A beachside café that has been a women's gathering spot for over a decade.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:22,name:"The Mango Tree",city:"Goa",area:"Panjim",type:"workspace",lat:15.4989,lng:73.8278,owner:"Clara",desc:"A co-working space inside a Portuguese-era house. Cool floors, strong wifi, good coffee.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:23,name:"The Hive",city:"Noida",area:"Sector 18",type:"workspace",lat:28.5708,lng:77.3260,owner:"Ruchika",desc:"A women-first co-working space with creche facilities and flexible memberships.",ownerNote:"PASTE OWNER NOTE HERE"},
-  {id:24,name:"Roots Café",city:"Gurgaon",area:"DLF Phase 4",type:"cafe",lat:28.4771,lng:77.0887,owner:"Tanya",desc:"A farm-to-table café sourcing entirely from women-led farms in Haryana.",ownerNote:"PASTE OWNER NOTE HERE"},
-];
+const SUPABASE_URL='https://xyzgqmghddzirnafwodi.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5emdxbWdoZGR6aXJuYWZ3b2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTM2MTcsImV4cCI6MjA5NTUyOTYxN30.4laPWa2_obOOAkTeFWDg4FGI9LDKDrHcY9pZlWAaAlo';
 
 const cityCoords={
   Mumbai:{center:[19.05,72.87],zoom:12},
@@ -251,65 +214,118 @@ const cityCoords={
   Gurgaon:{center:[28.47,77.09],zoom:12},
 };
 
-const typeColor={cafe:"#FF6C41",retail:"#7B2F25",studio:"#4A6B4A",wellness:"#B05878",workspace:"#4A6B8A"};
+const typeColor={
+  'cafe':'#FF6C41','cafe & food':'#FF6C41',
+  'retail':'#7B2F25','retail & fashion':'#7B2F25',
+  'studio':'#4A6B4A','studio & craft':'#4A6B4A',
+  'wellness':'#B05878','wellness & health':'#B05878',
+  'workspace':'#4A6B8A','community space':'#4A6B8A',
+  'books & art':'#6B4A8A','shelter & support':'#8A6B4A',
+};
 
-let activeCity="Mumbai";
-let activeCategory="all";
-let activeNeigh="all";
+function getTypeColor(t){return typeColor[t?.toLowerCase()]||'#FF6C41';}
+
+let allPlaces=[];
+let activeCity='Mumbai';
+let activeCategory='all';
+let activeNeigh='all';
 let activeCardId=null;
 let markers={};
 
-const map=L.map("map",{center:[19.05,72.87],zoom:12,zoomControl:false,attributionControl:false});
-L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{attribution:"&copy; OpenStreetMap &copy; CARTO"}).addTo(map);
-L.control.zoom({position:"bottomright"}).addTo(map);
+// MAP
+const map=L.map('map',{center:[19.05,72.87],zoom:12,zoomControl:false,attributionControl:false});
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO'}).addTo(map);
+L.control.zoom({position:'bottomright'}).addTo(map);
 
-const cities=Object.keys(cityCoords);
-const cityRow=document.getElementById("cityRow");
-cities.forEach(c=>{
-  const btn=document.createElement("button");
-  btn.className="city-pill"+(c==="Mumbai"?" active":"");
-  btn.textContent=c;
-  btn.onclick=()=>setCity(c,btn);
-  cityRow.appendChild(btn);
-});
+// FETCH FROM SUPABASE
+async function fetchPlaces(){
+  document.getElementById('cardsScroll').innerHTML='<div class="loading-state">Finding spaces…</div>';
+  try{
+    const res=await fetch(SUPABASE_URL+'/rest/v1/submissions?status=eq.approved&select=*',{
+      headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
+    });
+    if(!res.ok)throw new Error('fetch failed');
+    allPlaces=await res.json();
+    // normalise field names
+    allPlaces=allPlaces.map((p,i)=>({
+      id:p.id||i,
+      name:p.space_name||'Unnamed',
+      city:p.city||'Mumbai',
+      area:p.neighbourhood||'',
+      type:(p.category||'other').toLowerCase(),
+      lat:parseFloat(p.lat)||null,
+      lng:parseFloat(p.lng)||null,
+      note:p.personal_note||'',
+      instagram:p.space_instagram||p.owner_instagram||'',
+      owner:p.owner_name||'',
+    }));
+  }catch(e){
+    allPlaces=[];
+  }
+  buildUI();
+}
 
-function buildNeighPills(){
-  const neighRow=document.getElementById("neighRow");
-  neighRow.innerHTML="";
-  const allBtn=document.createElement("button");
-  allBtn.className="neigh-pill active";
-  allBtn.textContent="All areas";
-  allBtn.onclick=()=>setNeigh("all",allBtn);
-  neighRow.appendChild(allBtn);
-  const neighs=[...new Set(places.filter(p=>p.city===activeCity).map(p=>p.area))].sort();
-  neighs.forEach(n=>{
-    const btn=document.createElement("button");
-    btn.className="neigh-pill";
-    btn.textContent=n;
-    btn.onclick=()=>setNeigh(n,btn);
-    neighRow.appendChild(btn);
+function buildUI(){
+  buildCityPills();
+  buildNeighPills();
+  buildMarkers();
+  applyFilters();
+}
+
+// CITY PILLS
+function buildCityPills(){
+  const row=document.getElementById('cityRow');
+  row.innerHTML='';
+  const cities=Object.keys(cityCoords);
+  cities.forEach(c=>{
+    const btn=document.createElement('button');
+    btn.className='city-pill'+(c===activeCity?' active':'');
+    btn.textContent=c;
+    btn.onclick=()=>setCity(c,btn);
+    row.appendChild(btn);
   });
 }
 
-function makeMarker(p){
-  const html=`<div style='width:12px;height:12px;background:${typeColor[p.type]};border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);cursor:pointer'></div>`;
-  const icon=L.divIcon({className:"",html,iconSize:[12,12],iconAnchor:[6,6]});
-  const mk=L.marker([p.lat,p.lng],{icon});
-  mk.bindPopup(`<div class="popup-type">${p.type}</div><div class="popup-name">${p.name}</div><div class="popup-area">${p.area}, ${p.city}</div>`,{maxWidth:180,closeButton:false});
-  mk.on("click",()=>openModal(p.id));
-  return mk;
+// NEIGH PILLS
+function buildNeighPills(){
+  const row=document.getElementById('neighRow');
+  row.innerHTML='';
+  const allBtn=document.createElement('button');
+  allBtn.className='neigh-pill active';
+  allBtn.textContent='All areas';
+  allBtn.onclick=()=>setNeigh('all',allBtn);
+  row.appendChild(allBtn);
+  const neighs=[...new Set(allPlaces.filter(p=>p.city===activeCity).map(p=>p.area))].filter(Boolean).sort();
+  neighs.forEach(n=>{
+    const btn=document.createElement('button');
+    btn.className='neigh-pill';
+    btn.textContent=n;
+    btn.onclick=()=>setNeigh(n,btn);
+    row.appendChild(btn);
+  });
 }
 
-places.forEach(p=>{ markers[p.id]=makeMarker(p); });
+// MARKERS
+function buildMarkers(){
+  Object.values(markers).forEach(m=>{if(map.hasLayer(m))map.removeLayer(m);});
+  markers={};
+  allPlaces.forEach(p=>{
+    if(!p.lat||!p.lng)return;
+    const col=getTypeColor(p.type);
+    const icon=L.divIcon({className:'',html:'<div style="width:12px;height:12px;background:'+col+';border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);cursor:pointer"></div>',iconSize:[12,12],iconAnchor:[6,6]});
+    const mk=L.marker([p.lat,p.lng],{icon});
+    mk.bindPopup('<div class="popup-name">'+p.name+'</div><div class="popup-area">'+p.area+(p.city?', '+p.city:'')+'</div>',{maxWidth:180,closeButton:false});
+    mk.on('click',()=>openDetail(p.id));
+    markers[p.id]=mk;
+  });
+}
 
 function setCity(city,btn){
-  activeCity=city;
-  activeNeigh="all";
-  activeCategory="all";
-  document.querySelectorAll(".city-pill").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  document.querySelectorAll(".filter-pill").forEach(b=>b.classList.remove("active"));
-  document.querySelector(".filter-pill").classList.add("active");
+  activeCity=city;activeNeigh='all';activeCategory='all';
+  document.querySelectorAll('.city-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
+  document.querySelector('.filter-pill').classList.add('active');
   buildNeighPills();
   const cv=cityCoords[city];
   map.flyTo(cv.center,cv.zoom,{duration:1.2});
@@ -318,26 +334,24 @@ function setCity(city,btn){
 
 function setCategory(cat,btn){
   activeCategory=cat;
-  document.querySelectorAll(".filter-pill").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
+  document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
   applyFilters();
 }
 
 function setNeigh(n,btn){
   activeNeigh=n;
-  document.querySelectorAll(".neigh-pill").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
+  document.querySelectorAll('.neigh-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
   applyFilters();
 }
 
 function applyFilters(){
-  const q=document.getElementById("searchInput").value.toLowerCase().trim();
-  const filtered=places.filter(p=>{
+  const filtered=allPlaces.filter(p=>{
     const matchCity=p.city===activeCity;
-    const matchCat=activeCategory==="all"||p.type===activeCategory;
-    const matchNeigh=activeNeigh==="all"||p.area===activeNeigh;
-    const matchQ=!q||p.name.toLowerCase().includes(q)||p.area.toLowerCase().includes(q);
-    return matchCity&&matchCat&&matchNeigh&&matchQ;
+    const matchCat=activeCategory==='all'||p.type.includes(activeCategory);
+    const matchNeigh=activeNeigh==='all'||p.area===activeNeigh;
+    return matchCity&&matchCat&&matchNeigh;
   });
   renderCards(filtered);
   renderMarkers(filtered);
@@ -345,69 +359,110 @@ function applyFilters(){
 
 function renderMarkers(filtered){
   const ids=new Set(filtered.map(p=>p.id));
-  places.forEach(p=>{
+  allPlaces.forEach(p=>{
     const mk=markers[p.id];
+    if(!mk)return;
     if(ids.has(p.id)){if(!map.hasLayer(mk))mk.addTo(map);}
     else{if(map.hasLayer(mk))map.removeLayer(mk);}
   });
 }
 
 function renderCards(filtered){
-  document.getElementById("resultsMeta").innerHTML=`<span>${filtered.length}</span> space${filtered.length!==1?"s":""} found in ${activeCity}`;
-  const scroll=document.getElementById("cardsScroll");
+  const meta=document.getElementById('resultsMeta');
+  const scroll=document.getElementById('cardsScroll');
+  meta.innerHTML='<span>'+filtered.length+'</span> space'+(filtered.length!==1?'s':'')+' found in '+activeCity;
   if(filtered.length===0){
-    scroll.innerHTML=`<div class="empty-state"><div class="empty-icon">📍</div><div class="empty-text">No spaces found.<br>Try a different search.</div></div>`;
+    scroll.innerHTML='<div class="empty-state"><div class="empty-icon">📍</div><div class="empty-text">No spaces found yet.<br>Be the first to pin one.</div></div>';
     return;
   }
   scroll.innerHTML=filtered.map(p=>`
-    <div class="place-card${activeCardId===p.id?" active":""}" id="card-${p.id}" onclick="openModal(${p.id})">
-      <div class="card-top"><div class="card-type">${p.type}</div><div class="owner-dot"></div></div>
+    <div class="place-card${activeCardId===p.id?' active':''}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+      <div class="card-type">${p.type}</div>
       <div class="card-name">${p.name}</div>
-      <div class="card-area">${p.area}, ${p.city}</div>
-      <div class="card-desc">${p.desc}</div>
+      <div class="card-area">${p.area}${p.city?', '+p.city:''}</div>
+      ${p.note?'<div class="card-note">'+p.note+'</div>':''}
     </div>
-  `).join("");
+  `).join('');
 }
 
-function openModal(id){
+function openDetail(id){
   activeCardId=id;
-  const p=places.find(x=>x.id===id);
+  const p=allPlaces.find(x=>x.id===id);
   if(!p)return;
-  document.getElementById("mType").textContent=p.type;
-  document.getElementById("mName").textContent=p.name;
-  document.getElementById("mLocation").textContent=`${p.area}, ${p.city}`;
-  document.getElementById("mNote").textContent=p.ownerNote;
-  document.getElementById("mDesc").textContent=p.desc;
-  document.getElementById("mOwner").textContent=p.owner;
-  document.getElementById("modalOverlay").classList.add("open");
-  const slug=p.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-  history.pushState({},"",`#${slug}`);
-  document.querySelectorAll(".place-card").forEach(c=>c.classList.remove("active"));
-  const card=document.getElementById(`card-${id}`);
-  if(card){card.classList.add("active");card.scrollIntoView({behavior:"smooth",block:"nearest"});}
-  map.flyTo([p.lat,p.lng],15,{duration:0.8});
-  markers[id].openPopup();
+  document.getElementById('dNote').textContent=p.note||'No note provided yet.';
+  document.getElementById('dName').textContent=p.name;
+  document.getElementById('dArea').textContent=(p.area?p.area+', ':'')+p.city;
+  document.getElementById('dType').textContent=p.type;
+  const instaWrap=document.getElementById('dInstaWrap');
+  if(p.instagram){
+    instaWrap.innerHTML='<a class="detail-insta" href="https://instagram.com/'+p.instagram.replace('@','')+'" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @'+p.instagram.replace('@','')+'</a>';
+  }else{instaWrap.innerHTML='';}
+  document.getElementById('detailPanel').classList.add('open');
+  document.querySelectorAll('.place-card').forEach(c=>c.classList.remove('active'));
+  const card=document.getElementById('card-'+id);
+  if(card){card.classList.add('active');card.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  if(markers[id]&&p.lat&&p.lng){map.flyTo([p.lat,p.lng],15,{duration:0.8});markers[id].openPopup();}
 }
 
-function closeModal(e){
-  if(e.target===document.getElementById("modalOverlay"))closeModalDirect();
-}
-
-function closeModalDirect(){
-  document.getElementById("modalOverlay").classList.remove("open");
-  history.pushState({},"","#");
+function closeDetail(){
+  document.getElementById('detailPanel').classList.remove('open');
   activeCardId=null;
+  document.querySelectorAll('.place-card').forEach(c=>c.classList.remove('active'));
 }
 
-window.addEventListener("load",()=>{
-  buildNeighPills();
-  applyFilters();
-  const hash=window.location.hash.replace("#","");
-  if(hash){
-    const p=places.find(x=>x.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")=== hash);
-    if(p)openModal(p.id);
+// SEARCH MODAL
+function openSearch(){
+  document.getElementById('searchModal').classList.add('open');
+  setTimeout(()=>document.getElementById('modalSearchInput').focus(),50);
+  renderSearchResults('');
+}
+
+function closeSearch(){
+  document.getElementById('searchModal').classList.remove('open');
+  document.getElementById('modalSearchInput').value='';
+}
+
+function handleSearchOverlay(e){
+  if(e.target===document.getElementById('searchModal'))closeSearch();
+}
+
+function runSearch(){
+  const q=document.getElementById('modalSearchInput').value.trim();
+  renderSearchResults(q);
+}
+
+function renderSearchResults(q){
+  const list=document.getElementById('searchResultsList');
+  const filtered=q
+    ?allPlaces.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())||p.area.toLowerCase().includes(q.toLowerCase())||p.city.toLowerCase().includes(q.toLowerCase()))
+    :allPlaces.slice(0,12);
+  if(filtered.length===0){
+    list.innerHTML='<div class="search-empty">No spaces found for "'+q+'"</div>';
+    return;
   }
-});
+  list.innerHTML=filtered.map(p=>`
+    <div class="search-result-item" onclick="selectFromSearch('${p.id}')">
+      <div class="sr-name">${p.name}</div>
+      <div class="sr-meta">${p.area?p.area+', ':''}${p.city} &middot; ${p.type}</div>
+    </div>
+  `).join('');
+}
+
+function selectFromSearch(id){
+  closeSearch();
+  // switch to correct city first
+  const p=allPlaces.find(x=>x.id===id);
+  if(!p)return;
+  if(p.city!==activeCity){
+    const cityBtn=[...document.querySelectorAll('.city-pill')].find(b=>b.textContent===p.city);
+    if(cityBtn)setCity(p.city,cityBtn);
+  }
+  setTimeout(()=>openDetail(id),200);
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSearch();closeDetail();}});
+
+window.addEventListener('load',fetchPlaces);
 </script>
 </body>
 </html>
