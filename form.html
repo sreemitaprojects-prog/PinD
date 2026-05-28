@@ -103,11 +103,23 @@ input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#f
 .btn-confirm-ghost{background:none;color:var(--text-mid);border:1px solid var(--border);padding:0.85rem 2rem;font-family:"Karla",sans-serif;font-size:0.88rem;cursor:pointer;border-radius:3px;transition:all 0.2s;}
 .btn-confirm-ghost:hover{border-color:rgba(255,108,65,0.3);color:var(--text-dark);}
 @media(max-width:900px){
+  nav{padding:0 1.25rem;}
+  .nav-logo svg{height:30px;}
   .page-wrap{grid-template-columns:1fr;}
-  .left-panel{position:static;height:auto;padding:3rem 2rem;}
-  .right-panel{padding:2.5rem 1.75rem 4rem;max-width:100%;}
+  .left-panel{position:static;height:auto;padding:2.5rem 1.5rem;}
+  .left-title{font-size:1.9rem;}
+  .right-panel{padding:2rem 1.5rem 4rem;max-width:100%;}
   .field-row{grid-template-columns:1fr;}
-  nav{padding:0 1.5rem;}
+  .section-title{font-size:1.35rem;}
+  .btn-next,.btn-submit-final{width:100%;justify-content:center;}
+  .form-nav{flex-direction:column;gap:1rem;align-items:stretch;}
+  .btn-back{text-align:center;}
+  .confirm-timeline{flex-direction:column;align-items:flex-start;gap:0;}
+  .confirm-timeline::before{display:none;}
+  .ct-step{flex-direction:row;gap:0.75rem;padding:0.75rem 0;}
+  .confirm-actions{flex-direction:column;}
+  .btn-confirm-primary,.btn-confirm-ghost{width:100%;text-align:center;justify-content:center;}
+  .photo-upload-box{height:130px;}
 }
 </style>
 </head>
@@ -161,7 +173,67 @@ input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#f
         <div class="field"><label>Address <span class="req">*</span></label><input type="text" id="address" placeholder="Street, building, area…" required></div>
         <div class="field-row">
           <div class="field half"><label>Neighbourhood <span class="req">*</span></label><input type="text" id="neighbourhood" placeholder="e.g. Bandra West" required></div>
-          <div class="field half"><label>City <span class="req">*</span></label><input type="text" id="city" placeholder="e.g. Mumbai" required></div>
+          <div class="field half">
+            <label>City <span class="req">*</span></label>
+            <select id="city" required onchange="handleCityChange(this)">
+              <option value="">Select your city</option>
+              <optgroup label="Tier 1">
+                <option>Mumbai</option>
+                <option>Delhi</option>
+                <option>Bangalore</option>
+                <option>Hyderabad</option>
+                <option>Chennai</option>
+                <option>Kolkata</option>
+                <option>Pune</option>
+                <option>Ahmedabad</option>
+              </optgroup>
+              <optgroup label="Tier 2">
+                <option>Jaipur</option>
+                <option>Lucknow</option>
+                <option>Chandigarh</option>
+                <option>Bhopal</option>
+                <option>Indore</option>
+                <option>Nagpur</option>
+                <option>Patna</option>
+                <option>Vadodara</option>
+                <option>Surat</option>
+                <option>Kochi</option>
+                <option>Coimbatore</option>
+                <option>Visakhapatnam</option>
+                <option>Goa</option>
+                <option>Dehradun</option>
+                <option>Mysore</option>
+                <option>Bhubaneswar</option>
+                <option>Guwahati</option>
+              </optgroup>
+              <optgroup label="Tier 3">
+                <option>Noida</option>
+                <option>Gurgaon</option>
+                <option>Faridabad</option>
+                <option>Agra</option>
+                <option>Varanasi</option>
+                <option>Amritsar</option>
+                <option>Udaipur</option>
+                <option>Jodhpur</option>
+                <option>Pondicherry</option>
+                <option>Shimla</option>
+                <option>Manali</option>
+                <option>Nashik</option>
+                <option>Aurangabad</option>
+                <option>Trichy</option>
+                <option>Madurai</option>
+                <option>Mangalore</option>
+                <option>Thrissur</option>
+                <option>Jammu</option>
+                <option>Ranchi</option>
+                <option>Raipur</option>
+              </optgroup>
+              <optgroup label="Other">
+                <option value="other">Other — I'll type it</option>
+              </optgroup>
+            </select>
+            <input type="text" id="cityOther" placeholder="Type your city" style="display:none;margin-top:0.5rem;" oninput="syncCityOther(this)">
+          </div>
         </div>
         <div class="field-row">
           <div class="field half"><label>Space Instagram <span class="opt">optional</span></label><div class="contact-prefix"><span class="contact-prefix-label">@</span><input type="text" id="spaceInstagram" placeholder="yourspace" style="padding-left:2.25rem"></div></div>
@@ -262,6 +334,20 @@ input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#f
 </div>
 
 <script>
+function handleCityChange(sel){
+  const other=document.getElementById('cityOther');
+  if(sel.value==='other'){other.style.display='block';other.focus();}
+  else{other.style.display='none';}
+}
+function syncCityOther(input){
+  // keep the select showing "other" while user types
+}
+function getCityValue(){
+  const sel=document.getElementById('city');
+  if(sel.value==='other')return document.getElementById('cityOther').value.trim();
+  return sel.value;
+}
+
 const SUPABASE_URL='https://xyzgqmghddzirnafwodi.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5emdxbWdoZGR6aXJuYWZ3b2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTM2MTcsImV4cCI6MjA5NTUyOTYxN30.4laPWa2_obOOAkTeFWDg4FGI9LDKDrHcY9pZlWAaAlo';
 let currentSection=0;
@@ -307,7 +393,7 @@ async function uploadPhoto(inputId, folder) {
 
 function validateSection(idx){
   let valid=true;
-  const required={0:['spaceName','category','address','neighbourhood','city'],1:['ownerName','ownershipType','ownerEmail'],2:['personalNote']};
+  const required={0:['spaceName','category','address','neighbourhood'],1:['ownerName','ownershipType','ownerEmail'],2:['personalNote']};
   required[idx].forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
     el.classList.remove('err');
@@ -338,7 +424,7 @@ function goPrev(idx){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function buildReview(){
-  const spaceRows=[['Name',getVal('spaceName')],['Category',getVal('category')],['Address',getVal('address')+', '+getVal('neighbourhood')+', '+getVal('city')],['Years open',getVal('yearsInBusiness')||'—'],['Instagram',getVal('spaceInstagram')?'@'+getVal('spaceInstagram'):'—'],['Website',getVal('spaceWebsite')||'—']];
+  const spaceRows=[['Name',getVal('spaceName')],['Category',getVal('category')],['Address',getVal('address')+', '+getVal('neighbourhood')+', '+getCityValue()],['Years open',getVal('yearsInBusiness')||'—'],['Instagram',getVal('spaceInstagram')?'@'+getVal('spaceInstagram'):'—'],['Website',getVal('spaceWebsite')||'—']];
   const ownerRows=[['Your name',getVal('ownerName')],['Ownership',getVal('ownershipType')],['Email',getVal('ownerEmail')],['WhatsApp',getVal('ownerWhatsApp')?'+91 '+getVal('ownerWhatsApp'):'—'],['Instagram',getVal('ownerInstagram')?'@'+getVal('ownerInstagram'):'—'],['Property',getSelectedPill('propertyOwned')||'—']];
   const render=(rows,id)=>{document.getElementById(id).innerHTML=rows.map(r=>'<div class="review-row"><span class="review-key">'+r[0]+'</span><span class="review-val">'+(r[1]||'—')+'</span></div>').join('');};
   render(spaceRows,'reviewSpace');render(ownerRows,'reviewOwner');
@@ -364,7 +450,7 @@ async function submitForm(){
   const email=getVal('ownerEmail');
 
   // Geocode address
-  const coords = await geocodeAddress(getVal('address'), getVal('neighbourhood'), getVal('city'));
+  const coords = await geocodeAddress(getVal('address'), getVal('neighbourhood'), getCityValue());
 
   btn.textContent='Uploading photos…';
   ownerPhotoUrl = await uploadPhoto('ownerPhotoInput', 'owners');
@@ -374,7 +460,7 @@ async function submitForm(){
   btn.textContent='Submitting…';
   const payload={
     space_name:getVal('spaceName'),category:getVal('category'),
-    address:getVal('address'),neighbourhood:getVal('neighbourhood'),city:getVal('city'),
+    address:getVal('address'),neighbourhood:getVal('neighbourhood'),city:getCityValue(),
     years_in_business:getVal('yearsInBusiness'),space_instagram:getVal('spaceInstagram'),
     space_website:getVal('spaceWebsite'),owner_name:getVal('ownerName'),
     ownership_type:getVal('ownershipType'),owner_email:email,
