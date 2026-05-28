@@ -3,208 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PinD — Submit a Space</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
-<!-- Favicon: teardrop location pin -->
+<title>PinD — Add Your Space</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6C41'/%3E%3Cstop offset='100%25' stop-color='%23FF3C2D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 2C10.477 2 6 6.477 6 12c0 7.5 10 18 10 18s10-10.5 10-18c0-5.523-4.477-10-10-10z' fill='url(%23fg)'/%3E%3Ccircle cx='16' cy='12' r='3.5' fill='white'/%3E%3C/svg%3E">
-
 <style>
-:root {
-  --orange:#FF6C41;
-  --coral:#FF3C2D;
-  --ember:#7B2F25;
-  --peach:#FFCDB8;
-  --blush:#FFF0EC;
-  --cream:#FFFAF7;
-  --text-dark:#1C0A06;
-  --text-mid:#5C2D1E;
-  --text-light:#B07060;
-  --border:rgba(255,108,65,0.14);
-}
+:root{--orange:#FF6C41;--coral:#FF3C2D;--ember:#7B2F25;--peach:#FFCDB8;--blush:#FFF0EC;--cream:#FFFAF7;--text-dark:#1C0A06;--text-mid:#5C2D1E;--text-light:#B07060;--border:rgba(255,108,65,0.14);}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;}
-
-nav{
-  position:sticky;top:0;z-index:100;
-  background:rgba(255,250,247,0.96);
-  backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 3rem;height:62px;
-}
+body{font-family:"Karla",sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,250,247,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:62px;}
 .nav-logo{display:flex;align-items:center;text-decoration:none;}
 .nav-logo svg{height:36px;width:auto;}
 .nav-back{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;}
 .nav-back:hover{color:var(--orange);}
-
-.page-wrap{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 62px);}
-
-.left-panel{
-  background:var(--orange);
-  padding:4rem 3rem;
-  position:sticky;top:62px;height:calc(100vh - 62px);
-  overflow-y:auto;display:flex;flex-direction:column;
-}
-.left-eyebrow{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,250,247,0.55);margin-bottom:1.5rem;}
-.left-title{font-family:"Cormorant Garamond",serif;font-size:2.4rem;line-height:1.15;color:var(--cream);margin-bottom:1.5rem;}
-.left-title em{font-style:italic;color:rgba(255,250,247,0.7);}
-.left-body{font-size:0.88rem;line-height:1.8;color:rgba(255,250,247,0.65);margin-bottom:2.5rem;}
-.left-divider{width:40px;height:1px;background:rgba(255,250,247,0.2);margin-bottom:2rem;}
-.what-happens{margin-bottom:2rem;}
-.wh-title{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,250,247,0.5);margin-bottom:1.25rem;}
+.page-wrap{display:grid;grid-template-columns:400px 1fr;min-height:calc(100vh - 62px);}
+.left-panel{background:var(--ember);padding:4rem 3rem;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;display:flex;flex-direction:column;}
+.left-eyebrow{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,205,184,0.5);margin-bottom:1.5rem;}
+.left-title{font-family:"Fraunces",serif;font-size:2.3rem;line-height:1.15;color:var(--cream);margin-bottom:1.5rem;font-weight:300;}
+.left-title em{font-style:italic;color:var(--peach);}
+.left-body{font-size:0.9rem;line-height:1.85;color:rgba(255,205,184,0.65);margin-bottom:2rem;}
+.left-divider{width:40px;height:1px;background:rgba(255,205,184,0.18);margin-bottom:2rem;}
+.wh-title{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,205,184,0.4);margin-bottom:1.25rem;}
 .wh-step{display:flex;gap:1rem;margin-bottom:1.25rem;align-items:flex-start;}
-.wh-num{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,250,247,0.25);color:rgba(255,250,247,0.7);font-size:0.68rem;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-.wh-text{font-size:0.82rem;line-height:1.65;color:rgba(255,250,247,0.6);}
-.wh-text strong{color:rgba(255,250,247,0.9);font-weight:500;display:block;margin-bottom:2px;}
-.left-note{margin-top:auto;padding-top:2rem;border-top:1px solid rgba(255,250,247,0.1);font-size:0.75rem;line-height:1.7;color:rgba(255,250,247,0.3);font-style:italic;}
-
-.right-panel{padding:4rem 4rem 6rem;max-width:680px;}
-
+.wh-num{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,205,184,0.22);color:rgba(255,205,184,0.65);font-size:0.68rem;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.wh-text{font-size:0.82rem;line-height:1.7;color:rgba(255,205,184,0.5);}
+.wh-text strong{color:rgba(255,205,184,0.88);font-weight:500;display:block;margin-bottom:2px;}
+.left-note{margin-top:auto;padding-top:2rem;border-top:1px solid rgba(255,205,184,0.08);font-size:0.75rem;line-height:1.7;color:rgba(255,205,184,0.28);font-style:italic;}
+.right-panel{padding:4rem 4.5rem 6rem;max-width:700px;}
 .form-progress{display:flex;gap:6px;margin-bottom:3rem;align-items:center;}
 .prog-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,108,65,0.15);transition:all 0.3s;}
 .prog-dot.active{background:var(--orange);width:22px;border-radius:3px;}
 .prog-dot.done{background:var(--ember);}
 .prog-label{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);margin-left:0.5rem;}
-
 .form-section{margin-bottom:3rem;display:none;}
 .form-section.active{display:block;}
-.section-head{margin-bottom:1.75rem;}
-.section-num{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);margin-bottom:0.4rem;}
-.section-title{font-family:"Cormorant Garamond",serif;font-size:1.5rem;color:var(--text-dark);line-height:1.2;}
-.section-sub{font-size:0.82rem;color:var(--text-mid);margin-top:0.4rem;line-height:1.6;}
-
+.section-head{margin-bottom:2rem;}
+.section-num{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);margin-bottom:0.5rem;}
+.section-title{font-family:"Fraunces",serif;font-size:1.75rem;color:var(--text-dark);line-height:1.2;font-weight:300;}
+.section-title em{font-style:italic;color:var(--coral);}
+.section-sub{font-size:0.85rem;color:var(--text-mid);margin-top:0.5rem;line-height:1.65;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;}
 .field{display:flex;flex-direction:column;gap:0.45rem;margin-bottom:1.25rem;}
 .field.half{margin-bottom:0;}
-.field.full{grid-column:1/-1;}
-
-label{font-size:0.8rem;font-weight:500;color:var(--text-dark);letter-spacing:0.01em;}
+label{font-size:0.82rem;font-weight:500;color:var(--text-dark);letter-spacing:0.01em;}
 label .req{color:var(--orange);margin-left:2px;}
 label .opt{color:var(--text-mid);font-weight:400;font-size:0.72rem;margin-left:4px;}
-
-input[type="text"],input[type="email"],input[type="tel"],input[type="url"],input[type="number"],select,textarea{
-  border:1px solid var(--border);border-radius:3px;padding:0.75rem 1rem;
-  font-family:"DM Sans",sans-serif;font-size:0.88rem;color:var(--text-dark);background:white;
-  transition:border-color 0.2s,box-shadow 0.2s;width:100%;outline:none;-webkit-appearance:none;
-}
+input[type="text"],input[type="email"],input[type="tel"],input[type="url"],input[type="number"],select,textarea{border:1px solid var(--border);border-radius:3px;padding:0.75rem 1rem;font-family:"Karla",sans-serif;font-size:0.9rem;color:var(--text-dark);background:white;transition:border-color 0.2s,box-shadow 0.2s;width:100%;outline:none;-webkit-appearance:none;}
 input:focus,select:focus,textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,108,65,0.07);}
-input::placeholder,textarea::placeholder{color:rgba(122,106,94,0.5);}
-textarea{resize:vertical;min-height:110px;line-height:1.65;}
+input::placeholder,textarea::placeholder{color:rgba(176,112,96,0.4);}
+textarea{resize:vertical;min-height:130px;line-height:1.7;}
 select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237B2F25' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
-.field-hint{font-size:0.72rem;color:var(--text-mid);line-height:1.5;margin-top:-0.1rem;}
-
+.field-hint{font-size:0.74rem;color:var(--text-light);line-height:1.55;}
 .pill-group{display:flex;flex-wrap:wrap;gap:0.5rem;}
-.pill{border:1px solid var(--border);border-radius:20px;padding:0.38rem 0.9rem;font-size:0.8rem;color:var(--text-mid);cursor:pointer;transition:all 0.18s;user-select:none;background:white;}
-.pill:hover{border-color:rgba(255,108,65,0.3);color:var(--text-dark);}
-.pill.selected{background:var(--orange);color:var(--cream);border-color:var(--orange);}
-
+.pill{border:1px solid var(--border);border-radius:20px;padding:0.4rem 1rem;font-size:0.8rem;color:var(--text-mid);cursor:pointer;transition:all 0.18s;user-select:none;background:white;}
+.pill:hover{border-color:rgba(255,108,65,0.35);color:var(--text-dark);}
+.pill.selected{background:var(--orange);color:white;border-color:var(--orange);}
 .contact-prefix{position:relative;}
 .contact-prefix input{padding-left:2.75rem;}
 .contact-prefix-label{position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-size:0.82rem;color:var(--text-mid);}
-
 .form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,108,65,0.08);}
-.btn-back{background:none;border:none;font-family:"DM Sans",sans-serif;font-size:0.82rem;color:var(--text-mid);cursor:pointer;letter-spacing:0.04em;padding:0.6rem 0;transition:color 0.2s;}
+.btn-back{background:none;border:none;font-family:"Karla",sans-serif;font-size:0.82rem;color:var(--text-mid);cursor:pointer;letter-spacing:0.04em;padding:0.6rem 0;transition:color 0.2s;}
 .btn-back:hover{color:var(--text-dark);}
-.btn-next{background:var(--orange);color:var(--cream);border:none;padding:0.875rem 2.25rem;font-family:"DM Sans",sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s,transform 0.15s;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
+.btn-next{background:var(--orange);color:white;border:none;padding:0.9rem 2.25rem;font-family:"Karla",sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s,transform 0.15s;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
 .btn-next:hover{background:var(--coral);transform:translateY(-1px);}
-.btn-next:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-.btn-submit-final{background:var(--ember);color:var(--cream);border:none;padding:0.875rem 2.5rem;font-family:"DM Sans",sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
+.btn-submit-final{background:var(--ember);color:white;border:none;padding:0.9rem 2.5rem;font-family:"Karla",sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
 .btn-submit-final:hover{background:var(--coral);}
-.btn-submit-final.loading{opacity:0.7;cursor:not-allowed;}
-
-.review-block{background:white;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:1.25rem;}
-.review-block-head{padding:0.75rem 1.25rem;background:var(--cream);border-bottom:1px solid var(--border);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ember);font-weight:500;}
-.review-rows{padding:0.5rem 0;}
-.review-row{display:flex;padding:0.55rem 1.25rem;gap:1rem;font-size:0.83rem;}
+.btn-submit-final.loading{opacity:0.65;cursor:not-allowed;}
+.review-block{background:white;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:1.1rem;}
+.review-block-head{padding:0.7rem 1.25rem;background:var(--blush);border-bottom:1px solid var(--border);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ember);font-weight:500;}
+.review-rows{padding:0.4rem 0;}
+.review-row{display:flex;padding:0.5rem 1.25rem;gap:1rem;font-size:0.83rem;}
 .review-row:not(:last-child){border-bottom:1px solid rgba(255,108,65,0.05);}
-.review-key{color:var(--text-mid);min-width:140px;flex-shrink:0;}
-.review-val{color:var(--text-dark);font-weight:400;word-break:break-word;}
-
-#confirmScreen{display:none;text-align:center;padding:4rem 2rem;}
-.confirm-pin{width:64px;height:64px;border-radius:50%;background:var(--blush);display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;font-size:1.75rem;}
-.confirm-title{font-family:"Cormorant Garamond",serif;font-size:2.2rem;color:var(--ember);line-height:1.2;margin-bottom:1rem;}
-.confirm-title em{font-style:italic;color:var(--orange);}
-.confirm-body{font-size:0.92rem;line-height:1.85;color:var(--text-mid);max-width:420px;margin:0 auto 2.5rem;}
-.confirm-timeline{display:flex;gap:0;max-width:480px;margin:0 auto 2.5rem;position:relative;}
-.confirm-timeline::before{content:"";position:absolute;top:20px;left:calc(16.6% + 10px);right:calc(16.6% + 10px);height:1px;background:rgba(255,108,65,0.12);}
-.ct-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.6rem;}
-.ct-dot{width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(255,108,65,0.2);background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:0.6rem;position:relative;z-index:1;}
+.review-key{color:var(--text-light);min-width:130px;flex-shrink:0;}
+.review-val{color:var(--text-dark);word-break:break-word;}
+.field-error{font-size:0.72rem;color:var(--coral);}
+input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#fff8f7;}
+#confirmScreen{display:none;padding:3rem 0;}
+.confirm-inner{max-width:520px;}
+.confirm-celebration{font-family:"Fraunces",serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.15;color:var(--text-dark);margin-bottom:1.5rem;}
+.confirm-celebration em{font-style:italic;color:var(--coral);}
+.confirm-body{font-size:0.95rem;line-height:1.85;color:var(--text-mid);margin-bottom:2.5rem;}
+.confirm-timeline{display:flex;flex-direction:column;margin-bottom:2.5rem;border:1px solid var(--border);border-radius:4px;overflow:hidden;background:white;}
+.ct-step{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem;}
+.ct-step:not(:last-child){border-bottom:1px solid rgba(255,108,65,0.07);}
+.ct-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,108,65,0.2);background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0;margin-top:1px;}
 .ct-dot.done{background:var(--ember);border-color:var(--ember);color:white;}
 .ct-dot.now{background:var(--orange);border-color:var(--orange);color:white;}
-.ct-label{font-size:0.7rem;color:var(--text-mid);text-align:center;line-height:1.4;}
-.ct-label strong{display:block;color:var(--text-dark);font-weight:500;}
-.confirm-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
-.btn-confirm-primary{background:var(--orange);color:var(--cream);border:none;padding:0.8rem 2rem;font-family:"DM Sans",sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;}
+.ct-label strong{display:block;font-size:0.85rem;color:var(--text-dark);font-weight:500;margin-bottom:2px;}
+.ct-label span{font-size:0.78rem;color:var(--text-light);}
+.confirm-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-confirm-primary{background:var(--orange);color:white;border:none;padding:0.85rem 2rem;font-family:"Karla",sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;text-decoration:none;display:inline-block;}
 .btn-confirm-primary:hover{background:var(--coral);}
-.btn-confirm-ghost{background:none;color:var(--text-mid);border:1px solid var(--border);padding:0.8rem 2rem;font-family:"DM Sans",sans-serif;font-size:0.85rem;cursor:pointer;border-radius:3px;transition:all 0.2s;}
+.btn-confirm-ghost{background:none;color:var(--text-mid);border:1px solid var(--border);padding:0.85rem 2rem;font-family:"Karla",sans-serif;font-size:0.88rem;cursor:pointer;border-radius:3px;transition:all 0.2s;}
 .btn-confirm-ghost:hover{border-color:rgba(255,108,65,0.3);color:var(--text-dark);}
-
-.field-error{font-size:0.72rem;color:var(--orange);margin-top:-0.1rem;}
-input.err,select.err,textarea.err{border-color:rgba(255,108,65,0.5);background:var(--blush);}
-
 @media(max-width:900px){
   .page-wrap{grid-template-columns:1fr;}
   .left-panel{position:static;height:auto;padding:3rem 2rem;}
-  .right-panel{padding:2.5rem 1.75rem 4rem;}
+  .right-panel{padding:2.5rem 1.75rem 4rem;max-width:100%;}
   .field-row{grid-template-columns:1fr;}
   nav{padding:0 1.5rem;}
-  .confirm-timeline{flex-direction:column;align-items:flex-start;gap:1rem;}
-  .confirm-timeline::before{display:none;}
-  .ct-step{flex-direction:row;gap:0.75rem;}
 }
 </style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="nav-logo" aria-label="PinD Home">
     <svg height="36" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#FF6C41"/>
-          <stop offset="100%" stop-color="#FF3C2D"/>
-        </linearGradient>
-      </defs>
-      <text x="4" y="68" font-family="Cormorant Garamond, serif" font-size="72" font-style="italic" font-weight="400" fill="url(#ng)">PinD</text>
-      <g transform="translate(72, 2)">
-        <path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="url(#ng)"/>
-        <circle cx="9" cy="6" r="2.2" fill="white"/>
-      </g>
+      <defs><linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6C41"/><stop offset="100%" stop-color="#FF3C2D"/></linearGradient></defs>
+      <text x="4" y="68" font-family="Fraunces, serif" font-size="72" font-style="italic" font-weight="300" fill="url(#ng)">PinD</text>
+      <g transform="translate(72, 2)"><path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="url(#ng)"/><circle cx="9" cy="6" r="2.2" fill="white"/></g>
     </svg>
   </a>
   <a href="index.html" class="nav-back">← Back to map</a>
 </nav>
 
 <div class="page-wrap">
-
   <div class="left-panel">
-    <div class="left-eyebrow">Contribute to PinD</div>
-    <h1 class="left-title">Know a space she <em>built?</em></h1>
-    <p class="left-body">
-      Know a space run by a woman? Pin it. That is how this map grows. Not through algorithms or ad spend. Through people who care enough to share a name.
-    </p>
+    <div class="left-eyebrow">Add your space to PinD</div>
+    <h1 class="left-title">This map exists because of women <em>like you.</em></h1>
+    <p class="left-body">This map is a celebration of your space, the one you have created. You did the hard part. Owning a space in India, as a woman, is not a small thing. Let people find you.</p>
     <div class="left-divider"></div>
-    <div class="what-happens">
-      <div class="wh-title">What happens after you submit</div>
-      <div class="wh-step">
-        <div class="wh-num">1</div>
-        <div class="wh-text"><strong>Your submission lands with us</strong>We receive it directly. No middlemen, no bots.</div>
-      </div>
-      <div class="wh-step">
-        <div class="wh-num">2</div>
-        <div class="wh-text"><strong>We verify within 3 to 5 days</strong>We look up the space, check ownership, and sometimes reach out to the owner directly.</div>
-      </div>
-      <div class="wh-step">
-        <div class="wh-num">3</div>
-        <div class="wh-text"><strong>The pin goes live</strong>Once approved, the space joins the map. We will let you know when it does.</div>
-      </div>
-      <div class="wh-step">
-        <div class="wh-num">4</div>
-        <div class="wh-text"><strong>The word spreads</strong>Another woman finds it. Passes it on. That is the whole idea.</div>
-      </div>
-    </div>
-    <p class="left-note">We only pin verified women-owned spaces. We review every submission personally. This is not automated.</p>
+    <div class="wh-title">What happens after you submit</div>
+    <div class="wh-step"><div class="wh-num">1</div><div class="wh-text"><strong>We receive your submission</strong>Directly, personally. No bots, no middlemen.</div></div>
+    <div class="wh-step"><div class="wh-num">2</div><div class="wh-text"><strong>We verify within 3 to 5 days</strong>We look into your space and may reach out to you directly.</div></div>
+    <div class="wh-step"><div class="wh-num">3</div><div class="wh-text"><strong>Your pin goes live</strong>Once approved, you are on the map. We will tell you the moment it happens.</div></div>
+    <div class="wh-step"><div class="wh-num">4</div><div class="wh-text"><strong>Women find you</strong>That is the whole point.</div></div>
+    <p class="left-note">Only the owner can submit a space. We verify every listing personally. This map is not automated and never will be.</p>
   </div>
 
   <div class="right-panel">
@@ -212,319 +135,164 @@ input.err,select.err,textarea.err{border-color:rgba(255,108,65,0.5);background:v
       <div class="prog-dot active" id="dot-0"></div>
       <div class="prog-dot" id="dot-1"></div>
       <div class="prog-dot" id="dot-2"></div>
-      <div class="prog-dot" id="dot-3"></div>
       <span class="prog-label" id="progLabel">The Space</span>
     </div>
 
     <form id="pindForm" novalidate>
 
-      <!-- SECTION 1 -->
       <div class="form-section active" id="section-0">
         <div class="section-head">
-          <div class="section-num">01 of 04</div>
-          <h2 class="section-title">About the space</h2>
-          <p class="section-sub">Tell us what it is and where it lives.</p>
+          <div class="section-num">01 of 03</div>
+          <h2 class="section-title">The <em>space</em></h2>
+          <p class="section-sub">Tell us what you built and where it lives.</p>
         </div>
-        <div class="field">
-          <label>Name of the space <span class="req">*</span></label>
-          <input type="text" id="spaceName" placeholder="e.g. Kitab Khana, The Nook Studio…" required>
+        <div class="field"><label>Name of your space <span class="req">*</span></label><input type="text" id="spaceName" placeholder="e.g. Kitab Khana, The Nook Studio…" required></div>
+        <div class="field-row">
+          <div class="field half"><label>Category <span class="req">*</span></label><select id="category" required><option value="">Select one</option><option>Cafe & Food</option><option>Books & Art</option><option>Studio & Craft</option><option>Shelter & Support</option><option>Community Space</option><option>Wellness & Health</option><option>Retail & Fashion</option><option>Other</option></select></div>
+          <div class="field half"><label>Years open <span class="opt">approx</span></label><input type="number" id="yearsInBusiness" placeholder="e.g. 4" min="0" max="100"></div>
+        </div>
+        <div class="field"><label>Address <span class="req">*</span></label><input type="text" id="address" placeholder="Street, building, area…" required></div>
+        <div class="field-row">
+          <div class="field half"><label>Neighbourhood <span class="req">*</span></label><input type="text" id="neighbourhood" placeholder="e.g. Bandra West" required></div>
+          <div class="field half"><label>City <span class="req">*</span></label><input type="text" id="city" placeholder="e.g. Mumbai" required></div>
         </div>
         <div class="field-row">
-          <div class="field half">
-            <label>Category <span class="req">*</span></label>
-            <select id="category" required>
-              <option value="">Select one</option>
-              <option>Cafe & Food</option>
-              <option>Books & Art</option>
-              <option>Studio & Craft</option>
-              <option>Shelter & Support</option>
-              <option>Community Space</option>
-              <option>Wellness & Health</option>
-              <option>Retail & Fashion</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field half">
-            <label>Years in business <span class="opt">(approx)</span></label>
-            <input type="number" id="yearsInBusiness" placeholder="e.g. 7" min="0" max="100">
-          </div>
+          <div class="field half"><label>Space Instagram <span class="opt">optional</span></label><div class="contact-prefix"><span class="contact-prefix-label">@</span><input type="text" id="spaceInstagram" placeholder="yourspace" style="padding-left:2.25rem"></div></div>
+          <div class="field half"><label>Website <span class="opt">optional</span></label><input type="url" id="spaceWebsite" placeholder="https://…"></div>
         </div>
-        <div class="field">
-          <label>Street address <span class="req">*</span></label>
-          <input type="text" id="address" placeholder="Street, building, area…" required>
-        </div>
-        <div class="field-row">
-          <div class="field half">
-            <label>Neighbourhood <span class="req">*</span></label>
-            <input type="text" id="neighbourhood" placeholder="e.g. Bandra West" required>
-          </div>
-          <div class="field half">
-            <label>City <span class="req">*</span></label>
-            <input type="text" id="city" placeholder="e.g. Mumbai" required>
-          </div>
-        </div>
-        <div class="field">
-          <label>Space Instagram <span class="opt">optional</span></label>
-          <div class="contact-prefix">
-            <span class="contact-prefix-label">@</span>
-            <input type="text" id="spaceInstagram" placeholder="handle" style="padding-left:2.25rem">
-          </div>
-        </div>
-        <div class="field">
-          <label>Website <span class="opt">optional</span></label>
-          <input type="url" id="spaceWebsite" placeholder="https://…">
-        </div>
-        <div class="form-nav">
-          <span></span>
-          <button type="button" class="btn-next" onclick="goNext(0)">About the owner →</button>
-        </div>
+        <div class="form-nav"><span></span><button type="button" class="btn-next" onclick="goNext(0)">About you →</button></div>
       </div>
 
-      <!-- SECTION 2 -->
       <div class="form-section" id="section-1">
         <div class="section-head">
-          <div class="section-num">02 of 04</div>
-          <h2 class="section-title">About the owner</h2>
-          <p class="section-sub">The woman who built this. We would love to know her.</p>
+          <div class="section-num">02 of 03</div>
+          <h2 class="section-title"><em>You</em></h2>
+          <p class="section-sub">The woman who built this. We would love to know you.</p>
         </div>
         <div class="field-row">
-          <div class="field half">
-            <label>Owner's name <span class="req">*</span></label>
-            <input type="text" id="ownerName" placeholder="First name is fine" required>
-          </div>
-          <div class="field half">
-            <label>Ownership type <span class="req">*</span></label>
-            <select id="ownershipType" required>
-              <option value="">Select one</option>
-              <option>Sole owner</option>
-              <option>Co-founded with women</option>
-              <option>Inherited & now running</option>
-              <option>Women's collective / co-op</option>
-              <option>Not sure</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label>Owner's Instagram <span class="opt">optional but helpful</span></label>
-          <div class="contact-prefix">
-            <span class="contact-prefix-label">@</span>
-            <input type="text" id="ownerInstagram" placeholder="handle" style="padding-left:2.25rem">
-          </div>
-          <span class="field-hint">This helps us verify ownership and reach out if we would like to feature her.</span>
+          <div class="field half"><label>Your first name <span class="req">*</span></label><input type="text" id="ownerName" placeholder="First name" required></div>
+          <div class="field half"><label>Ownership type <span class="req">*</span></label><select id="ownershipType" required><option value="">Select one</option><option>Sole owner</option><option>Co-founded with women</option><option>Inherited & now running</option><option>Women's collective / co-op</option><option>Not sure</option></select></div>
         </div>
         <div class="field-row">
-          <div class="field half">
-            <label>Owner's WhatsApp <span class="opt">optional</span></label>
-            <div class="contact-prefix">
-              <span class="contact-prefix-label">+91</span>
-              <input type="tel" id="ownerWhatsApp" placeholder="98765 43210" style="padding-left:3rem">
-            </div>
-          </div>
-          <div class="field half">
-            <label>Owner's email <span class="opt">optional</span></label>
-            <input type="email" id="ownerEmail" placeholder="her@email.com">
-          </div>
+          <div class="field half"><label>Your email <span class="req">*</span></label><input type="email" id="ownerEmail" placeholder="you@email.com" required><span class="field-hint">So we can reach you when your space goes live.</span></div>
+          <div class="field half"><label>Your WhatsApp <span class="opt">optional</span></label><div class="contact-prefix"><span class="contact-prefix-label">+91</span><input type="tel" id="ownerWhatsApp" placeholder="98765 43210" style="padding-left:3rem"></div></div>
         </div>
+        <div class="field"><label>Your Instagram <span class="opt">optional but helpful</span></label><div class="contact-prefix"><span class="contact-prefix-label">@</span><input type="text" id="ownerInstagram" placeholder="yourhandle" style="padding-left:2.25rem"></div><span class="field-hint">Helps us verify ownership and reach out if we would like to feature you.</span></div>
         <div class="field">
-          <label>Does she own the property? <span class="opt">optional</span></label>
+          <label>Do you own the property? <span class="opt">optional</span></label>
           <div class="pill-group" id="propertyOwned">
-            <span class="pill" onclick="selectPill(this,'propertyOwned')">Yes, she owns the space</span>
-            <span class="pill" onclick="selectPill(this,'propertyOwned')">She rents it</span>
+            <span class="pill" onclick="selectPill(this,'propertyOwned')">Yes, I own the space</span>
+            <span class="pill" onclick="selectPill(this,'propertyOwned')">I rent it</span>
             <span class="pill" onclick="selectPill(this,'propertyOwned')">Not sure</span>
           </div>
-          <span class="field-hint">Property ownership is a political act. We track this separately.</span>
+          <span class="field-hint">Property ownership is a political act. We track this because it matters.</span>
         </div>
-        <div class="form-nav">
-          <button type="button" class="btn-back" onclick="goPrev(1)">← Back</button>
-          <button type="button" class="btn-next" onclick="goNext(1)">Your note →</button>
-        </div>
+        <div class="form-nav"><button type="button" class="btn-back" onclick="goPrev(1)">← Back</button><button type="button" class="btn-next" onclick="goNext(1)">Your note →</button></div>
       </div>
 
-      <!-- SECTION 3 -->
       <div class="form-section" id="section-2">
         <div class="section-head">
-          <div class="section-num">03 of 04</div>
-          <h2 class="section-title">Your personal note</h2>
-          <p class="section-sub">Why does this space matter? What does it feel like to walk in?</p>
+          <div class="section-num">03 of 03</div>
+          <h2 class="section-title">Your <em>note</em></h2>
+          <p class="section-sub">Why did you build this? What does it feel like to walk in?</p>
         </div>
-        <div class="field">
-          <label>Tell us about this place <span class="req">*</span></label>
-          <textarea id="personalNote" placeholder="It could be the smell of the coffee, the way the owner greets you, the fact that it exists at all. Write it the way you would tell a friend." required style="min-height:150px"></textarea>
-          <span class="field-hint">This becomes the soul of the pin. Write freely. We will not publish it word for word without asking.</span>
-        </div>
-        <div class="field">
-          <label>How do you know this space? <span class="req">*</span></label>
-          <div class="pill-group" id="relation">
-            <span class="pill" onclick="selectPill(this,'relation')">I am a regular</span>
-            <span class="pill" onclick="selectPill(this,'relation')">A friend told me</span>
-            <span class="pill" onclick="selectPill(this,'relation')">I am the owner</span>
-            <span class="pill" onclick="selectPill(this,'relation')">I work here</span>
-            <span class="pill" onclick="selectPill(this,'relation')">I visited once</span>
-            <span class="pill" onclick="selectPill(this,'relation')">I read about it</span>
-          </div>
-        </div>
-        <div class="form-nav">
-          <button type="button" class="btn-back" onclick="goPrev(2)">← Back</button>
-          <button type="button" class="btn-next" onclick="goNext(2)">Your details →</button>
-        </div>
-      </div>
+        <div class="field"><label>Tell us about your space <span class="req">*</span></label><textarea id="personalNote" placeholder="It could be why you opened it, what you want people to feel when they walk in, or what it cost you to get here. Write it the way you would tell a friend." required style="min-height:160px"></textarea><span class="field-hint">This becomes the soul of your pin. We will not publish it word for word without asking you first.</span></div>
 
-      <!-- SECTION 4 -->
-      <div class="form-section" id="section-3">
-        <div class="section-head">
-          <div class="section-num">04 of 04</div>
-          <h2 class="section-title">About you</h2>
-          <p class="section-sub">So we can follow up if we have questions. Everything here is optional.</p>
-        </div>
-        <div class="field-row">
-          <div class="field half">
-            <label>Your name <span class="opt">optional</span></label>
-            <input type="text" id="submitterName" placeholder="What we call you">
-          </div>
-          <div class="field half">
-            <label>Your email <span class="opt">optional</span></label>
-            <input type="email" id="submitterEmail" placeholder="so we can write back">
-          </div>
-        </div>
-        <div class="field">
-          <label>Your Instagram <span class="opt">optional</span></label>
-          <div class="contact-prefix">
-            <span class="contact-prefix-label">@</span>
-            <input type="text" id="submitterInstagram" placeholder="handle" style="padding-left:2.25rem">
-          </div>
+        <div style="margin-top:2.5rem;">
+          <div style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;">Review before you submit</div>
+          <div class="review-block"><div class="review-block-head">The Space</div><div class="review-rows" id="reviewSpace"></div></div>
+          <div class="review-block"><div class="review-block-head">You</div><div class="review-rows" id="reviewOwner"></div></div>
         </div>
 
-        <div style="margin-top:2rem;">
-          <div style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;">Review your submission</div>
-          <div class="review-block">
-            <div class="review-block-head">The Space</div>
-            <div class="review-rows" id="reviewSpace"></div>
-          </div>
-          <div class="review-block">
-            <div class="review-block-head">The Owner</div>
-            <div class="review-rows" id="reviewOwner"></div>
-          </div>
-          <div class="review-block">
-            <div class="review-block-head">Your Note</div>
-            <div class="review-rows" id="reviewNote"></div>
-          </div>
-        </div>
-
-        <div class="form-nav">
-          <button type="button" class="btn-back" onclick="goPrev(3)">← Back</button>
-          <button type="button" class="btn-submit-final" id="submitBtn" onclick="submitForm()">Pin it →</button>
-        </div>
-        <p style="font-size:0.72rem;color:var(--text-mid);margin-top:1.25rem;line-height:1.65;">
-          We review every submission personally. Only verified women-owned spaces are added to the map. We will never share your contact details without permission.
-        </p>
+        <div class="form-nav"><button type="button" class="btn-back" onclick="goPrev(2)">← Back</button><button type="button" class="btn-submit-final" id="submitBtn" onclick="submitForm()">Pin my space →</button></div>
+        <p style="font-size:0.74rem;color:var(--text-light);margin-top:1.5rem;line-height:1.7;">Only the owner can submit a space. We verify every listing personally. We will never share your contact details without your permission.</p>
       </div>
 
     </form>
 
-    <!-- CONFIRMATION -->
     <div id="confirmScreen">
-      <div class="confirm-pin">📍</div>
-      <h2 class="confirm-title">Your pin is<br><em>in our hands now.</em></h2>
-      <p class="confirm-body">
-        Thank you for passing this on. You have just added a name to a map that did not have it before. We will look into it, reach out if we need to, and let you know when she goes live.
-      </p>
-      <div class="confirm-timeline">
-        <div class="ct-step"><div class="ct-dot done">✓</div><div class="ct-label"><strong>Submitted</strong>Just now</div></div>
-        <div class="ct-step"><div class="ct-dot now">→</div><div class="ct-label"><strong>In review</strong>3 to 5 days</div></div>
-        <div class="ct-step"><div class="ct-dot"></div><div class="ct-label"><strong>Verified</strong>We reach out</div></div>
-        <div class="ct-step"><div class="ct-dot"></div><div class="ct-label"><strong>Pinned</strong>Goes live</div></div>
-      </div>
-      <div class="confirm-actions">
-        <button class="btn-confirm-primary" onclick="resetForm()">Submit another space</button>
-        <button class="btn-confirm-ghost" onclick="window.location.href='index.html'">Back to the map</button>
+      <div class="confirm-inner">
+        <div class="confirm-celebration" id="confirmHeadline">You are <em>on the map now.</em></div>
+        <p class="confirm-body" id="confirmBody">Your space has been submitted. We will be in touch soon.</p>
+        <div class="confirm-timeline">
+          <div class="ct-step"><div class="ct-dot done">✓</div><div class="ct-label"><strong>Submitted</strong><span>Just now</span></div></div>
+          <div class="ct-step"><div class="ct-dot now">→</div><div class="ct-label"><strong>In review</strong><span>3 to 5 days</span></div></div>
+          <div class="ct-step"><div class="ct-dot"></div><div class="ct-label"><strong>We reach out</strong><span>Verification</span></div></div>
+          <div class="ct-step"><div class="ct-dot"></div><div class="ct-label"><strong>Your pin goes live</strong><span>On the map</span></div></div>
+        </div>
+        <div class="confirm-actions">
+          <a href="index.html" class="btn-confirm-primary">Go to the map</a>
+          <button class="btn-confirm-ghost" onclick="resetForm()">Submit another space</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-const FORMSPREE_URL='https://formspree.io/f/mdajwywj';
+const SUPABASE_URL='https://xyzgqmghddzirnafwodi.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5emdxbWdoZGR6aXJuYWZ3b2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTM2MTcsImV4cCI6MjA5NTUyOTYxN30.4laPWa2_obOOAkTeFWDg4FGI9LDKDrHcY9pZlWAaAlo';
 let currentSection=0;
-const totalSections=4;
-const sectionLabels=['The Space','The Owner','Your Note','Review'];
-
-function selectPill(el,group){
-  document.querySelectorAll(`#${group} .pill`).forEach(p=>p.classList.remove('selected'));
-  el.classList.add('selected');
-}
+const sectionLabels=['The Space','You','Your Note'];
+function selectPill(el,group){document.querySelectorAll('#'+group+' .pill').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');}
 function getVal(id){const el=document.getElementById(id);return el?el.value.trim():'';}
-function getSelectedPill(group){const sel=document.querySelector(`#${group} .pill.selected`);return sel?sel.textContent.trim():'';}
-
+function getSelectedPill(group){const sel=document.querySelector('#'+group+' .pill.selected');return sel?sel.textContent.trim():'';}
 function validateSection(idx){
   let valid=true;
-  const required={0:['spaceName','category','address','neighbourhood','city'],1:['ownerName','ownershipType'],2:['personalNote'],3:[]};
+  const required={0:['spaceName','category','address','neighbourhood','city'],1:['ownerName','ownershipType','ownerEmail'],2:['personalNote']};
   required[idx].forEach(id=>{
-    const el=document.getElementById(id);
-    if(!el)return;
+    const el=document.getElementById(id);if(!el)return;
     el.classList.remove('err');
     const next=el.nextElementSibling;
     if(next&&next.classList.contains('field-error'))next.remove();
-    if(!el.value.trim()){
-      el.classList.add('err');
-      const err=document.createElement('span');
-      err.className='field-error';
-      err.textContent='This field is required.';
-      el.parentNode.insertBefore(err,el.nextSibling);
-      valid=false;
-    }
+    if(!el.value.trim()){el.classList.add('err');const err=document.createElement('span');err.className='field-error';err.textContent='This field is required.';el.parentNode.insertBefore(err,el.nextSibling);valid=false;}
   });
-  if(idx===2&&!getSelectedPill('relation'))valid=false;
   return valid;
 }
-
 function updateProgress(idx){
-  for(let i=0;i<totalSections;i++){
-    const dot=document.getElementById(`dot-${i}`);
-    dot.classList.remove('active','done');
-    if(i<idx)dot.classList.add('done');
-    else if(i===idx)dot.classList.add('active');
-  }
+  for(let i=0;i<3;i++){const dot=document.getElementById('dot-'+i);dot.classList.remove('active','done');if(i<idx)dot.classList.add('done');else if(i===idx)dot.classList.add('active');}
   document.getElementById('progLabel').textContent=sectionLabels[idx];
 }
-
 function goNext(idx){
   if(!validateSection(idx))return;
-  if(idx===2)buildReview();
-  document.getElementById(`section-${idx}`).classList.remove('active');
+  if(idx===1)buildReview();
+  document.getElementById('section-'+idx).classList.remove('active');
   currentSection=idx+1;
-  document.getElementById(`section-${currentSection}`).classList.add('active');
+  document.getElementById('section-'+currentSection).classList.add('active');
   updateProgress(currentSection);
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function goPrev(idx){
-  document.getElementById(`section-${idx}`).classList.remove('active');
+  document.getElementById('section-'+idx).classList.remove('active');
   currentSection=idx-1;
-  document.getElementById(`section-${currentSection}`).classList.add('active');
+  document.getElementById('section-'+currentSection).classList.add('active');
   updateProgress(currentSection);
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function buildReview(){
-  const spaceRows=[['Name',getVal('spaceName')],['Category',getVal('category')],['Address',`${getVal('address')}, ${getVal('neighbourhood')}, ${getVal('city')}`],['Years in business',getVal('yearsInBusiness')||'—'],['Instagram',getVal('spaceInstagram')?'@'+getVal('spaceInstagram'):'—'],['Website',getVal('spaceWebsite')||'—']];
-  const ownerRows=[['Owner name',getVal('ownerName')],['Ownership type',getVal('ownershipType')],['Instagram',getVal('ownerInstagram')?'@'+getVal('ownerInstagram'):'—'],['WhatsApp',getVal('ownerWhatsApp')?'+91 '+getVal('ownerWhatsApp'):'—'],['Email',getVal('ownerEmail')||'—'],['Property owned',getSelectedPill('propertyOwned')||'—']];
-  const noteRows=[['Note',getVal('personalNote')],['Relation',getSelectedPill('relation')||'—']];
-  const render=(rows,id)=>{document.getElementById(id).innerHTML=rows.map(([k,v])=>`<div class="review-row"><span class="review-key">${k}</span><span class="review-val">${v||'—'}</span></div>`).join('');};
-  render(spaceRows,'reviewSpace');render(ownerRows,'reviewOwner');render(noteRows,'reviewNote');
+  const spaceRows=[['Name',getVal('spaceName')],['Category',getVal('category')],['Address',getVal('address')+', '+getVal('neighbourhood')+', '+getVal('city')],['Years open',getVal('yearsInBusiness')||'—'],['Instagram',getVal('spaceInstagram')?'@'+getVal('spaceInstagram'):'—'],['Website',getVal('spaceWebsite')||'—']];
+  const ownerRows=[['Your name',getVal('ownerName')],['Ownership',getVal('ownershipType')],['Email',getVal('ownerEmail')],['WhatsApp',getVal('ownerWhatsApp')?'+91 '+getVal('ownerWhatsApp'):'—'],['Instagram',getVal('ownerInstagram')?'@'+getVal('ownerInstagram'):'—'],['Property',getSelectedPill('propertyOwned')||'—']];
+  const render=(rows,id)=>{document.getElementById(id).innerHTML=rows.map(r=>'<div class="review-row"><span class="review-key">'+r[0]+'</span><span class="review-val">'+(r[1]||'—')+'</span></div>').join('');};
+  render(spaceRows,'reviewSpace');render(ownerRows,'reviewOwner');
 }
-
 async function submitForm(){
   const btn=document.getElementById('submitBtn');
-  btn.classList.add('loading');
-  btn.textContent='Sending…';
-  const payload={spaceName:getVal('spaceName'),category:getVal('category'),address:getVal('address'),neighbourhood:getVal('neighbourhood'),city:getVal('city'),yearsInBusiness:getVal('yearsInBusiness'),spaceInstagram:getVal('spaceInstagram'),spaceWebsite:getVal('spaceWebsite'),ownerName:getVal('ownerName'),ownershipType:getVal('ownershipType'),ownerInstagram:getVal('ownerInstagram'),ownerWhatsApp:getVal('ownerWhatsApp'),ownerEmail:getVal('ownerEmail'),propertyOwned:getSelectedPill('propertyOwned'),personalNote:getVal('personalNote'),relation:getSelectedPill('relation'),submitterName:getVal('submitterName'),submitterEmail:getVal('submitterEmail'),submitterInstagram:getVal('submitterInstagram')};
-  try{await fetch(FORMSPREE_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});}catch(e){}
-  document.getElementById('pindForm').style.display='none';
-  document.getElementById('progressBar').style.display='none';
-  document.getElementById('confirmScreen').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
+  btn.classList.add('loading');btn.textContent='Submitting…';
+  const firstName=getVal('ownerName').split(' ')[0];
+  const email=getVal('ownerEmail');
+  const payload={space_name:getVal('spaceName'),category:getVal('category'),address:getVal('address'),neighbourhood:getVal('neighbourhood'),city:getVal('city'),years_in_business:getVal('yearsInBusiness'),space_instagram:getVal('spaceInstagram'),space_website:getVal('spaceWebsite'),owner_name:getVal('ownerName'),ownership_type:getVal('ownershipType'),owner_email:email,owner_whatsapp:getVal('ownerWhatsApp'),owner_instagram:getVal('ownerInstagram'),property_owned:getSelectedPill('propertyOwned'),personal_note:getVal('personalNote')};
+  try{
+    const response=await fetch(SUPABASE_URL+'/rest/v1/submissions',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Prefer':'return=minimal'},body:JSON.stringify(payload)});
+    if(response.ok){
+      document.getElementById('confirmHeadline').innerHTML=firstName+', your space is <em>now part of this map.</em>';
+      document.getElementById('confirmBody').textContent='You built something real. We will review your submission personally within 3 to 5 days and reach out to you at '+email+'. Your space deserves to be found. Now it will be.';
+      document.getElementById('pindForm').style.display='none';
+      document.getElementById('progressBar').style.display='none';
+      document.getElementById('confirmScreen').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }else{throw new Error('failed');}
+  }catch(e){btn.classList.remove('loading');btn.textContent='Pin my space →';alert('Something went wrong. Please try again.');}
 }
-
 function resetForm(){
   document.getElementById('pindForm').reset();
   document.querySelectorAll('.pill').forEach(p=>p.classList.remove('selected'));
@@ -538,7 +306,7 @@ function resetForm(){
   document.getElementById('progressBar').style.display='flex';
   document.getElementById('confirmScreen').style.display='none';
   document.getElementById('submitBtn').classList.remove('loading');
-  document.getElementById('submitBtn').textContent='Pin it →';
+  document.getElementById('submitBtn').textContent='Pin my space →';
 }
 </script>
 </body>
