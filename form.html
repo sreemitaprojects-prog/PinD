@@ -3,105 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PinD — Add Your Space</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6C41'/%3E%3Cstop offset='100%25' stop-color='%23FF3C2D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 2C10.477 2 6 6.477 6 12c0 7.5 10 18 10 18s10-10.5 10-18c0-5.523-4.477-10-10-10z' fill='url(%23fg)'/%3E%3Ccircle cx='16' cy='12' r='3.5' fill='white'/%3E%3C/svg%3E">
+<title>PinD by Decoding Draupadi — Add Your Space</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2C10.477 2 6 6.477 6 12c0 7.5 10 18 10 18s10-10.5 10-18c0-5.523-4.477-10-10-10z' fill='%23F0615C'/%3E%3Ccircle cx='16' cy='12' r='3.5' fill='white'/%3E%3C/svg%3E">
 <style>
-:root{--orange:#FF6C41;--coral:#FF3C2D;--ember:#7B2F25;--peach:#FFCDB8;--blush:#FFF0EC;--cream:#FFFAF7;--text-dark:#1C0A06;--text-mid:#5C2D1E;--text-light:#B07060;--border:rgba(255,108,65,0.14);}
+:root{--dd-red:#F0615C;--dd-pink:#FFACEC;--white:#FFFFFF;--black:#000000;--text-muted:#333333;--border:rgba(240,97,92,0.2);}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:"Karla",sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;}
-nav{position:sticky;top:0;z-index:100;background:rgba(255,250,247,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:62px;}
+body{font-family:"Montserrat",sans-serif;background:var(--white);color:var(--black);min-height:100vh;}
+nav{position:sticky;top:0;z-index:100;background:var(--dd-red);border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:72px;}
 .nav-logo{display:flex;align-items:center;text-decoration:none;}
-.nav-logo svg{height:36px;width:auto;}
-.nav-back{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;}
-.nav-back:hover{color:var(--orange);}
-.page-wrap{display:grid;grid-template-columns:400px 1fr;min-height:calc(100vh - 62px);}
-.left-panel{background:var(--ember);padding:4rem 3rem;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;display:flex;flex-direction:column;}
-.left-eyebrow{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,205,184,0.5);margin-bottom:1.5rem;}
-.left-title{font-family:"Fraunces",serif;font-size:2.3rem;line-height:1.15;color:var(--cream);margin-bottom:1.5rem;font-weight:300;}
-.left-title em{font-style:italic;color:var(--peach);}
-.left-body{font-size:0.9rem;line-height:1.85;color:rgba(255,205,184,0.65);margin-bottom:2rem;}
-.left-divider{width:40px;height:1px;background:rgba(255,205,184,0.18);margin-bottom:2rem;}
-.wh-title{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,205,184,0.4);margin-bottom:1.25rem;}
+.nav-logo-wrap{display:flex;flex-direction:column;gap:2px;}
+.nav-logo-text{font-family:"Montserrat",sans-serif;font-size:1.5rem;font-weight:700;color:var(--white);line-height:1;}
+.dd-initiative-tag{font-family:"Montserrat",sans-serif;font-size:11px;font-weight:600;color:var(--dd-pink);line-height:1.2;}
+.nav-back{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;font-weight:600;}
+.nav-back:hover{color:var(--dd-pink);}
+.page-wrap{display:grid;grid-template-columns:400px 1fr;min-height:calc(100vh - 72px);}
+.left-panel{background:var(--white);padding:4rem 3rem;position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto;display:flex;flex-direction:column;border-right:1px solid var(--border);}
+.left-eyebrow{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--dd-red);margin-bottom:1.5rem;font-weight:600;}
+.left-title{font-family:"Montserrat",sans-serif;font-size:2.3rem;line-height:1.15;color:var(--black);margin-bottom:1.5rem;font-weight:700;}
+.left-title em{font-family:"Montserrat",sans-serif;font-style:italic;font-weight:400;color:var(--dd-pink);}
+.left-body{font-size:0.9rem;line-height:1.85;color:var(--black);margin-bottom:2rem;font-weight:400;}
+.left-divider{width:40px;height:1px;background:var(--dd-red);margin-bottom:2rem;}
+.wh-title{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.25rem;font-weight:600;}
 .wh-step{display:flex;gap:1rem;margin-bottom:1.25rem;align-items:flex-start;}
-.wh-num{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,205,184,0.22);color:rgba(255,205,184,0.65);font-size:0.68rem;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
-.wh-text{font-size:0.82rem;line-height:1.7;color:rgba(255,205,184,0.5);}
-.wh-text strong{color:rgba(255,205,184,0.88);font-weight:500;display:block;margin-bottom:2px;}
-.left-note{margin-top:auto;padding-top:2rem;border-top:1px solid rgba(255,205,184,0.08);font-size:0.75rem;line-height:1.7;color:rgba(255,205,184,0.28);font-style:italic;}
+.wh-num{width:22px;height:22px;border-radius:50%;border:1px solid var(--dd-red);color:var(--dd-red);font-size:0.68rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.wh-text{font-size:0.82rem;line-height:1.7;color:var(--text-muted);}
+.wh-text strong{color:var(--black);font-weight:600;display:block;margin-bottom:2px;}
+.left-note{margin-top:auto;padding-top:2rem;border-top:1px solid var(--border);font-size:0.75rem;line-height:1.7;color:var(--text-muted);font-style:italic;}
 .right-panel{padding:4rem 4.5rem 6rem;max-width:700px;}
 .form-progress{display:flex;gap:6px;margin-bottom:3rem;align-items:center;}
-.prog-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,108,65,0.15);transition:all 0.3s;}
-.prog-dot.active{background:var(--orange);width:22px;border-radius:3px;}
-.prog-dot.done{background:var(--ember);}
-.prog-label{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);margin-left:0.5rem;}
+.prog-dot{width:6px;height:6px;border-radius:50%;background:rgba(240,97,92,0.2);transition:all 0.3s;}
+.prog-dot.active{background:var(--dd-red);width:22px;border-radius:4px;}
+.prog-dot.done{background:var(--dd-pink);}
+.prog-label{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-left:0.5rem;font-weight:600;}
 .form-section{margin-bottom:3rem;display:none;}
 .form-section.active{display:block;}
 .section-head{margin-bottom:2rem;}
-.section-num{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);margin-bottom:0.5rem;}
-.section-title{font-family:"Fraunces",serif;font-size:1.75rem;color:var(--text-dark);line-height:1.2;font-weight:300;}
-.section-title em{font-style:italic;color:var(--coral);}
-.section-sub{font-size:0.85rem;color:var(--text-mid);margin-top:0.5rem;line-height:1.65;}
+.section-num{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--dd-red);margin-bottom:0.5rem;font-weight:600;}
+.section-title{font-family:"Montserrat",sans-serif;font-size:1.75rem;color:var(--black);line-height:1.2;font-weight:700;}
+.section-title em{font-family:"Montserrat",sans-serif;font-style:italic;font-weight:400;color:var(--dd-pink);}
+.section-sub{font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem;line-height:1.65;font-weight:400;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;}
 .field{display:flex;flex-direction:column;gap:0.45rem;margin-bottom:1.25rem;}
 .field.half{margin-bottom:0;}
-label{font-size:0.82rem;font-weight:500;color:var(--text-dark);letter-spacing:0.01em;}
-label .req{color:var(--orange);margin-left:2px;}
-label .opt{color:var(--text-mid);font-weight:400;font-size:0.72rem;margin-left:4px;}
-input[type="text"],input[type="email"],input[type="tel"],input[type="url"],input[type="number"],select,textarea{border:1px solid var(--border);border-radius:3px;padding:0.75rem 1rem;font-family:"Karla",sans-serif;font-size:0.9rem;color:var(--text-dark);background:white;transition:border-color 0.2s,box-shadow 0.2s;width:100%;outline:none;-webkit-appearance:none;}
-input:focus,select:focus,textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,108,65,0.07);}
-input::placeholder,textarea::placeholder{color:rgba(176,112,96,0.4);}
+label{font-size:0.82rem;font-weight:600;color:var(--black);letter-spacing:0.01em;}
+label .req{color:var(--dd-red);margin-left:2px;}
+label .opt{color:var(--text-muted);font-weight:400;font-size:0.72rem;margin-left:4px;}
+input[type="text"],input[type="email"],input[type="tel"],input[type="url"],input[type="number"],select,textarea{border:1px solid var(--border);border-radius:5px;padding:0.75rem 1rem;font-family:"Montserrat",sans-serif;font-size:0.9rem;color:var(--black);background:white;transition:border-color 0.2s,box-shadow 0.2s;width:100%;outline:none;-webkit-appearance:none;}
+input:focus,select:focus,textarea:focus{border-color:var(--dd-red);box-shadow:0 0 0 3px rgba(240,97,92,0.1);}
+input::placeholder,textarea::placeholder{color:rgba(0,0,0,0.35);}
 textarea{resize:vertical;min-height:130px;line-height:1.7;}
-select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237B2F25' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
-.field-hint{font-size:0.74rem;color:var(--text-light);line-height:1.55;}
+select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F0615C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
+.field-hint{font-size:0.74rem;color:var(--text-muted);line-height:1.55;}
 .pill-group{display:flex;flex-wrap:wrap;gap:0.5rem;}
-.pill{border:1px solid var(--border);border-radius:20px;padding:0.4rem 1rem;font-size:0.8rem;color:var(--text-mid);cursor:pointer;transition:all 0.18s;user-select:none;background:white;}
-.pill:hover{border-color:rgba(255,108,65,0.35);color:var(--text-dark);}
-.pill.selected{background:var(--orange);color:white;border-color:var(--orange);}
+.pill{border:1px solid var(--border);border-radius:20px;padding:0.4rem 1rem;font-size:0.8rem;color:var(--text-muted);cursor:pointer;transition:all 0.18s;user-select:none;background:white;font-family:"Montserrat",sans-serif;}
+.pill:hover{border-color:var(--dd-red);color:var(--black);}
+.pill.selected{background:var(--dd-red);color:white;border-color:var(--dd-red);}
 .contact-prefix{position:relative;}
 .contact-prefix input{padding-left:2.75rem;}
-.contact-prefix-label{position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-size:0.82rem;color:var(--text-mid);}
-.form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,108,65,0.08);}
-.btn-back{background:none;border:none;font-family:"Karla",sans-serif;font-size:0.82rem;color:var(--text-mid);cursor:pointer;letter-spacing:0.04em;padding:0.6rem 0;transition:color 0.2s;}
-.btn-back:hover{color:var(--text-dark);}
-.btn-next{background:var(--orange);color:white;border:none;padding:0.9rem 2.25rem;font-family:"Karla",sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s,transform 0.15s;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
-.btn-next:hover{background:var(--coral);transform:translateY(-1px);}
-.btn-submit-final{background:var(--ember);color:white;border:none;padding:0.9rem 2.5rem;font-family:"Karla",sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
-.btn-submit-final:hover{background:var(--coral);}
+.contact-prefix-label{position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-size:0.82rem;color:var(--text-muted);}
+.form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);}
+.btn-back{background:none;border:none;font-family:"Montserrat",sans-serif;font-size:0.82rem;color:var(--text-muted);cursor:pointer;letter-spacing:0.04em;padding:0.6rem 0;transition:color 0.2s;}
+.btn-back:hover{color:var(--black);}
+.btn-next{background:var(--dd-red);color:white;border:none;padding:0.9rem 2.25rem;font-family:"Montserrat",sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;border-radius:5px;transition:background 0.2s,color 0.2s,transform 0.15s;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
+.btn-next:hover{background:var(--dd-pink);color:var(--black);transform:translateY(-1px);}
+.btn-submit-final{background:var(--dd-red);color:white;border:none;padding:0.9rem 2.5rem;font-family:"Montserrat",sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;border-radius:5px;transition:background 0.2s,color 0.2s;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
+.btn-submit-final:hover{background:var(--dd-pink);color:var(--black);}
 .btn-submit-final.loading{opacity:0.65;cursor:not-allowed;}
 .review-block{background:white;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:1.1rem;}
-.review-block-head{padding:0.7rem 1.25rem;background:var(--blush);border-bottom:1px solid var(--border);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ember);font-weight:500;}
+.review-block-head{padding:0.7rem 1.25rem;background:rgba(240,97,92,0.06);border-bottom:1px solid var(--border);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dd-red);font-weight:600;}
 .review-rows{padding:0.4rem 0;}
 .review-row{display:flex;padding:0.5rem 1.25rem;gap:1rem;font-size:0.83rem;}
-.review-row:not(:last-child){border-bottom:1px solid rgba(255,108,65,0.05);}
-.review-key{color:var(--text-light);min-width:130px;flex-shrink:0;}
-.review-val{color:var(--text-dark);word-break:break-word;}
-.field-error{font-size:0.72rem;color:var(--coral);}
-input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#fff8f7;}
+.review-row:not(:last-child){border-bottom:1px solid rgba(240,97,92,0.08);}
+.review-key{color:var(--text-muted);min-width:130px;flex-shrink:0;}
+.review-val{color:var(--black);word-break:break-word;}
+.field-error{font-size:0.72rem;color:var(--dd-red);}
+input.err,select.err,textarea.err{border-color:rgba(240,97,92,0.5);background:#fff5f5;}
 
-.photo-upload-box{border:1px dashed rgba(255,108,65,0.35);border-radius:3px;background:white;cursor:pointer;transition:border-color 0.2s,background 0.2s;overflow:hidden;height:160px;display:flex;align-items:center;justify-content:center;}
-.photo-upload-box:hover{border-color:var(--orange);background:var(--blush);}
-.photo-upload-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:0.8rem;color:var(--text-light);font-family:"Karla",sans-serif;text-align:center;padding:1rem;width:100%;height:100%;}
+.photo-upload-box{border:1px dashed rgba(240,97,92,0.35);border-radius:5px;background:white;cursor:pointer;transition:border-color 0.2s,background 0.2s;overflow:hidden;height:160px;display:flex;align-items:center;justify-content:center;}
+.photo-upload-box:hover{border-color:var(--dd-red);background:rgba(255,172,236,0.15);}
+.photo-upload-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:0.8rem;color:var(--text-muted);font-family:"Montserrat",sans-serif;text-align:center;padding:1rem;width:100%;height:100%;}
 .photo-upload-inner img{width:100%;height:100%;object-fit:cover;display:block;}
-.photo-uploading{font-size:0.75rem;color:var(--orange);font-family:"Karla",sans-serif;margin-top:4px;}
-.photo-done{font-size:0.75rem;color:var(--ember);font-family:"Karla",sans-serif;margin-top:4px;}
+.photo-uploading{font-size:0.75rem;color:var(--dd-red);font-family:"Montserrat",sans-serif;margin-top:4px;}
+.photo-done{font-size:0.75rem;color:var(--dd-red);font-family:"Montserrat",sans-serif;margin-top:4px;}
 #confirmScreen{display:none;padding:3rem 0;}
 .confirm-inner{max-width:520px;}
-.confirm-celebration{font-family:"Fraunces",serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.15;color:var(--text-dark);margin-bottom:1.5rem;}
-.confirm-celebration em{font-style:italic;color:var(--coral);}
-.confirm-body{font-size:0.95rem;line-height:1.85;color:var(--text-mid);margin-bottom:2.5rem;}
-.confirm-timeline{display:flex;flex-direction:column;margin-bottom:2.5rem;border:1px solid var(--border);border-radius:4px;overflow:hidden;background:white;}
+.confirm-celebration{font-family:"Montserrat",sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.15;color:var(--black);margin-bottom:1.5rem;}
+.confirm-celebration em{font-family:"Montserrat",sans-serif;font-style:italic;font-weight:400;color:var(--dd-pink);}
+.confirm-body{font-size:0.95rem;line-height:1.85;color:var(--text-muted);margin-bottom:2.5rem;}
+.confirm-timeline{display:flex;flex-direction:column;margin-bottom:2.5rem;border:1px solid var(--border);border-radius:5px;overflow:hidden;background:white;}
 .ct-step{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem;}
-.ct-step:not(:last-child){border-bottom:1px solid rgba(255,108,65,0.07);}
-.ct-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,108,65,0.2);background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0;margin-top:1px;}
-.ct-dot.done{background:var(--ember);border-color:var(--ember);color:white;}
-.ct-dot.now{background:var(--orange);border-color:var(--orange);color:white;}
-.ct-label strong{display:block;font-size:0.85rem;color:var(--text-dark);font-weight:500;margin-bottom:2px;}
-.ct-label span{font-size:0.78rem;color:var(--text-light);}
+.ct-step:not(:last-child){border-bottom:1px solid rgba(240,97,92,0.08);}
+.ct-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(240,97,92,0.3);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0;margin-top:1px;}
+.ct-dot.done{background:var(--dd-red);border-color:var(--dd-red);color:white;}
+.ct-dot.now{background:var(--dd-red);border-color:var(--dd-red);color:white;}
+.ct-label strong{display:block;font-size:0.85rem;color:var(--black);font-weight:600;margin-bottom:2px;}
+.ct-label span{font-size:0.78rem;color:var(--text-muted);}
 .confirm-actions{display:flex;gap:1rem;flex-wrap:wrap;}
-.btn-confirm-primary{background:var(--orange);color:white;border:none;padding:0.85rem 2rem;font-family:"Karla",sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;text-decoration:none;display:inline-block;}
-.btn-confirm-primary:hover{background:var(--coral);}
-.btn-confirm-ghost{background:none;color:var(--text-mid);border:1px solid var(--border);padding:0.85rem 2rem;font-family:"Karla",sans-serif;font-size:0.88rem;cursor:pointer;border-radius:3px;transition:all 0.2s;}
-.btn-confirm-ghost:hover{border-color:rgba(255,108,65,0.3);color:var(--text-dark);}
+.btn-confirm-primary{background:var(--dd-red);color:white;border:none;padding:0.85rem 2rem;font-family:"Montserrat",sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;border-radius:5px;transition:background 0.2s,color 0.2s;text-decoration:none;display:inline-block;}
+.btn-confirm-primary:hover{background:var(--dd-pink);color:var(--black);}
+.btn-confirm-ghost{background:none;color:var(--text-muted);border:1px solid var(--border);padding:0.85rem 2rem;font-family:"Montserrat",sans-serif;font-size:0.88rem;cursor:pointer;border-radius:5px;transition:all 0.2s;}
+.btn-confirm-ghost:hover{border-color:var(--dd-red);color:var(--black);}
 @media(max-width:900px){
   nav{padding:0 1.25rem;}
   .nav-logo svg{height:30px;}
@@ -126,24 +128,23 @@ input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#f
 <body>
 <nav>
   <a href="index.html" class="nav-logo" aria-label="PinD Home">
-    <svg height="36" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6C41"/><stop offset="100%" stop-color="#FF3C2D"/></linearGradient></defs>
-      <text x="4" y="68" font-family="Fraunces, serif" font-size="72" font-style="italic" font-weight="300" fill="url(#ng)">PinD</text>
-      <g transform="translate(72, 2)"><path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="url(#ng)"/><circle cx="9" cy="6" r="2.2" fill="white"/></g>
-    </svg>
+    <div class="nav-logo-wrap">
+      <span class="nav-logo-text">PinD</span>
+      <span class="dd-initiative-tag">A Decoding Draupadi Initiative</span>
+    </div>
   </a>
   <a href="index.html" class="nav-back">← Back to map</a>
 </nav>
 
 <div class="page-wrap">
   <div class="left-panel">
-    <div class="left-eyebrow">Add your space to PinD</div>
-    <h1 class="left-title">This map exists because of women <em>like you.</em></h1>
-    <p class="left-body">This map is a celebration of your space, the one you have created. You did the hard part. Owning a space in India, as a woman, is not a small thing. Let people find you.</p>
+    <div class="left-eyebrow">Add Your Space to the DD Map</div>
+    <h1 class="left-title">This map grows because women <em>like you pin it.</em></h1>
+    <p class="left-body">You did the hard part. Owning a space in India, as a woman, is not a small thing. Let the DD community find you. Verified listings may be featured on the Decoding Draupadi Instagram, where 10,000+ women are already looking for spaces exactly like yours.</p>
     <div class="left-divider"></div>
     <div class="wh-title">What happens after you submit</div>
     <div class="wh-step"><div class="wh-num">1</div><div class="wh-text"><strong>We receive your submission</strong>Directly, personally. No bots, no middlemen.</div></div>
-    <div class="wh-step"><div class="wh-num">2</div><div class="wh-text"><strong>We verify within 3 to 5 days</strong>We look into your space and may reach out to you directly.</div></div>
+    <div class="wh-step"><div class="wh-num">2</div><div class="wh-text"><strong>We verify within 3 to 5 days</strong>We look into your space and may reach out to you directly. Verified listings may be featured on the Decoding Draupadi Instagram.</div></div>
     <div class="wh-step"><div class="wh-num">3</div><div class="wh-text"><strong>Your pin goes live</strong>Once approved, you are on the map. We will tell you the moment it happens.</div></div>
     <div class="wh-step"><div class="wh-num">4</div><div class="wh-text"><strong>Women find you</strong>That is the whole point.</div></div>
     <p class="left-note">Only the owner can submit a space. We verify every listing personally. This map is not automated and never will be.</p>
@@ -229,7 +230,7 @@ input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#f
                 <option>Raipur</option>
               </optgroup>
               <optgroup label="Other">
-                <option value="other">Other — I'll type it</option>
+                <option value="other">Other, I'll type it</option>
               </optgroup>
             </select>
             <input type="text" id="cityOther" placeholder="Type your city" style="display:none;margin-top:0.5rem;" oninput="syncCityOther(this)">
@@ -282,7 +283,7 @@ input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#f
             <label>A photo of you in your space <span class="opt">optional</span></label>
             <div class="photo-upload-box" id="ownerPhotoBox" onclick="document.getElementById('ownerPhotoInput').click()">
               <div class="photo-upload-inner" id="ownerPhotoPreview">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-light);margin-bottom:8px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);margin-bottom:8px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 <span>Upload your photo</span>
               </div>
             </div>
@@ -293,7 +294,7 @@ input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#f
             <label>A photo of your space <span class="opt">optional</span></label>
             <div class="photo-upload-box" id="spacePhotoBox" onclick="document.getElementById('spacePhotoInput').click()">
               <div class="photo-upload-inner" id="spacePhotoPreview">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-light);margin-bottom:8px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);margin-bottom:8px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 <span>Upload your space</span>
               </div>
             </div>
@@ -303,13 +304,13 @@ input.err,select.err,textarea.err{border-color:rgba(255,60,45,0.4);background:#f
         </div>
 
         <div style="margin-top:2.5rem;">
-          <div style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);margin-bottom:1rem;">Review before you submit</div>
+          <div style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--dd-red);margin-bottom:1rem;font-weight:600;">Review before you submit</div>
           <div class="review-block"><div class="review-block-head">The Space</div><div class="review-rows" id="reviewSpace"></div></div>
           <div class="review-block"><div class="review-block-head">You</div><div class="review-rows" id="reviewOwner"></div></div>
         </div>
 
         <div class="form-nav"><button type="button" class="btn-back" onclick="goPrev(2)">← Back</button><button type="button" class="btn-submit-final" id="submitBtn" onclick="submitForm()">Pin my space →</button></div>
-        <p style="font-size:0.74rem;color:var(--text-light);margin-top:1.5rem;line-height:1.7;">Only the owner can submit a space. We verify every listing personally. We will never share your contact details without your permission.</p>
+        <p style="font-size:0.74rem;color:var(--text-muted);margin-top:1.5rem;line-height:1.7;">Only the owner can submit a space. We verify every listing personally. We will never share your contact details without your permission.</p>
       </div>
 
     </form>
@@ -424,9 +425,10 @@ function goPrev(idx){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function buildReview(){
-  const spaceRows=[['Name',getVal('spaceName')],['Category',getVal('category')],['Address',getVal('address')+', '+getVal('neighbourhood')+', '+getCityValue()],['Years open',getVal('yearsInBusiness')||'—'],['Instagram',getVal('spaceInstagram')?'@'+getVal('spaceInstagram'):'—'],['Website',getVal('spaceWebsite')||'—']];
-  const ownerRows=[['Your name',getVal('ownerName')],['Ownership',getVal('ownershipType')],['Email',getVal('ownerEmail')],['WhatsApp',getVal('ownerWhatsApp')?'+91 '+getVal('ownerWhatsApp'):'—'],['Instagram',getVal('ownerInstagram')?'@'+getVal('ownerInstagram'):'—'],['Property',getSelectedPill('propertyOwned')||'—']];
-  const render=(rows,id)=>{document.getElementById(id).innerHTML=rows.map(r=>'<div class="review-row"><span class="review-key">'+r[0]+'</span><span class="review-val">'+(r[1]||'—')+'</span></div>').join('');};
+  const empty='Not provided';
+  const spaceRows=[['Name',getVal('spaceName')],['Category',getVal('category')],['Address',getVal('address')+', '+getVal('neighbourhood')+', '+getCityValue()],['Years open',getVal('yearsInBusiness')||empty],['Instagram',getVal('spaceInstagram')?'@'+getVal('spaceInstagram'):empty],['Website',getVal('spaceWebsite')||empty]];
+  const ownerRows=[['Your name',getVal('ownerName')],['Ownership',getVal('ownershipType')],['Email',getVal('ownerEmail')],['WhatsApp',getVal('ownerWhatsApp')?'+91 '+getVal('ownerWhatsApp'):empty],['Instagram',getVal('ownerInstagram')?'@'+getVal('ownerInstagram'):empty],['Property',getSelectedPill('propertyOwned')||empty]];
+  const render=(rows,id)=>{document.getElementById(id).innerHTML=rows.map(r=>'<div class="review-row"><span class="review-key">'+r[0]+'</span><span class="review-val">'+(r[1]||empty)+'</span></div>').join('');};
   render(spaceRows,'reviewSpace');render(ownerRows,'reviewOwner');
 }
 async function geocodeAddress(address, neighbourhood, city) {
@@ -488,8 +490,8 @@ function resetForm(){
   document.querySelectorAll('.pill').forEach(p=>p.classList.remove('selected'));
   document.querySelectorAll('.err').forEach(e=>e.classList.remove('err'));
   document.querySelectorAll('.field-error').forEach(e=>e.remove());
-  document.getElementById('ownerPhotoPreview').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-light);margin-bottom:8px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Upload your photo</span>';
-  document.getElementById('spacePhotoPreview').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-light);margin-bottom:8px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Upload your space</span>';
+  document.getElementById('ownerPhotoPreview').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);margin-bottom:8px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Upload your photo</span>';
+  document.getElementById('spacePhotoPreview').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);margin-bottom:8px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Upload your space</span>';
   ownerPhotoUrl='';spacePhotoUrl='';
   currentSection=0;
   document.querySelectorAll('.form-section').forEach(s=>s.classList.remove('active'));

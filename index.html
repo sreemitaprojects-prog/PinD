@@ -3,76 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PinD — Women-Owned Spaces</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+<title>PinD by Decoding Draupadi — Women-Owned Spaces</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF6C41'/%3E%3Cstop offset='100%25' stop-color='%23FF3C2D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 2C10.477 2 6 6.477 6 12c0 7.5 10 18 10 18s10-10.5 10-18c0-5.523-4.477-10-10-10z' fill='url(%23fg)'/%3E%3Ccircle cx='16' cy='12' r='3.5' fill='white'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2C10.477 2 6 6.477 6 12c0 7.5 10 18 10 18s10-10.5 10-18c0-5.523-4.477-10-10-10z' fill='%23F0615C'/%3E%3Ccircle cx='16' cy='12' r='3.5' fill='white'/%3E%3C/svg%3E">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{--orange:#FF6C41;--coral:#FF3C2D;--ember:#7B2F25;--peach:#FFCDB8;--blush:#FFF0EC;--cream:#FFFAF7;--text-dark:#1C0A06;--text-mid:#5C2D1E;--text-light:#B07060;}
+:root{--dd-red:#F0615C;--dd-pink:#FFACEC;--white:#FFFFFF;--black:#000000;--text-muted:#333333;}
 html{scroll-behavior:smooth;}
-body{font-family:"Karla",sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+body{font-family:"Montserrat",sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:66px;background:rgba(255,250,247,0.95);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,108,65,0.1);transition:box-shadow 0.3s;}
-nav.scrolled{box-shadow:0 2px 24px rgba(123,47,37,0.07);}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:72px;background:var(--dd-red);border-bottom:1px solid rgba(0,0,0,0.08);transition:box-shadow 0.3s;}
+nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,0.12);}
 .nav-logo{display:flex;align-items:center;text-decoration:none;}
-.nav-logo svg{height:38px;width:auto;}
+.nav-logo-wrap{display:flex;flex-direction:column;gap:2px;}
+.nav-logo-text{font-family:"Montserrat",sans-serif;font-size:1.65rem;font-weight:700;color:var(--white);line-height:1;letter-spacing:-0.02em;}
+.dd-initiative-tag{font-family:"Montserrat",sans-serif;font-size:11px;font-weight:600;color:var(--dd-pink);line-height:1.2;letter-spacing:0.01em;}
 .nav-links{display:flex;align-items:center;gap:1rem;list-style:none;}
-.nav-links a{text-decoration:none;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);transition:color 0.2s;font-family:"Karla",sans-serif;}
-.nav-links a:hover{color:var(--orange);}
-.nav-cta{background:var(--orange)!important;color:white!important;padding:8px 20px;border-radius:2px;}
-.nav-cta:hover{background:var(--ember)!important;}
+.nav-links a{text-decoration:none;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);transition:color 0.2s;font-family:"Montserrat",sans-serif;}
+.nav-links a:hover{color:var(--dd-pink);}
+.nav-cta{background:var(--white)!important;color:var(--dd-red)!important;padding:8px 20px;border-radius:5px;font-weight:700!important;}
+.nav-cta:hover{background:var(--dd-pink)!important;color:var(--black)!important;}
 
 /* HERO */
-.hero{min-height:100vh;padding-top:66px;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;}
+.hero{min-height:100vh;padding-top:72px;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;background:var(--white);}
 .hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 3.5rem 4rem 4rem;z-index:2;}
-.hero-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;font-family:"Karla",sans-serif;}
-.hero-eyebrow::before{content:"";width:24px;height:1px;background:var(--orange);display:block;}
-.hero-headline{font-family:"Fraunces",serif;font-size:clamp(2.8rem,4.2vw,5rem);font-weight:300;line-height:1.07;color:var(--text-dark);margin-bottom:1.75rem;}
-.hero-headline em{font-style:italic;color:var(--coral);}
-.hero-sub{font-size:15px;font-weight:300;line-height:1.85;color:var(--text-mid);max-width:420px;margin-bottom:2.5rem;font-family:"Karla",sans-serif;}
-.hero-sub strong{font-weight:500;color:var(--text-dark);}
-.btn-primary{background:var(--orange);color:white;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;padding:13px 28px;border-radius:2px;transition:background 0.2s,transform 0.15s;display:inline-block;font-family:"Karla",sans-serif;border:none;cursor:pointer;}
-.btn-primary:hover{background:var(--ember);transform:translateY(-1px);}
-.hero-right{position:relative;overflow:hidden;background:var(--blush);}
+.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--dd-red);margin-bottom:0.5rem;display:flex;align-items:center;gap:10px;font-family:"Montserrat",sans-serif;}
+.hero-eyebrow::before{content:"";width:24px;height:1px;background:var(--dd-red);display:block;}
+.hero-dd-line{font-size:11px;font-weight:600;color:var(--dd-red);margin-bottom:1.5rem;font-family:"Montserrat",sans-serif;}
+.hero-headline{font-family:"Montserrat",sans-serif;font-size:clamp(2.8rem,4.2vw,5rem);font-weight:700;line-height:1.07;color:var(--dd-red);margin-bottom:1.75rem;}
+.hero-headline em{font-family:"Montserrat",sans-serif;font-style:italic;font-weight:400;color:var(--dd-pink);}
+.hero-sub{font-size:15px;font-weight:400;line-height:1.85;color:var(--black);max-width:420px;margin-bottom:2.5rem;font-family:"Montserrat",sans-serif;}
+.btn-primary{background:var(--dd-red);color:var(--white);text-decoration:none;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:13px 28px;border-radius:5px;transition:background 0.2s,color 0.2s,transform 0.15s;display:inline-block;font-family:"Montserrat",sans-serif;border:none;cursor:pointer;}
+.btn-primary:hover{background:var(--dd-pink);color:var(--black);transform:translateY(-1px);}
+.hero-right{position:relative;overflow:hidden;background:var(--white);}
 #hero-map{position:absolute;inset:0;}
-.map-fade-left{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,var(--cream) 0%,rgba(255,250,247,0.3) 40%,transparent 65%);}
-.map-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:80px;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--cream),transparent);}
+.map-fade-left{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,var(--white) 0%,rgba(255,255,255,0.3) 40%,transparent 65%);}
+.map-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:80px;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--white),transparent);}
 
 /* MARQUEE */
-.marquee-strip{background:var(--blush);border-top:1px solid rgba(255,108,65,0.1);border-bottom:1px solid rgba(255,108,65,0.1);overflow:hidden;padding:1.4rem 0;white-space:nowrap;position:relative;}
+.marquee-strip{background:var(--dd-red);border-top:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);overflow:hidden;padding:1.4rem 0;white-space:nowrap;position:relative;}
 .marquee-strip::before,.marquee-strip::after{content:"";position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;}
-.marquee-strip::before{left:0;background:linear-gradient(to right,var(--blush),transparent);}
-.marquee-strip::after{right:0;background:linear-gradient(to left,var(--blush),transparent);}
+.marquee-strip::before{left:0;background:linear-gradient(to right,var(--dd-red),transparent);}
+.marquee-strip::after{right:0;background:linear-gradient(to left,var(--dd-red),transparent);}
 .marquee-track{display:inline-flex;animation:marqueeScroll 18s linear infinite;}
 @keyframes marqueeScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .marquee-item{display:inline-flex;align-items:center;gap:1.5rem;padding:0 2rem;}
-.marquee-word{font-family:"Fraunces",serif;font-size:1.2rem;font-style:italic;font-weight:300;color:var(--text-mid);}
-.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--orange);flex-shrink:0;}
+.marquee-word{font-family:"Montserrat",sans-serif;font-size:1.2rem;font-weight:700;color:var(--white);letter-spacing:0.12em;text-transform:uppercase;}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--white);flex-shrink:0;opacity:0.6;}
 
 /* SHARED */
-.section-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;font-family:"Karla",sans-serif;}
-.section-eyebrow::before{content:"";width:24px;height:1px;background:var(--orange);display:block;}
-.section-title{font-family:"Fraunces",serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;line-height:1.15;color:var(--text-dark);}
-.section-title em{font-style:italic;color:var(--coral);}
+.section-eyebrow{font-size:10px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--dd-red);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;font-family:"Montserrat",sans-serif;}
+.section-eyebrow::before{content:"";width:24px;height:1px;background:var(--dd-red);display:block;}
+.section-title{font-family:"Montserrat",sans-serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;line-height:1.15;color:var(--black);}
+.section-title em{font-family:"Montserrat",sans-serif;font-style:italic;font-weight:400;color:var(--dd-pink);}
+.section-divider{height:1px;background:var(--dd-red);border:none;margin:0;}
 
 /* MANIFESTO */
-.manifesto{padding:5rem 4rem;background:var(--cream);}
+.manifesto{padding:5rem 4rem;background:var(--dd-red);}
 .manifesto-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
-.manifesto-headline{font-family:"Fraunces",serif;font-size:clamp(1.7rem,2.5vw,2.5rem);font-weight:300;line-height:1.2;color:var(--text-dark);margin-bottom:1.75rem;}
-.manifesto-headline em{font-style:italic;color:var(--coral);}
-.manifesto-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--text-mid);font-family:"Karla",sans-serif;}
+.manifesto .section-eyebrow{color:var(--white);}
+.manifesto .section-eyebrow::before{background:var(--white);}
+.manifesto-headline{font-family:"Montserrat",sans-serif;font-size:clamp(1.7rem,2.5vw,2.5rem);font-weight:700;line-height:1.2;color:var(--white);margin-bottom:1.75rem;}
+.manifesto-headline em{font-family:"Montserrat",sans-serif;font-style:italic;font-weight:400;color:var(--dd-pink);}
+.manifesto-body{font-size:15px;font-weight:400;line-height:1.9;color:var(--white);font-family:"Montserrat",sans-serif;}
 .manifesto-body p+p{margin-top:1.1rem;}
-.pull-quote{font-family:"Fraunces",serif;font-size:clamp(1.3rem,2vw,1.85rem);font-weight:300;font-style:italic;line-height:1.5;color:var(--coral);border-left:2px solid var(--orange);padding-left:1.75rem;margin-bottom:2.5rem;}
+.pull-quote{font-family:"Montserrat",sans-serif;font-size:clamp(1.3rem,2vw,1.85rem);font-weight:400;font-style:italic;line-height:1.5;color:var(--dd-pink);border-left:2px solid var(--white);padding-left:1.75rem;margin-bottom:2.5rem;}
 .value-list{display:flex;flex-direction:column;gap:1.1rem;}
 .value-item{display:flex;align-items:flex-start;gap:0.9rem;}
-.value-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);margin-top:8px;flex-shrink:0;}
-.value-text{font-size:14px;font-weight:300;line-height:1.7;color:var(--text-mid);font-family:"Karla",sans-serif;}
+.value-dot{width:5px;height:5px;border-radius:50%;background:var(--dd-pink);margin-top:8px;flex-shrink:0;}
+.value-text{font-size:14px;font-weight:400;line-height:1.7;color:rgba(255,255,255,0.9);font-family:"Montserrat",sans-serif;}
 
-/* PHOTO STRIP — full bleed, fixed height, no gap */
-.photo-strip{overflow:hidden;height:280px;background:var(--cream);margin-top:4rem;}
+/* PHOTO STRIP */
+.photo-strip{overflow:hidden;height:280px;background:var(--dd-red);margin-top:4rem;}
 .photo-track{display:flex;gap:0.75rem;animation:photoScroll 24s linear infinite;height:100%;}
 .photo-track:hover{animation-play-state:paused;}
 @keyframes photoScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
@@ -80,52 +85,52 @@ nav.scrolled{box-shadow:0 2px 24px rgba(123,47,37,0.07);}
 .photo-slide img{width:100%;height:100%;object-fit:cover;display:block;}
 
 /* NOTES SECTION */
-.notes-section{padding:5rem 0;background:var(--blush);overflow:hidden;}
+.notes-section{padding:5rem 0;background:var(--white);overflow:hidden;border-top:1px solid var(--dd-red);}
 .notes-header{padding:0 4rem;margin-bottom:2.5rem;}
 .notes-track-wrap{overflow:hidden;position:relative;}
 .notes-track-wrap::before,.notes-track-wrap::after{content:"";position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
-.notes-track-wrap::before{left:0;background:linear-gradient(to right,var(--blush),transparent);}
-.notes-track-wrap::after{right:0;background:linear-gradient(to left,var(--blush),transparent);}
+.notes-track-wrap::before{left:0;background:linear-gradient(to right,var(--white),transparent);}
+.notes-track-wrap::after{right:0;background:linear-gradient(to left,var(--white),transparent);}
 .notes-track{display:inline-flex;gap:1.25rem;animation:notesScroll 32s linear infinite;padding:0.5rem 0;}
 .notes-track:hover{animation-play-state:paused;}
 @keyframes notesScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.note-card{flex-shrink:0;width:300px;background:white;border:1px solid rgba(255,108,65,0.12);border-radius:4px;padding:1.75rem;display:flex;flex-direction:column;gap:0.9rem;}
-.note-card-text{font-family:"Fraunces",serif;font-size:1rem;font-weight:300;font-style:italic;line-height:1.75;color:var(--text-mid);}
-.note-card-text::before{content:'\201C';color:var(--orange);font-size:1.4rem;line-height:0;vertical-align:-0.4em;margin-right:3px;}
+.note-card{flex-shrink:0;width:300px;background:var(--white);border:1px solid rgba(240,97,92,0.2);border-radius:5px;padding:1.75rem;display:flex;flex-direction:column;gap:0.9rem;}
+.note-card-text{font-family:"Montserrat",sans-serif;font-size:1rem;font-weight:400;font-style:italic;line-height:1.75;color:var(--black);}
+.note-card-text::before{content:'\201C';color:var(--dd-red);font-size:1.4rem;line-height:0;vertical-align:-0.4em;margin-right:3px;}
 .note-card-footer{display:flex;align-items:center;gap:0.65rem;margin-top:auto;}
-.note-card-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0;}
-.note-card-name{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);font-family:"Karla",sans-serif;}
-.note-card-place{font-size:10px;font-weight:300;color:var(--text-light);font-family:"Karla",sans-serif;}
-.notes-coming-soon{text-align:center;padding:2rem 4rem;font-family:"Fraunces",serif;font-size:1.1rem;font-weight:300;font-style:italic;color:var(--text-light);}
+.note-card-dot{width:5px;height:5px;border-radius:50%;background:var(--dd-red);flex-shrink:0;}
+.note-card-name{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--dd-red);font-family:"Montserrat",sans-serif;}
+.note-card-place{font-size:10px;font-weight:400;color:var(--text-muted);font-family:"Montserrat",sans-serif;}
+.notes-coming-soon{text-align:center;padding:2rem 4rem;font-family:"Montserrat",sans-serif;font-size:1.1rem;font-weight:400;font-style:italic;color:var(--text-muted);}
 
 /* RECENTLY PINNED */
-.places-preview{padding:4rem;background:var(--blush);}
-.coming-soon-block{margin-top:2rem;border:1px dashed rgba(255,108,65,0.3);border-radius:4px;padding:3.5rem 2.5rem;text-align:center;background:rgba(255,240,236,0.4);}
-.coming-soon-title{font-family:"Fraunces",serif;font-size:1.6rem;font-weight:300;font-style:italic;color:var(--text-mid);margin-bottom:0.65rem;}
-.coming-soon-sub{font-size:14px;font-weight:300;color:var(--text-light);line-height:1.75;font-family:"Karla",sans-serif;max-width:400px;margin:0 auto 1.5rem;}
+.places-preview{padding:4rem;background:var(--white);border-top:1px solid var(--dd-red);}
+.coming-soon-block{margin-top:2rem;border:1px dashed rgba(240,97,92,0.35);border-radius:5px;padding:3.5rem 2.5rem;text-align:center;background:var(--white);}
+.coming-soon-title{font-family:"Montserrat",sans-serif;font-size:1.6rem;font-weight:400;font-style:italic;color:var(--black);margin-bottom:0.65rem;}
+.coming-soon-sub{font-size:14px;font-weight:400;color:var(--text-muted);line-height:1.75;font-family:"Montserrat",sans-serif;max-width:400px;margin:0 auto 1.5rem;}
 .places-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2rem;}
-.place-card{background:var(--cream);border:1px solid rgba(255,108,65,0.12);border-radius:4px;padding:1.5rem;cursor:pointer;transition:all 0.25s;text-decoration:none;color:inherit;display:block;}
-.place-card:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,108,65,0.1);}
-.place-type{font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--orange);margin-bottom:0.6rem;font-family:"Karla",sans-serif;}
-.place-name{font-family:"Fraunces",serif;font-size:1.3rem;font-weight:400;color:var(--text-dark);margin-bottom:0.4rem;line-height:1.2;}
-.place-area{font-size:11px;font-weight:300;color:var(--text-light);margin-bottom:0.9rem;display:flex;align-items:center;gap:5px;font-family:"Karla",sans-serif;}
-.place-area::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--orange);display:inline-block;opacity:0.6;}
-.place-desc{font-size:13px;font-weight:300;line-height:1.65;color:var(--text-mid);font-family:"Karla",sans-serif;}
-.place-footer{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,108,65,0.08);display:flex;align-items:center;justify-content:space-between;}
-.owner-badge{font-size:9px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);background:rgba(123,47,37,0.07);padding:4px 9px;border-radius:2px;font-family:"Karla",sans-serif;}
+.place-card{background:var(--white);border:1px solid rgba(240,97,92,0.2);border-radius:5px;padding:1.5rem;cursor:pointer;transition:all 0.25s;text-decoration:none;color:inherit;display:block;}
+.place-card:hover{border-color:var(--dd-red);transform:translateY(-2px);box-shadow:0 10px 24px rgba(240,97,92,0.12);}
+.place-type{font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--dd-red);margin-bottom:0.6rem;font-family:"Montserrat",sans-serif;}
+.place-name{font-family:"Montserrat",sans-serif;font-size:1.3rem;font-weight:700;color:var(--black);margin-bottom:0.4rem;line-height:1.2;}
+.place-area{font-size:11px;font-weight:400;color:var(--text-muted);margin-bottom:0.9rem;display:flex;align-items:center;gap:5px;font-family:"Montserrat",sans-serif;}
+.place-area::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--dd-red);display:inline-block;opacity:0.6;}
+.place-desc{font-size:13px;font-weight:400;line-height:1.65;color:var(--black);font-family:"Montserrat",sans-serif;}
+.place-footer{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(240,97,92,0.12);display:flex;align-items:center;justify-content:space-between;}
+.owner-badge{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--dd-red);background:rgba(240,97,92,0.08);padding:4px 9px;border-radius:4px;font-family:"Montserrat",sans-serif;}
 .see-all{margin-top:2.5rem;text-align:center;}
 
 /* POWER */
-.power-section{background:var(--ember);padding:5rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
-.power-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:rgba(255,205,184,0.55);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;font-family:"Karla",sans-serif;}
-.power-eyebrow::before{content:"";width:24px;height:1px;background:var(--peach);display:block;opacity:0.55;}
-.power-headline{font-family:"Fraunces",serif;font-size:clamp(1.8rem,3vw,3rem);font-weight:300;color:var(--peach);line-height:1.15;margin-bottom:1.75rem;}
-.power-headline em{font-style:italic;color:white;}
-.power-body{font-size:14px;font-weight:300;line-height:1.9;color:rgba(255,205,184,0.7);margin-bottom:2rem;font-family:"Karla",sans-serif;}
+.power-section{background:var(--white);padding:5rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;border-top:1px solid var(--dd-red);}
+.power-eyebrow{font-size:10px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--dd-red);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;font-family:"Montserrat",sans-serif;}
+.power-eyebrow::before{content:"";width:24px;height:1px;background:var(--dd-red);display:block;}
+.power-headline{font-family:"Montserrat",sans-serif;font-size:clamp(1.8rem,3vw,3rem);font-weight:700;color:var(--black);line-height:1.15;margin-bottom:1.75rem;}
+.power-headline em{font-family:"Montserrat",sans-serif;font-style:italic;font-weight:400;color:var(--dd-pink);}
+.power-body{font-size:14px;font-weight:400;line-height:1.9;color:var(--black);margin-bottom:2rem;font-family:"Montserrat",sans-serif;}
 .power-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:2rem;}
-.power-stat{background:rgba(255,205,184,0.07);border:1px solid rgba(255,205,184,0.12);border-radius:4px;padding:1.25rem;}
-.power-stat-num{font-family:"Fraunces",serif;font-size:2rem;font-weight:300;color:white;line-height:1;margin-bottom:5px;}
-.power-stat-label{font-size:11px;font-weight:300;color:rgba(255,205,184,0.5);font-family:"Karla",sans-serif;}
+.power-stat{background:var(--white);border:1px solid rgba(240,97,92,0.2);border-radius:5px;padding:1.25rem;}
+.power-stat-num{font-family:"Montserrat",sans-serif;font-size:2rem;font-weight:700;color:var(--dd-red);line-height:1;margin-bottom:5px;}
+.power-stat-label{font-size:11px;font-weight:400;color:var(--black);font-family:"Montserrat",sans-serif;line-height:1.4;}
 .power-photos{height:500px;overflow:hidden;border-radius:4px;}
 .power-photo-track{display:flex;flex-direction:column;gap:0.75rem;animation:powerPhotoScroll 20s linear infinite;}
 .power-photo-track:hover{animation-play-state:paused;}
@@ -134,23 +139,27 @@ nav.scrolled{box-shadow:0 2px 24px rgba(123,47,37,0.07);}
 .power-photo-slide img{width:100%;height:100%;object-fit:cover;display:block;}
 
 /* DOC BANNER */
-.doc-banner{background:var(--blush);padding:5rem 4rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;border-top:1px solid rgba(255,108,65,0.1);}
-.doc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,108,65,0.1);border:1px solid rgba(255,108,65,0.25);color:var(--orange);font-size:9px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:6px 13px;border-radius:2px;margin-bottom:1.25rem;font-family:"Karla",sans-serif;}
-.doc-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite;}
+.doc-banner{background:var(--dd-pink);padding:5rem 4rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;border-top:1px solid var(--dd-red);}
+.doc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.12);color:var(--black);font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;padding:6px 13px;border-radius:4px;margin-bottom:1.25rem;font-family:"Montserrat",sans-serif;}
+.doc-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--dd-red);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-.doc-title{font-family:"Fraunces",serif;font-size:clamp(1.6rem,2.5vw,2.8rem);font-weight:300;color:var(--text-dark);line-height:1.15;margin-bottom:0.9rem;}
-.doc-title em{font-style:italic;color:var(--coral);}
-.doc-sub{font-size:14px;font-weight:300;color:var(--text-mid);line-height:1.75;max-width:460px;font-family:"Karla",sans-serif;}
-.yt-btn{display:flex;align-items:center;gap:10px;background:var(--orange);color:white;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;padding:13px 26px;border-radius:2px;transition:background 0.2s;white-space:nowrap;font-family:"Karla",sans-serif;}
-.yt-btn:hover{background:var(--ember);}
+.doc-title{font-family:"Montserrat",sans-serif;font-size:clamp(1.6rem,2.5vw,2.8rem);font-weight:700;color:var(--black);line-height:1.15;margin-bottom:0.9rem;}
+.doc-title em{font-family:"Montserrat",sans-serif;font-style:italic;font-weight:400;color:var(--dd-red);}
+.doc-sub{font-size:14px;font-weight:400;color:var(--black);line-height:1.75;max-width:460px;font-family:"Montserrat",sans-serif;}
+.yt-btn{display:flex;align-items:center;gap:10px;background:var(--dd-red);color:var(--white);text-decoration:none;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:13px 26px;border-radius:5px;transition:background 0.2s,color 0.2s;white-space:nowrap;font-family:"Montserrat",sans-serif;}
+.yt-btn:hover{background:var(--dd-pink);color:var(--black);}
 
 /* FOOTER */
-footer{background:var(--text-dark);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
-.footer-logo svg{height:26px;width:auto;opacity:0.4;}
+footer{background:var(--dd-red);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+.footer-logo-wrap{display:flex;flex-direction:column;gap:2px;text-decoration:none;}
+.footer-logo-text{font-family:"Montserrat",sans-serif;font-size:1.25rem;font-weight:700;color:var(--white);line-height:1;}
+.footer-logo .dd-initiative-tag{color:var(--dd-pink);font-size:10px;}
 .footer-links{display:flex;gap:1.75rem;list-style:none;align-items:center;flex-wrap:wrap;}
-.footer-links a{text-decoration:none;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,205,184,0.4);transition:color 0.2s;display:flex;align-items:center;gap:6px;font-family:"Karla",sans-serif;}
-.footer-links a:hover{color:var(--peach);}
-.footer-copy{font-size:11px;color:rgba(255,205,184,0.22);font-family:"Karla",sans-serif;}
+.footer-links a{text-decoration:none;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white);transition:color 0.2s;display:flex;align-items:center;gap:6px;font-family:"Montserrat",sans-serif;font-weight:600;}
+.footer-links a:hover{color:var(--dd-pink);}
+.footer-copy{font-size:11px;color:var(--white);font-family:"Montserrat",sans-serif;font-weight:400;}
+.footer-copy a{color:var(--white);text-decoration:none;}
+.footer-copy a:hover{color:var(--dd-pink);}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
 .fade-up{opacity:0;animation:fadeUp 0.8s ease forwards;}
@@ -158,16 +167,17 @@ footer{background:var(--text-dark);padding:2rem 4rem;display:flex;align-items:ce
 
 /* MOBILE */
 @media(max-width:768px){
-  nav{padding:0 1.25rem;height:58px;}
-  .nav-logo svg{height:32px;}
+  nav{padding:0 1.25rem;height:64px;}
+  .nav-logo-text{font-size:1.4rem;}
+  .dd-initiative-tag{font-size:10px;}
 
-  .hero{grid-template-columns:1fr;min-height:auto;padding-top:58px;}
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:64px;}
   .hero-left{padding:3rem 1.5rem 2.5rem;}
   .hero-headline{font-size:clamp(2.4rem,9vw,3.2rem);}
   .hero-sub{font-size:14px;max-width:100%;}
   .hero-right{height:260px;position:relative;}
   #hero-map{position:absolute;inset:0;}
-  .map-fade-left{background:linear-gradient(to bottom,var(--cream) 0%,transparent 40%);}
+  .map-fade-left{background:linear-gradient(to bottom,var(--white) 0%,transparent 40%);}
 
   .marquee-item{padding:0 1.25rem;gap:1rem;}
   .marquee-word{font-size:1rem;}
@@ -205,23 +215,23 @@ footer{background:var(--text-dark);padding:2rem 4rem;display:flex;align-items:ce
 
 <nav id="navbar">
   <a class="nav-logo" href="index.html" aria-label="PinD Home">
-    <svg height="38" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF6C41"/><stop offset="100%" stop-color="#FF3C2D"/></linearGradient></defs>
-      <text x="4" y="68" font-family="Fraunces, serif" font-size="72" font-style="italic" font-weight="300" fill="url(#ng)">PinD</text>
-      <g transform="translate(72, 2)"><path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="url(#ng)"/><circle cx="9" cy="6" r="2.2" fill="white"/></g>
-    </svg>
+    <div class="nav-logo-wrap">
+      <span class="nav-logo-text">PinD</span>
+      <span class="dd-initiative-tag">A Decoding Draupadi Initiative</span>
+    </div>
   </a>
   <ul class="nav-links">
     <li><a href="explore.html">Explore</a></li>
-    <li><a href="form.html" class="nav-cta">PinIt</a></li>
+    <li><a href="form.html" class="nav-cta">Pin a Space</a></li>
   </ul>
 </nav>
 
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-eyebrow fade-up fd1">Women-Owned Spaces</div>
+    <div class="hero-eyebrow fade-up fd1">Women-Owned Spaces, Found by Women Like You</div>
+    <p class="hero-dd-line fade-up fd1">A Decoding Draupadi Initiative</p>
     <h1 class="hero-headline fade-up fd2">Meet me at<br><em>her spot.</em></h1>
-    <p class="hero-sub fade-up fd3"><strong>A wise woman once said, we should all strive to say "oh, I know a girl"</strong> and solve any possible problem with it. This is the digitised version of that. For every woman, to every woman.</p>
+    <p class="hero-sub fade-up fd3">You know that thing where someone says oh, I know a girl and suddenly your problem is solved? This is that, but on a map. Every pin is a woman who built something. Every search is a woman who wants to find her.</p>
     <div class="fade-up fd4"><a href="explore.html" class="btn-primary">Take me there</a></div>
   </div>
   <div class="hero-right">
@@ -233,16 +243,16 @@ footer{background:var(--text-dark);padding:2rem 4rem;display:flex;align-items:ce
 
 <div class="marquee-strip">
   <div class="marquee-track">
-    <div class="marquee-item"><span class="marquee-word">PinD</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Belong</span><span class="marquee-dot"></span></div>
-    <div class="marquee-item"><span class="marquee-word">PinD</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Decode</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Explore</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Discover</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Celebrate</span><span class="marquee-dot"></span></div>
     <div class="marquee-item"><span class="marquee-word">Belong</span><span class="marquee-dot"></span></div>
+    <div class="marquee-item"><span class="marquee-word">Decode</span><span class="marquee-dot"></span></div>
   </div>
 </div>
 
@@ -252,9 +262,11 @@ footer{background:var(--text-dark);padding:2rem 4rem;display:flex;align-items:ce
       <div class="section-eyebrow">Why PinD Exists</div>
       <h2 class="manifesto-headline">Google Maps will give you an address. It won't tell you that the woman behind the counter <em>built this from nothing.</em></h2>
       <div class="manifesto-body">
-        <p>PinD is built so we can celebrate taking up space. So that you can find your spot, where you can be unapologetically yourself.</p>
-        <p>These are your pockets of comfort, of girlhood, of community and belonging. And importantly, it is a movement. A statement. We are here. And we are going nowhere.</p>
-        <p>In India, a woman owning a space is still a radical act. Property. Walls. A business that is hers. Every pin on this map is a woman who held one anyway.</p>
+        <p>In India, a woman owning a space is still a radical act. Property. Walls. A business that is hers.</p>
+        <p>Most of these spaces exist only through word of mouth, passed between friends, shared in group chats, whispered at dinner tables. They never make it onto any map that matters.</p>
+        <p>PinD changes that. We map women-owned spaces so they can be found, celebrated, and supported. Not just by people who already know them, but by every woman looking for exactly what they offer.</p>
+        <p>This is not a directory. Every pin is a story. Every space here was built by someone who held on anyway.</p>
+        <p>PinD is a Decoding Draupadi initiative, because the DD community has always run on I know a girl. Now there is a map for it.</p>
       </div>
     </div>
     <div>
@@ -290,7 +302,7 @@ footer{background:var(--text-dark);padding:2rem 4rem;display:flex;align-items:ce
   <div class="notes-track-wrap">
     <div class="notes-track" id="notesTrack"></div>
   </div>
-  <div class="notes-coming-soon" id="notesComing" style="display:none;">The first notes are on their way. Come back soon.</div>
+  <div class="notes-coming-soon" id="notesComing" style="display:none;">The first stories are coming. We are collecting them carefully.</div>
 </section>
 
 <section class="places-preview">
@@ -303,13 +315,15 @@ footer{background:var(--text-dark);padding:2rem 4rem;display:flex;align-items:ce
   <div>
     <div class="power-eyebrow">Why It Matters</div>
     <h2 class="power-headline">14% of Indian businesses are women-owned.<br><em>This map is for the other 86% to find them.</em></h2>
-    <p class="power-body">Know a space run by a woman? Pin it. That is how this map grows. Not through algorithms or ad spend. Through people who care enough to share a name.</p>
-    <a href="form.html" class="btn-primary" style="background:var(--peach);color:var(--ember);">Own a space? Pin it.</a>
+    <p class="power-body">Women-owned businesses in India are underdiscovered by design. They do not have the ad budgets. They rely on referrals. They grow through trust, not traffic.</p>
+    <p class="power-body">PinD gives them something simple and powerful: a place to be found by the women who are already looking for them.</p>
+    <p class="power-body">Know a space run by a woman? Pin it. That is how this map grows, not through algorithms or ad spend, but through people who care enough to share a name.</p>
+    <a href="form.html" class="btn-primary">Own a space? Pin it.</a>
     <div class="power-stat-grid">
       <div class="power-stat"><div class="power-stat-num">14%</div><div class="power-stat-label">of Indian businesses are women-owned</div></div>
       <div class="power-stat"><div class="power-stat-num">1 in 5</div><div class="power-stat-label">women in India own any property at all</div></div>
       <div class="power-stat"><div class="power-stat-num">Mumbai</div><div class="power-stat-label">where it starts</div></div>
-      <div class="power-stat"><div class="power-stat-num">Growing</div><div class="power-stat-label">by word of mouth, one pin at a time</div></div>
+      <div class="power-stat"><div class="power-stat-num">10,000+</div><div class="power-stat-label">DD community members already asking I know a girl</div></div>
     </div>
   </div>
   <div class="power-photos">
@@ -330,29 +344,26 @@ footer{background:var(--text-dark);padding:2rem 4rem;display:flex;align-items:ce
   <div>
     <div class="doc-badge"><span class="doc-badge-dot"></span>YouTube Documentary Series</div>
     <h2 class="doc-title"><em>30 Minutes With.</em></h2>
-    <p class="doc-sub">A documentary series about what it means to own a space in India, told through the women who did it anyway. Thirty minutes with the women behind the pins. Filming in Mumbai. Coming soon.</p>
+    <p class="doc-sub">A Decoding Draupadi documentary series. Thirty minutes with the women behind the pins, what it took to build, what it feels like to own, and why they did it anyway. Filming in Mumbai. Coming soon.</p>
   </div>
-  <a href="#" class="yt-btn">
+  <a href="https://www.instagram.com/decodingdraupadi/" target="_blank" rel="noopener" class="yt-btn">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
     Notify Me
   </a>
 </section>
 
 <footer>
-  <a class="footer-logo" href="index.html" aria-label="PinD Home">
-    <svg height="26" viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="fg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(255,205,184,0.4)"/><stop offset="100%" stop-color="rgba(255,60,45,0.4)"/></linearGradient></defs>
-      <text x="4" y="68" font-family="Fraunces, serif" font-size="72" font-style="italic" font-weight="300" fill="url(#fg2)">PinD</text>
-      <g transform="translate(72, 2)"><path d="M9 0C5.686 0 3 2.686 3 6c0 4.5 6 11 6 11s6-6.5 6-11C15 2.686 12.314 0 9 0z" fill="rgba(255,205,184,0.4)"/><circle cx="9" cy="6" r="2.2" fill="rgba(28,10,6,0.8)"/></g>
-    </svg>
+  <a class="footer-logo footer-logo-wrap" href="index.html" aria-label="PinD Home">
+    <span class="footer-logo-text">PinD</span>
+    <span class="dd-initiative-tag">A Decoding Draupadi Initiative</span>
   </a>
   <ul class="footer-links">
-    <li><a href="https://www.instagram.com/sreemitamukherjee/" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a></li>
-    <li><a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a></li>
+    <li><a href="https://www.instagram.com/decodingdraupadi/" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a></li>
+    <li><a href="https://www.linkedin.com/company/decoding-draupadi" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a></li>
     <li><a href="explore.html">Explore</a></li>
-    <li><a href="form.html">Add Your Space</a></li>
+    <li><a href="form.html">Pin a Space</a></li>
   </ul>
-  <span class="footer-copy">2026 PinD</span>
+  <span class="footer-copy">2026 PinD  |  A Decoding Draupadi Initiative  |  <a href="https://decodingdraupadi.com" target="_blank" rel="noopener">decodingdraupadi.com</a></span>
 </footer>
 
 <script>
@@ -395,7 +406,7 @@ function renderRecentPins(places){
     return;
   }
   const recent=[...places].slice(-6).reverse();
-  c.innerHTML='<div class="places-grid">'+recent.map(p=>`<a class="place-card" href="explore.html"><div class="place-type">${p.category||''}</div><div class="place-name">${p.space_name||''}</div><div class="place-area">${p.neighbourhood?p.neighbourhood+', ':''}${p.city||''}</div><div class="place-desc">${p.personal_note||''}</div><div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#B07060;font-size:14px">&#x2192;</span></div></a>`).join('')+'</div><div class="see-all"><a href="explore.html" class="btn-primary">See All Spaces</a></div>';
+  c.innerHTML='<div class="places-grid">'+recent.map(p=>`<a class="place-card" href="explore.html"><div class="place-type">${p.category||''}</div><div class="place-name">${p.space_name||''}</div><div class="place-area">${p.neighbourhood?p.neighbourhood+', ':''}${p.city||''}</div><div class="place-desc">${p.personal_note||''}</div><div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#F0615C;font-size:14px">&#x2192;</span></div></a>`).join('')+'</div><div class="see-all"><a href="explore.html" class="btn-primary">See All Spaces</a></div>';
 }
 
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40));
