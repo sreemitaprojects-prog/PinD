@@ -237,7 +237,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:ce
     <div class="detail-scroll">
       <!-- PHOTOS -->
       <div id="dPhotos" style="display:none;margin-bottom:1.5rem;">
-        <div style="display:flex;gap:0.6rem;height:180px;">
+        <div style="display:flex;gap:0.6rem;height:150px;">
           <div id="dOwnerPhotoWrap" style="flex:1;border-radius:3px;overflow:hidden;display:none;">
             <img id="dOwnerPhoto" src="" alt="Owner" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
@@ -475,7 +475,9 @@ function openDetail(id){
 
   const instaWrap=document.getElementById('dInstaWrap');
   if(p.instagram){
-    instaWrap.innerHTML='<a class="detail-insta" href="https://instagram.com/'+p.instagram.replace('@','')+'" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @'+p.instagram.replace('@','')+'</a>';
+    const raw=p.instagram.trim();
+    const href=raw.startsWith('http')?raw:'https://instagram.com/'+raw.replace('@','');
+    instaWrap.innerHTML='<a class="detail-insta" href="'+href+'" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Find more here!</a>';
   }else{instaWrap.innerHTML='';}
   document.getElementById('dFullLink').href='/space/'+slugify(p.name);
   history.pushState({spaceId:p.id},'','/space/'+slugify(p.name));
