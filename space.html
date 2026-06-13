@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PinD — Loading…</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2C10.477 2 6 6.477 6 12c0 7.5 10 18 10 18s10-10.5 10-18c0-5.523-4.477-10-10-10z' fill='%23F0615C'/%3E%3Ccircle cx='16' cy='12' r='3.5' fill='white'/%3E%3C/svg%3E">
+<style>
+:root{--dd-red:#F0615C;--dd-pink:#FFACEC;--white:#FFFFFF;--black:#000000;--text-muted:#333333;--border:rgba(240,97,92,0.2);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Montserrat",sans-serif;background:var(--white);color:var(--black);min-height:100vh;}
+nav{position:sticky;top:0;z-index:100;background:var(--dd-red);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:72px;}
+.nav-logo{display:flex;align-items:center;text-decoration:none;}
+.nav-logo-wrap{display:flex;flex-direction:column;gap:2px;}
+.nav-logo-text{font-family:"Montserrat",sans-serif;font-size:1.5rem;font-weight:700;color:var(--white);line-height:1;}
+.dd-initiative-tag{font-family:"Montserrat",sans-serif;font-size:11px;font-weight:600;color:var(--dd-pink);line-height:1.2;}
+.nav-back{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:6px;font-weight:600;transition:color 0.2s;}
+.nav-back:hover{color:var(--dd-pink);}
+
+.state-wrap{display:flex;align-items:center;justify-content:center;min-height:60vh;font-family:"Montserrat",sans-serif;font-size:1.1rem;font-style:italic;color:var(--text-muted);}
+
+.profile-wrap{max-width:860px;margin:0 auto;padding:4rem 2rem 6rem;}
+
+.profile-photos{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:3rem;height:320px;}
+.profile-photos.one-photo{grid-template-columns:1fr;}
+.profile-photo{border-radius:5px;overflow:hidden;height:100%;}
+.profile-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+
+.profile-eyebrow{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--dd-red);margin-bottom:0.9rem;font-weight:600;}
+.profile-name{font-family:"Montserrat",sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.1;color:var(--black);margin-bottom:0.75rem;}
+.profile-location{font-size:0.9rem;color:var(--text-muted);margin-bottom:1.75rem;display:flex;align-items:center;gap:6px;}
+.profile-location::before{content:"📍";font-size:0.8rem;}
+
+.profile-tags{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.profile-tag{display:inline-block;font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--dd-red);background:rgba(240,97,92,0.08);padding:5px 12px;border-radius:4px;font-family:"Montserrat",sans-serif;}
+
+.profile-divider{height:1px;background:var(--border);margin-bottom:2.5rem;}
+
+.profile-note{font-family:"Montserrat",sans-serif;font-size:1.2rem;font-weight:400;font-style:italic;line-height:1.8;color:var(--black);margin-bottom:2.5rem;}
+.profile-note::before{content:'\201C';color:var(--dd-red);font-size:2rem;line-height:0;vertical-align:-0.5em;margin-right:4px;}
+
+.profile-details{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:2.5rem;}
+.profile-detail-row{display:flex;gap:1rem;font-size:0.88rem;}
+.profile-detail-key{color:var(--text-muted);min-width:110px;flex-shrink:0;font-weight:600;}
+.profile-detail-val{color:var(--black);}
+
+.profile-insta{display:inline-flex;align-items:center;gap:8px;color:var(--dd-red);text-decoration:none;font-size:0.9rem;font-family:"Montserrat",sans-serif;font-weight:600;border-bottom:1px solid rgba(240,97,92,0.3);padding-bottom:2px;transition:color 0.2s;margin-bottom:2.5rem;}
+.profile-insta:hover{color:var(--black);}
+
+.profile-badge{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--dd-red);background:rgba(240,97,92,0.08);padding:8px 16px;border-radius:4px;display:inline-block;font-family:"Montserrat",sans-serif;}
+
+.profile-actions{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{background:var(--dd-red);color:white;border:none;padding:0.85rem 2rem;font-family:"Montserrat",sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;border-radius:5px;transition:background 0.2s,color 0.2s;text-decoration:none;display:inline-block;letter-spacing:0.02em;}
+.btn-primary:hover{background:var(--dd-pink);color:var(--black);}
+.btn-ghost{background:none;color:var(--text-muted);border:1px solid var(--border);padding:0.85rem 2rem;font-family:"Montserrat",sans-serif;font-size:0.88rem;cursor:pointer;border-radius:5px;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.btn-ghost:hover{border-color:var(--dd-red);color:var(--black);}
+
+@media(max-width:768px){
+  nav{padding:0 1.25rem;}
+  .profile-wrap{padding:2rem 1.25rem 4rem;}
+  .profile-photos{height:220px;}
+  .profile-photos.one-photo{height:260px;}
+  .profile-note{font-size:1rem;}
+  .profile-name{font-size:clamp(1.7rem,7vw,2.5rem);}
+  .profile-actions{flex-direction:column;}
+  .btn-primary,.btn-ghost{text-align:center;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo" aria-label="PinD Home">
+    <div class="nav-logo-wrap">
+      <span class="nav-logo-text">PinD</span>
+      <span class="dd-initiative-tag">A Decoding Draupadi Initiative</span>
+    </div>
+  </a>
+  <a href="explore.html" class="nav-back">← Back to map</a>
+</nav>
+
+<div id="loadingState" class="state-wrap">Finding this space…</div>
+<div id="notFoundState" class="state-wrap" style="display:none">This space could not be found.</div>
+
+<div id="spaceProfile" class="profile-wrap" style="display:none">
+  <div id="profilePhotos"></div>
+  <div class="profile-eyebrow">Women-Owned Space</div>
+  <h1 class="profile-name" id="profileName"></h1>
+  <div class="profile-location" id="profileLocation"></div>
+  <div class="profile-tags" id="profileTags"></div>
+  <div class="profile-divider"></div>
+  <div class="profile-note" id="profileNote"></div>
+  <div class="profile-details" id="profileDetails"></div>
+  <div id="profileInsta"></div>
+  <span class="profile-badge">Verified Women-Owned</span>
+  <div class="profile-actions">
+    <a href="explore.html" class="btn-primary">Back to the map</a>
+    <a href="form.html" class="btn-ghost">Pin your own space</a>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL='https://xyzgqmghddzirnafwodi.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5emdxbWdoZGR6aXJuYWZ3b2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTM2MTcsImV4cCI6MjA5NTUyOTYxN30.4laPWa2_obOOAkTeFWDg4FGI9LDKDrHcY9pZlWAaAlo';
+
+function slugify(str){
+  return (str||'').toLowerCase().replace(/[^\w\s-]/g,'').replace(/[\s_]+/g,'-').replace(/^-+|-+$/g,'');
+}
+
+function isBlank(val){
+  if(val===null||val===undefined)return true;
+  const v=String(val).trim().toLowerCase();
+  return['na','n/a','-','--','nil','none','not applicable',''].includes(v);
+}
+
+function show(id){document.getElementById(id).style.display='';}
+function hide(id){document.getElementById(id).style.display='none';}
+
+async function init(){
+  const parts=window.location.pathname.split('/space/');
+  const slug=parts[1]?parts[1].replace(/\/$/,''):'';
+  if(!slug){showNotFound();return;}
+  try{
+    const res=await fetch(SUPABASE_URL+'/rest/v1/submissions?status=eq.approved&select=*',{
+      headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
+    });
+    const places=await res.json();
+    const space=places.find(p=>slugify(p.space_name||'')===slug);
+    if(!space){showNotFound();return;}
+    render(space);
+  }catch(e){showNotFound();}
+}
+
+function showNotFound(){
+  hide('loadingState');
+  show('notFoundState');
+}
+
+function render(p){
+  document.title='PinD — '+(p.space_name||'Space');
+  hide('loadingState');
+
+  // Photos
+  const hasOwner=p.owner_photo_url&&!isBlank(p.owner_photo_url);
+  const hasSpace=p.space_photo_url&&!isBlank(p.space_photo_url);
+  const photosEl=document.getElementById('profilePhotos');
+  if(hasOwner||hasSpace){
+    const both=hasOwner&&hasSpace;
+    photosEl.className='profile-photos'+(both?'':' one-photo');
+    photosEl.innerHTML=(hasOwner?'<div class="profile-photo"><img src="'+p.owner_photo_url+'" alt="'+p.space_name+'"></div>':'')+(hasSpace?'<div class="profile-photo"><img src="'+p.space_photo_url+'" alt="'+p.space_name+'"></div>':'');
+  }else{photosEl.style.display='none';}
+
+  // Name
+  document.getElementById('profileName').textContent=p.space_name||'';
+
+  // Location
+  const loc=[p.neighbourhood,p.city].filter(x=>!isBlank(x)).join(', ');
+  document.getElementById('profileLocation').textContent=loc;
+
+  // Tags
+  const tags=document.getElementById('profileTags');
+  if(!isBlank(p.category))tags.innerHTML+='<span class="profile-tag">'+p.category+'</span>';
+  tags.innerHTML+='<span class="profile-tag">Women-Owned</span>';
+
+  // Note
+  const noteEl=document.getElementById('profileNote');
+  if(!isBlank(p.personal_note)){noteEl.textContent=p.personal_note;}
+  else{noteEl.style.display='none';}
+
+  // Details (only show non-blank, no personal info)
+  const details=document.getElementById('profileDetails');
+  const rows=[];
+  if(!isBlank(p.years_in_business))rows.push(['Years open',p.years_in_business]);
+  if(!isBlank(p.address))rows.push(['Address',p.address]);
+  details.innerHTML=rows.map(r=>'<div class="profile-detail-row"><span class="profile-detail-key">'+r[0]+'</span><span class="profile-detail-val">'+r[1]+'</span></div>').join('');
+  if(!rows.length)details.style.display='none';
+
+  // Space Instagram only (no personal owner info)
+  const instaEl=document.getElementById('profileInsta');
+  if(!isBlank(p.space_instagram)){
+    const handle=p.space_instagram.replace('@','');
+    instaEl.innerHTML='<a class="profile-insta" href="https://instagram.com/'+handle+'" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>@'+handle+'</a>';
+  }else{instaEl.style.display='none';}
+
+  show('spaceProfile');
+}
+
+init();
+</script>
+</body>
+</html>

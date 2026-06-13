@@ -74,7 +74,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:ce
 .cards-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:2px;}
 
 /* PLACE CARD */
-.place-card{background:white;border-radius:5px;padding:1.1rem 1.2rem;margin-bottom:0.6rem;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;gap:0.3rem;border:2px solid transparent;}
+.place-card{background:white;border-radius:5px;padding:1.1rem 1.2rem;margin-bottom:0.6rem;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;gap:0.3rem;border:2px solid transparent;text-decoration:none;color:inherit;}
 .place-card:hover,.place-card.active{border-color:var(--dd-pink);box-shadow:0 4px 16px rgba(0,0,0,0.12);}
 .card-type{font-size:8px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--dd-red);font-family:"Montserrat",sans-serif;}
 .card-name{font-family:"Montserrat",sans-serif;font-size:1.1rem;font-weight:700;line-height:1.2;color:var(--black);}
@@ -250,6 +250,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:ce
 </div>
 
 <script>
+function slugify(str){return(str||'').toLowerCase().replace(/[^\w\s-]/g,'').replace(/[\s_]+/g,'-').replace(/^-+|-+$/g,'');}
 const SUPABASE_URL='https://xyzgqmghddzirnafwodi.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5emdxbWdoZGR6aXJuYWZ3b2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTM2MTcsImV4cCI6MjA5NTUyOTYxN30.4laPWa2_obOOAkTeFWDg4FGI9LDKDrHcY9pZlWAaAlo';
 
@@ -298,7 +299,7 @@ async function fetchPlaces(){
       lat:parseFloat(p.lat)||null,
       lng:parseFloat(p.lng)||null,
       note:p.personal_note||'',
-      instagram:p.space_instagram||p.owner_instagram||'',
+      instagram:p.space_instagram||'',
       owner:p.owner_name||'',
       ownerPhoto:p.owner_photo_url||'',
       spacePhoto:p.space_photo_url||'',
@@ -358,7 +359,7 @@ function buildMarkers(){
     const col=getTypeColor(p.type);
     const icon=L.divIcon({className:'',html:'<div style="width:12px;height:12px;background:'+col+';border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);cursor:pointer"></div>',iconSize:[12,12],iconAnchor:[6,6]});
     const mk=L.marker([p.lat,p.lng],{icon});
-    mk.bindPopup('<div class="popup-name">'+p.name+'</div><div class="popup-area">'+p.area+(p.city?', '+p.city:'')+'</div>',{maxWidth:180,closeButton:false});
+    mk.bindPopup('<div class="popup-name">'+p.name+'</div><div class="popup-area">'+p.area+(p.city?', '+p.city:'')+'</div><div style="margin-top:6px"><a href="/space/'+slugify(p.name)+'" style="font-size:11px;color:#F0615C;font-family:Montserrat,sans-serif;font-weight:600;">View space →</a></div>',{maxWidth:200,closeButton:false});
     mk.on('click',()=>openDetail(p.id));
     markers[p.id]=mk;
   });
@@ -420,12 +421,12 @@ function renderCards(filtered){
     return;
   }
   scroll.innerHTML=filtered.map(p=>`
-    <div class="place-card${activeCardId===p.id?' active':''}" id="card-${p.id}" onclick="openDetail('${p.id}')">
+    <a class="place-card${activeCardId===p.id?' active':''}" id="card-${p.id}" href="/space/${slugify(p.name)}" onclick="handleCardClick(event,'${p.id}')">
       <div class="card-type">${p.type}</div>
       <div class="card-name">${p.name}</div>
       <div class="card-area">${p.area}${p.city?', '+p.city:''}</div>
       ${p.note?'<div class="card-note">'+p.note+'</div>':''}
-    </div>
+    </a>
   `).join('');
 }
 
@@ -459,6 +460,12 @@ function openDetail(id){
   const card=document.getElementById('card-'+id);
   if(card){card.classList.add('active');card.scrollIntoView({behavior:'smooth',block:'nearest'});}
   if(markers[id]&&p.lat&&p.lng){map.flyTo([p.lat,p.lng],15,{duration:0.8});markers[id].openPopup();}
+}
+
+function handleCardClick(e,id){
+  e.preventDefault();
+  const p=allPlaces.find(x=>x.id===id);
+  if(p)window.location.href='/space/'+slugify(p.name);
 }
 
 function closeDetail(){

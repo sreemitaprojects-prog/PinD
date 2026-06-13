@@ -254,7 +254,7 @@ input.err,select.err,textarea.err{border-color:rgba(240,97,92,0.5);background:#f
           <div class="field half"><label>Ownership type <span class="req">*</span></label><select id="ownershipType" required><option value="">Select one</option><option>Sole owner</option><option>Co-founded with women</option><option>Inherited & now running</option><option>Women's collective / co-op</option><option>Not sure</option></select></div>
         </div>
         <div class="field-row">
-          <div class="field half"><label>Your email <span class="req">*</span></label><input type="email" id="ownerEmail" placeholder="you@email.com" required><span class="field-hint">So we can reach you when your space goes live.</span></div>
+          <div class="field half"><label>Your email <span class="opt">optional</span></label><input type="email" id="ownerEmail" placeholder="you@email.com"><span class="field-hint">So we can reach you when your space goes live.</span></div>
           <div class="field half"><label>Your WhatsApp <span class="opt">optional</span></label><div class="contact-prefix"><span class="contact-prefix-label">+91</span><input type="tel" id="ownerWhatsApp" placeholder="98765 43210" style="padding-left:3rem"></div></div>
         </div>
         <div class="field"><label>Your Instagram <span class="opt">optional but helpful</span></label><div class="contact-prefix"><span class="contact-prefix-label">@</span><input type="text" id="ownerInstagram" placeholder="yourhandle" style="padding-left:2.25rem"></div><span class="field-hint">Helps us verify ownership and reach out if we would like to feature you.</span></div>
@@ -280,7 +280,7 @@ input.err,select.err,textarea.err{border-color:rgba(240,97,92,0.5);background:#f
 
         <div class="field-row">
           <div class="field half">
-            <label>A photo of you in your space <span class="opt">optional</span></label>
+            <label>A photo of you in your space <span class="req">*</span></label>
             <div class="photo-upload-box" id="ownerPhotoBox" onclick="document.getElementById('ownerPhotoInput').click()">
               <div class="photo-upload-inner" id="ownerPhotoPreview">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);margin-bottom:8px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -291,7 +291,7 @@ input.err,select.err,textarea.err{border-color:rgba(240,97,92,0.5);background:#f
             <span class="field-hint">You, in the space you built.</span>
           </div>
           <div class="field half">
-            <label>A photo of your space <span class="opt">optional</span></label>
+            <label>A photo of your space <span class="req">*</span></label>
             <div class="photo-upload-box" id="spacePhotoBox" onclick="document.getElementById('spacePhotoInput').click()">
               <div class="photo-upload-inner" id="spacePhotoPreview">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);margin-bottom:8px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -394,7 +394,7 @@ async function uploadPhoto(inputId, folder) {
 
 function validateSection(idx){
   let valid=true;
-  const required={0:['spaceName','category','address','neighbourhood'],1:['ownerName','ownershipType','ownerEmail'],2:['personalNote']};
+  const required={0:['spaceName','category','address','neighbourhood'],1:['ownerName','ownershipType'],2:['personalNote']};
   required[idx].forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
     el.classList.remove('err');
@@ -402,6 +402,17 @@ function validateSection(idx){
     if(next&&next.classList.contains('field-error'))next.remove();
     if(!el.value.trim()){el.classList.add('err');const err=document.createElement('span');err.className='field-error';err.textContent='This field is required.';el.parentNode.insertBefore(err,el.nextSibling);valid=false;}
   });
+  if(idx===2){
+    ['ownerPhotoInput','spacePhotoInput'].forEach(photoId=>{
+      const box=document.getElementById(photoId==='ownerPhotoInput'?'ownerPhotoBox':'spacePhotoBox');
+      const existing=box.nextElementSibling&&box.nextElementSibling.classList.contains('field-error')?box.nextElementSibling:null;
+      if(existing)existing.remove();
+      if(!document.getElementById(photoId).files[0]){
+        const err=document.createElement('span');err.className='field-error';err.textContent='Please upload a photo.';
+        box.parentNode.insertBefore(err,box.nextSibling);valid=false;
+      }
+    });
+  }
   return valid;
 }
 function updateProgress(idx){
