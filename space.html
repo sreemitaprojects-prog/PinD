@@ -178,8 +178,9 @@ function render(p){
   // Space Instagram only (no personal owner info)
   const instaEl=document.getElementById('profileInsta');
   if(!isBlank(p.space_instagram)){
-    const handle=p.space_instagram.replace('@','');
-    instaEl.innerHTML='<a class="profile-insta" href="https://instagram.com/'+handle+'" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>@'+handle+'</a>';
+    const raw=p.space_instagram.trim();
+    const href=raw.startsWith('http')?raw:'https://instagram.com/'+raw.replace('@','');
+    instaEl.innerHTML='<a class="profile-insta" href="'+href+'" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Find more here!</a>';
   }else{instaEl.style.display='none';}
 
   show('spaceProfile');
