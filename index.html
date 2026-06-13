@@ -369,6 +369,7 @@ footer{background:var(--dd-red);padding:2rem 4rem;display:flex;align-items:cente
 </footer>
 
 <script>
+function slugify(str){return(str||'').toLowerCase().replace(/[^\w\s-]/g,'').replace(/[\s_]+/g,'-').replace(/^-+|-+$/g,'');}
 const SUPABASE_URL='https://xyzgqmghddzirnafwodi.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5emdxbWdoZGR6aXJuYWZ3b2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NTM2MTcsImV4cCI6MjA5NTUyOTYxN30.4laPWa2_obOOAkTeFWDg4FGI9LDKDrHcY9pZlWAaAlo';
 
@@ -408,7 +409,7 @@ function renderRecentPins(places){
     return;
   }
   const recent=[...places].slice(-6).reverse();
-  c.innerHTML='<div class="places-grid">'+recent.map(p=>`<a class="place-card" href="explore.html"><div class="place-type">${p.category||''}</div><div class="place-name">${p.space_name||''}</div><div class="place-area">${p.neighbourhood?p.neighbourhood+', ':''}${p.city||''}</div><div class="place-desc">${p.personal_note||''}</div><div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#F0615C;font-size:14px">&#x2192;</span></div></a>`).join('')+'</div><div class="see-all"><a href="explore.html" class="btn-primary">See All Spaces</a></div>';
+  c.innerHTML='<div class="places-grid">'+recent.map(p=>`<a class="place-card" href="/space/${slugify(p.space_name)}"><div class="place-type">${p.category||''}</div><div class="place-name">${p.space_name||''}</div><div class="place-area">${p.neighbourhood?p.neighbourhood+', ':''}${p.city||''}</div><div class="place-desc">${p.personal_note||''}</div><div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#F0615C;font-size:14px">&#x2192;</span></div></a>`).join('')+'</div><div class="see-all"><a href="explore.html" class="btn-primary">See All Spaces</a></div>';
 }
 
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40));

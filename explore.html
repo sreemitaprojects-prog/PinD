@@ -73,14 +73,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:ce
 .cards-scroll::-webkit-scrollbar-track{background:transparent;}
 .cards-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:2px;}
 
-/* PLACE CARD */
-.place-card{background:white;border-radius:5px;padding:1.1rem 1.2rem;margin-bottom:0.6rem;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;gap:0.3rem;border:2px solid transparent;text-decoration:none;color:inherit;}
-.place-card:hover,.place-card.active{border-color:var(--dd-pink);box-shadow:0 4px 16px rgba(0,0,0,0.12);}
-.card-type{font-size:8px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--dd-red);font-family:"Montserrat",sans-serif;}
-.card-name{font-family:"Montserrat",sans-serif;font-size:1.1rem;font-weight:700;line-height:1.2;color:var(--black);}
-.card-area{font-size:10px;font-weight:400;color:var(--text-muted);font-family:"Montserrat",sans-serif;display:flex;align-items:center;gap:4px;}
-.card-area::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--dd-red);display:inline-block;opacity:0.6;}
-.card-note{font-size:11.5px;font-weight:400;line-height:1.6;color:var(--black);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:"Montserrat",sans-serif;margin-top:2px;}
+/* FILTER TOGGLE */
+.filter-toggle-btn{width:100%;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);color:white;font-family:"Montserrat",sans-serif;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:8px 14px;border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.18s;margin-bottom:0;}
+.filter-toggle-btn:hover{background:rgba(255,255,255,0.2);}
+.filter-drawer{overflow:hidden;max-height:0;transition:max-height 0.35s ease;}
+.filter-drawer.open{max-height:500px;}
+.filter-drawer-inner{padding:0.75rem 1.5rem 0.25rem;}
+
+/* PLACE CARDS — square grid */
+.cards-scroll{flex:1;overflow-y:auto;padding:0.5rem 0.75rem 2rem;background:var(--dd-red);}
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;}
+.sq-card{background:white;border-radius:5px;padding:0.85rem 0.8rem;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;gap:0.2rem;border:2px solid transparent;text-decoration:none;color:inherit;min-height:110px;}
+.sq-card:hover,.sq-card.active{border-color:var(--dd-pink);box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+.card-type{font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--dd-red);font-family:"Montserrat",sans-serif;}
+.card-name{font-family:"Montserrat",sans-serif;font-size:0.92rem;font-weight:700;line-height:1.2;color:var(--black);}
+.card-area{font-size:9px;font-weight:400;color:var(--text-muted);font-family:"Montserrat",sans-serif;}
+.card-note{font-size:10px;font-weight:400;line-height:1.5;color:#555;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-family:"Montserrat",sans-serif;margin-top:auto;padding-top:4px;}
 
 /* EMPTY / LOADING */
 .empty-state{text-align:center;padding:3rem 1.5rem;}
@@ -195,17 +203,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:ce
         <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="searchInput" placeholder="Search by name or area…" readonly onclick="openSearch()">
       </div>
-      <div class="filter-row">
-        <button class="filter-pill active" onclick="setCategory('all',this)">All</button>
-        <button class="filter-pill" onclick="setCategory('cafe',this)">Cafe & Food</button>
-        <button class="filter-pill" onclick="setCategory('studio',this)">Studios</button>
-        <button class="filter-pill" onclick="setCategory('retail',this)">Retail</button>
-        <button class="filter-pill" onclick="setCategory('wellness',this)">Wellness</button>
-        <button class="filter-pill" onclick="setCategory('workspace',this)">Workspaces</button>
-      </div>
+      <button class="filter-toggle-btn" onclick="toggleFilters()" id="filterToggleBtn">
+        <span id="filterSummary">Mumbai · All</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" id="filterChevron" style="transition:transform 0.3s;flex-shrink:0"><path d="M1 1l5 5 5-5" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </button>
     </div>
-    <div class="city-row" id="cityRow"></div>
-    <div class="neigh-row" id="neighRow"></div>
+    <div class="filter-drawer" id="filterDrawer">
+      <div class="filter-drawer-inner">
+        <div class="filter-row">
+          <button class="filter-pill active" onclick="setCategory('all',this)">All</button>
+          <button class="filter-pill" onclick="setCategory('cafe',this)">Cafe & Food</button>
+          <button class="filter-pill" onclick="setCategory('studio',this)">Studios</button>
+          <button class="filter-pill" onclick="setCategory('retail',this)">Retail</button>
+          <button class="filter-pill" onclick="setCategory('wellness',this)">Wellness</button>
+          <button class="filter-pill" onclick="setCategory('workspace',this)">Workspaces</button>
+        </div>
+      </div>
+      <div class="city-row" id="cityRow"></div>
+      <div class="neigh-row" id="neighRow"></div>
+    </div>
     <div class="results-meta" id="resultsMeta"></div>
     <div class="cards-scroll" id="cardsScroll"></div>
   </div>
@@ -289,9 +305,9 @@ async function fetchPlaces(){
       headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
     });
     if(!res.ok)throw new Error('fetch failed');
-    allPlaces=await res.json();
+    const raw=await res.json();
     // normalise field names
-    allPlaces=allPlaces.map((p,i)=>({
+    allPlaces=raw.map((p,i)=>({
       id:p.id||i,
       name:p.space_name||'Unnamed',
       city:p.city||'Mumbai',
@@ -308,6 +324,7 @@ async function fetchPlaces(){
   }catch(e){
     allPlaces=[];
   }
+  await geocodeAll(allPlaces);
   buildUI();
 }
 
@@ -357,8 +374,7 @@ function buildMarkers(){
   markers={};
   allPlaces.forEach(p=>{
     if(!p.lat||!p.lng)return;
-    const col=getTypeColor(p.type);
-    const icon=L.divIcon({className:'',html:'<div style="width:12px;height:12px;background:'+col+';border-radius:50%;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);cursor:pointer"></div>',iconSize:[12,12],iconAnchor:[6,6]});
+    const icon=L.divIcon({className:'',html:'<svg width="22" height="30" viewBox="0 0 22 30" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));cursor:pointer"><path d="M11 0C4.925 0 0 4.925 0 11c0 8.25 11 19 11 19s11-10.75 11-19C22 4.925 17.075 0 11 0z" fill="#F0615C"/><circle cx="11" cy="11" r="4.5" fill="white"/></svg>',iconSize:[22,30],iconAnchor:[11,30]});
     const mk=L.marker([p.lat,p.lng],{icon});
     mk.on('click',()=>openDetail(p.id));
     markers[p.id]=mk;
@@ -374,6 +390,7 @@ function setCity(city,btn){
   buildNeighPills();
   const cv=cityCoords[city];
   map.flyTo(cv.center,cv.zoom,{duration:1.2});
+  updateFilterSummary();
   applyFilters();
 }
 
@@ -381,6 +398,7 @@ function setCategory(cat,btn){
   activeCategory=cat;
   document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  updateFilterSummary();
   applyFilters();
 }
 
@@ -420,14 +438,14 @@ function renderCards(filtered){
     scroll.innerHTML='<div class="empty-state"><div class="empty-icon">📍</div><div class="empty-text">No spaces found yet.<br>Be the first to pin one.</div></div>';
     return;
   }
-  scroll.innerHTML=filtered.map(p=>`
-    <a class="place-card${activeCardId===p.id?' active':''}" id="card-${p.id}" href="/space/${slugify(p.name)}" onclick="handleCardClick(event,'${p.id}')">
+  scroll.innerHTML='<div class="cards-grid">'+filtered.map(p=>`
+    <a class="sq-card${activeCardId===p.id?' active':''}" id="card-${p.id}" href="/space/${slugify(p.name)}" onclick="handleCardClick(event,'${p.id}')">
       <div class="card-type">${p.type}</div>
       <div class="card-name">${p.name}</div>
       <div class="card-area">${p.area}${p.city?', '+p.city:''}</div>
       ${p.note?'<div class="card-note">'+p.note+'</div>':''}
     </a>
-  `).join('');
+  `).join('')+'</div>';
 }
 
 function openDetail(id){
@@ -458,7 +476,7 @@ function openDetail(id){
   document.getElementById('dFullLink').href='/space/'+slugify(p.name);
   history.pushState({spaceId:p.id},'','/space/'+slugify(p.name));
   document.getElementById('detailPanel').classList.add('open');
-  document.querySelectorAll('.place-card').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.sq-card').forEach(c=>c.classList.remove('active'));
   const card=document.getElementById('card-'+id);
   if(card){card.classList.add('active');card.scrollIntoView({behavior:'smooth',block:'nearest'});}
   if(markers[id]&&p.lat&&p.lng){map.flyTo([p.lat,p.lng],15,{duration:0.8});markers[id].openPopup();}
@@ -472,7 +490,7 @@ function handleCardClick(e,id){
 function closeDetail(){
   document.getElementById('detailPanel').classList.remove('open');
   activeCardId=null;
-  document.querySelectorAll('.place-card').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.sq-card').forEach(c=>c.classList.remove('active'));
   history.pushState(null,'','/explore.html');
 }
 window.addEventListener('popstate',()=>{closeDetail();});
@@ -528,6 +546,47 @@ function selectFromSearch(id){
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSearch();closeDetail();}});
+
+// FILTER TOGGLE
+let filtersOpen=false;
+function toggleFilters(){
+  filtersOpen=!filtersOpen;
+  document.getElementById('filterDrawer').classList.toggle('open',filtersOpen);
+  document.getElementById('filterChevron').style.transform=filtersOpen?'rotate(180deg)':'';
+}
+function updateFilterSummary(){
+  const cat=activeCategory==='all'?'All':activeCategory;
+  document.getElementById('filterSummary').textContent=activeCity+' · '+cat;
+}
+
+// GEOCODING
+const geocodeCache={};
+async function geocodeAll(places){
+  const seen=new Set();
+  const toGeocode=[];
+  places.forEach(p=>{
+    const key=((p.area||'')+','+(p.city||'')).toLowerCase();
+    if(!seen.has(key)){seen.add(key);toGeocode.push({key,area:p.area,city:p.city});}
+  });
+  for(let i=0;i<toGeocode.length;i++){
+    const{key,area,city}=toGeocode[i];
+    if(geocodeCache[key])continue;
+    try{
+      const q=encodeURIComponent([area,city,'India'].filter(Boolean).join(', '));
+      const res=await fetch('https://nominatim.openstreetmap.org/search?q='+q+'&format=json&limit=1',{headers:{'Accept-Language':'en','User-Agent':'PinD/1.0'}});
+      const data=await res.json();
+      if(data&&data.length)geocodeCache[key]={lat:parseFloat(data[0].lat),lng:parseFloat(data[0].lon)};
+    }catch(e){}
+    if(i<toGeocode.length-1)await new Promise(r=>setTimeout(r,1100));
+  }
+  places.forEach(p=>{
+    const key=((p.area||'')+','+(p.city||'')).toLowerCase();
+    if(geocodeCache[key]){
+      p.lat=geocodeCache[key].lat+(Math.random()-0.5)*0.002;
+      p.lng=geocodeCache[key].lng+(Math.random()-0.5)*0.002;
+    }
+  });
+}
 
 window.addEventListener('load',fetchPlaces);
 </script>
