@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/space/:slug", "destination": "/space.html" }
+    { "source": "/space/:slug", "destination": "/space.html" },
+    { "source": "/:slug", "destination": "/space.html" }
   ]
 }

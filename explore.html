@@ -443,7 +443,7 @@ function renderCards(filtered){
     return;
   }
   scroll.innerHTML='<div class="cards-grid">'+filtered.map(p=>`
-    <a class="sq-card${activeCardId===p.id?' active':''}" id="card-${p.id}" href="/space/${slugify(p.name)}" onclick="handleCardClick(event,'${p.id}')">
+    <a class="sq-card${activeCardId===p.id?' active':''}" id="card-${p.id}" href="/${slugify(p.name)}" onclick="handleCardClick(event,'${p.id}')">
       <div class="card-type">${p.type}</div>
       <div class="card-name">${p.name}</div>
       <div class="card-area">${p.area}${p.city?', '+p.city:''}</div>
@@ -479,8 +479,8 @@ function openDetail(id){
     const href=raw.startsWith('http')?raw:'https://instagram.com/'+raw.replace('@','');
     instaWrap.innerHTML='<a class="detail-insta" href="'+href+'" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Find more here!</a>';
   }else{instaWrap.innerHTML='';}
-  document.getElementById('dFullLink').href='/space/'+slugify(p.name);
-  history.pushState({spaceId:p.id},'','/space/'+slugify(p.name));
+  document.getElementById('dFullLink').href='/'+slugify(p.name);
+  history.pushState({spaceId:p.id},'','/'+slugify(p.name));
   document.getElementById('modalOverlay').classList.add('open');
   document.querySelectorAll('.sq-card').forEach(c=>c.classList.remove('active'));
   const card=document.getElementById('card-'+id);

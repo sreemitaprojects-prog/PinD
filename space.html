@@ -117,8 +117,7 @@ function show(id){document.getElementById(id).style.display='';}
 function hide(id){document.getElementById(id).style.display='none';}
 
 async function init(){
-  const parts=window.location.pathname.split('/space/');
-  const slug=parts[1]?parts[1].replace(/\/$/,''):'';
+  const slug=window.location.pathname.replace(/^\/+|\/+$/g,'').split('/').pop()||'';
   if(!slug){showNotFound();return;}
   try{
     const res=await fetch(SUPABASE_URL+'/rest/v1/submissions?status=eq.approved&select=*',{

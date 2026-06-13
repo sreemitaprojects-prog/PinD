@@ -409,7 +409,7 @@ function renderRecentPins(places){
     return;
   }
   const recent=[...places].slice(-6).reverse();
-  c.innerHTML='<div class="places-grid">'+recent.map(p=>`<a class="place-card" href="/space/${slugify(p.space_name)}"><div class="place-type">${p.category||''}</div><div class="place-name">${p.space_name||''}</div><div class="place-area">${p.neighbourhood?p.neighbourhood+', ':''}${p.city||''}</div><div class="place-desc">${p.personal_note||''}</div><div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#F0615C;font-size:14px">&#x2192;</span></div></a>`).join('')+'</div><div class="see-all"><a href="explore.html" class="btn-primary">See All Spaces</a></div>';
+  c.innerHTML='<div class="places-grid">'+recent.map(p=>`<a class="place-card" href="/${slugify(p.space_name)}"><div class="place-type">${p.category||''}</div><div class="place-name">${p.space_name||''}</div><div class="place-area">${p.neighbourhood?p.neighbourhood+', ':''}${p.city||''}</div><div class="place-desc">${p.personal_note||''}</div><div class="place-footer"><span class="owner-badge">Women-Owned</span><span style="color:#F0615C;font-size:14px">&#x2192;</span></div></a>`).join('')+'</div><div class="see-all"><a href="explore.html" class="btn-primary">See All Spaces</a></div>';
 }
 
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40));
