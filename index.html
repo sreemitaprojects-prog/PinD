@@ -39,14 +39,17 @@ nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,0.12);}
 .btn-primary{background:var(--dd-red);color:var(--white);text-decoration:none;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:13px 28px;border-radius:5px;transition:background 0.2s,color 0.2s,transform 0.15s;display:inline-block;font-family:"Montserrat",sans-serif;border:none;cursor:pointer;}
 .btn-primary:hover{background:var(--dd-pink);color:var(--black);transform:translateY(-1px);}
 .hero-right{position:relative;overflow:hidden;background:var(--white);}
-#hero-map{position:absolute;inset:0;}
+#hero-map{position:absolute;inset:0;z-index:1;}
 .map-fade-left{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,var(--white) 0%,rgba(255,255,255,0.3) 40%,transparent 65%);}
 .map-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:80px;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--white),transparent);}
-.hero-map-overlay{display:none;position:absolute;inset:0;z-index:3;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:1.75rem 1.5rem;background:linear-gradient(to top,rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.28) 45%,transparent 78%);pointer-events:none;}
-.hero-map-overlay .btn-primary{pointer-events:auto;}
-.hero-map-eyebrow{font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--dd-pink);margin-bottom:0.6rem;font-family:"Montserrat",sans-serif;}
-.hero-map-headline{font-family:"Montserrat",sans-serif;font-size:clamp(2.2rem,9vw,3rem);font-weight:700;line-height:1.08;color:var(--white);margin-bottom:1.25rem;}
+.hero-map-overlay{display:none;position:absolute;inset:0;z-index:3;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:1rem;padding:1.5rem;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.4) 50%,rgba(0,0,0,0.05) 85%,transparent 100%);pointer-events:none;}
+.hero-map-text{flex:1;min-width:0;}
+.hero-map-eyebrow{font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--dd-pink);margin-bottom:0.5rem;font-family:"Montserrat",sans-serif;}
+.hero-map-headline{font-family:"Montserrat",sans-serif;font-size:clamp(1.9rem,8vw,2.6rem);font-weight:700;line-height:1.1;color:var(--white);}
 .hero-map-headline em{font-style:italic;font-weight:400;color:var(--dd-pink);}
+.hero-map-cta{pointer-events:auto;flex-shrink:0;width:56px;height:56px;border-radius:8px;background:var(--dd-red);display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;transition:background 0.2s,color 0.2s,transform 0.15s;}
+.hero-map-cta:hover{background:var(--dd-pink);color:var(--black);transform:translateY(-1px);}
+.hero-map-cta svg{display:block;}
 
 /* MARQUEE */
 .marquee-strip{background:var(--dd-red);border-top:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);overflow:hidden;padding:1.4rem 0;white-space:nowrap;position:relative;}
@@ -248,9 +251,13 @@ footer{background:var(--dd-red);padding:2rem 4rem;display:flex;align-items:cente
     <div class="map-fade-left"></div>
     <div class="map-fade-bottom"></div>
     <div class="hero-map-overlay">
-      <div class="hero-map-eyebrow">Women-Owned Spaces, Found by Women Like You</div>
-      <h2 class="hero-map-headline">Meet me at<br><em>her spot.</em></h2>
-      <a href="explore.html" class="btn-primary">Take me there</a>
+      <div class="hero-map-text">
+        <div class="hero-map-eyebrow">Women-Owned Spaces, Found by Women Like You</div>
+        <h2 class="hero-map-headline">Meet me at<br><em>her spot.</em></h2>
+      </div>
+      <a href="explore.html" class="hero-map-cta" aria-label="Take me there">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -393,9 +400,12 @@ const heroMapEl=document.getElementById('hero-map');
 if(heroMapEl){
   hMap=L.map('hero-map',{center:[19.076,72.8777],zoom:12,zoomControl:false,scrollWheelZoom:false,dragging:false,attributionControl:false});
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(hMap);
-  const cityViews=[{center:[19.076,72.8777],zoom:12},{center:[28.6139,77.2090],zoom:12},{center:[12.9716,77.5946],zoom:12},{center:[22.5726,88.3639],zoom:12},{center:[15.2993,74.1240],zoom:12}];
-  let ci=0;
-  setInterval(()=>{ci=(ci+1)%cityViews.length;const c=cityViews[ci];hMap.flyTo(c.center,c.zoom,{duration:2.5,easeLinearity:0.25});},4000);
+  // Mobile gets a static Mumbai map (text overlay needs a still backdrop); desktop keeps the rotating cities.
+  if(window.matchMedia('(min-width:769px)').matches){
+    const cityViews=[{center:[19.076,72.8777],zoom:12},{center:[28.6139,77.2090],zoom:12},{center:[12.9716,77.5946],zoom:12},{center:[22.5726,88.3639],zoom:12},{center:[15.2993,74.1240],zoom:12}];
+    let ci=0;
+    setInterval(()=>{ci=(ci+1)%cityViews.length;const c=cityViews[ci];hMap.flyTo(c.center,c.zoom,{duration:2.5,easeLinearity:0.25});},4000);
+  }
 }
 
 const heroCityCoords={Mumbai:[19.076,72.8777],Delhi:[28.6139,77.2090],Bangalore:[12.9716,77.5946],Kolkata:[22.5726,88.3639],Hyderabad:[17.387,78.4867],Pune:[18.5204,73.8567],Goa:[15.2993,74.1240],Noida:[28.5708,77.3261],Gurgaon:[28.4595,77.0266]};
