@@ -42,12 +42,12 @@ nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,0.12);}
 #hero-map{position:absolute;inset:0;z-index:1;}
 .map-fade-left{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,var(--white) 0%,rgba(255,255,255,0.3) 40%,transparent 65%);}
 .map-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:80px;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--white),transparent);}
-.hero-map-overlay{display:none;position:absolute;inset:0;z-index:3;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:1rem;padding:1.5rem;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.4) 50%,rgba(0,0,0,0.05) 85%,transparent 100%);pointer-events:none;}
-.hero-map-text{flex:1;min-width:0;}
+.hero-map-overlay{display:none;position:absolute;inset:0;z-index:3;align-items:flex-end;padding:1.5rem;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.4) 50%,rgba(0,0,0,0.05) 85%,transparent 100%);pointer-events:none;}
+.hero-map-text{padding-right:4rem;}
 .hero-map-eyebrow{font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--dd-pink);margin-bottom:0.5rem;font-family:"Montserrat",sans-serif;}
 .hero-map-headline{font-family:"Montserrat",sans-serif;font-size:clamp(1.9rem,8vw,2.6rem);font-weight:700;line-height:1.1;color:var(--white);}
 .hero-map-headline em{font-style:italic;font-weight:400;color:var(--dd-pink);}
-.hero-map-cta{pointer-events:auto;flex-shrink:0;width:56px;height:56px;border-radius:8px;background:var(--dd-red);display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;transition:background 0.2s,color 0.2s,transform 0.15s;}
+.hero-map-cta{pointer-events:auto;position:absolute;right:1.5rem;bottom:1.5rem;width:48px;height:48px;aspect-ratio:1/1;border-radius:8px;background:var(--dd-red);display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;transition:background 0.2s,color 0.2s,transform 0.15s;}
 .hero-map-cta:hover{background:var(--dd-pink);color:var(--black);transform:translateY(-1px);}
 .hero-map-cta svg{display:block;}
 
